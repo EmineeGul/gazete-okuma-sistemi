@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets">
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
 <h:head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HABER_KONSOLU</title>
+    <title>Kategoriye Göre Haberler | HABER_KONSOLU</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -29,7 +30,6 @@
             <div class="collapse navbar-collapse" id="ustMenu">
                 <div class="navbar-nav ms-auto">
                     <h:outputLink value="index.xhtml" styleClass="nav-link px-3">Ana Sayfa</h:outputLink>
-                    <h:outputLink value="giris.xhtml" styleClass="nav-link px-3">Giriş</h:outputLink>
                 </div>
             </div>
         </div>
@@ -37,18 +37,50 @@
 
     <main class="container py-5">
         <div class="text-center mb-5">
-            <h1 class="bolum-basligi">Son Haberler</h1>
-            <p class="text-secondary mt-3 mb-0">Güncel gelişmeleri sade ve düzenli bir akışta takip edin.</p>
+            <h1 class="bolum-basligi">Kategoriye Göre Haberler</h1>
+            <p class="text-secondary mt-3 mb-0">İlgilendiğiniz kategoriye göre haberleri filtreleyin.</p>
         </div>
 
-        <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Henüz haber bulunamadı.</h4>
-            <p class="mb-0">Sisteme eklendiğinde haberler burada listelenecektir.</p>
+        <h:form>
+            <div class="card haber-karti mb-5">
+                <div class="card-body p-4">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-12 col-lg-7">
+                            <label for="kategoriSecimi" class="form-label text-light">Kategori Seçimi</label>
+                            <h:selectOneMenu id="kategoriSecimi"
+                                             value="#{kategoriFiltreBean.seciliKategori}"
+                                             styleClass="form-select bg-dark text-light border-secondary">
+                                <f:selectItem itemLabel="Kategori seçiniz" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{kategoriFiltreBean.kategoriler}"
+                                               var="kategori"
+                                               itemValue="#{kategori}"
+                                               itemLabel="#{kategori.kategoriAdi}" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div class="col-12 col-lg-5">
+                            <div class="d-flex flex-wrap gap-2">
+                                <h:commandButton value="Filtrele"
+                                                 action="#{kategoriFiltreBean.kategoriyeGoreFiltrele}"
+                                                 styleClass="btn btn-haber" />
+                                <h:commandButton value="Temizle"
+                                                 action="#{kategoriFiltreBean.filtreyiTemizle}"
+                                                 styleClass="btn btn-outline-light" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <h:panelGroup rendered="#{empty kategoriFiltreBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
+            <h4 class="mb-2">Bu kategoriye ait haber bulunamadı.</h4>
+            <p class="mb-0">Farklı bir kategori seçerek tekrar deneyebilirsiniz.</p>
         </h:panelGroup>
 
-        <h:panelGroup rendered="#{not empty haberBean.haberler}" layout="block">
+        <h:panelGroup rendered="#{not empty kategoriFiltreBean.haberler}" layout="block">
             <div class="row g-4">
-                <ui:repeat value="#{haberBean.haberler}" var="haber">
+                <ui:repeat value="#{kategoriFiltreBean.haberler}" var="haber">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
                             <h:graphicImage value="#{haber.gorselUrl}"
@@ -58,10 +90,6 @@
 
                             <div class="card-body d-flex flex-column p-4">
                                 <div class="d-flex flex-wrap gap-2 mb-3">
-                                    <h:panelGroup rendered="#{not empty haber.kategori and not empty haber.kategori.kategoriAdi}">
-                                        <span class="badge rounded-pill rozet-kategori">#{haber.kategori.kategoriAdi}</span>
-                                    </h:panelGroup>
-
                                     <h:panelGroup rendered="#{not empty haber.gazeteKaynagi and not empty haber.gazeteKaynagi.ad}">
                                         <span class="badge rounded-pill rozet-kaynak">#{haber.gazeteKaynagi.ad}</span>
                                     </h:panelGroup>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:pt="jakarta.faces.passthrough">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giriş | HABER_KONSOLU</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <h:outputStylesheet library="css" name="stil.css" />
+</h:head>
+
+<h:body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-haber mt-3 mx-3 mx-md-4 rounded-4">
+        <div class="container-fluid px-3 px-md-4">
+            <h:outputLink value="index.xhtml" styleClass="navbar-brand marka-haber text-decoration-none">
+                HABER_KONSOLU
+            </h:outputLink>
+
+            <div class="navbar-nav ms-auto">
+                <h:outputLink value="index.xhtml" styleClass="nav-link px-3">Ana Sayfa</h:outputLink>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-5">
+                <div class="card haber-karti">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="text-center mb-4">
+                            <h1 class="bolum-basligi h2 mb-3">Giriş Yap</h1>
+                            <p class="text-secondary mb-0">Haber konsoluna erişmek için bilgilerinizi girin.</p>
+                        </div>
+
+                        <h:form>
+                            <h:panelGroup id="mesajAlani" layout="block" styleClass="mb-4">
+                                <h:messages globalOnly="true"
+                                            layout="list"
+                                            styleClass="alert alert-danger mb-0" />
+                            </h:panelGroup>
+
+                            <div class="mb-3">
+                                <label for="eposta" class="form-label text-light">E-posta</label>
+                                <h:inputText id="eposta"
+                                             value="#{girisBean.eposta}"
+                                             styleClass="form-control bg-dark text-light border-secondary"
+                                             pt:placeholder="eposta@example.com"
+                                             required="true" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="sifre" class="form-label text-light">Şifre</label>
+                                <h:inputSecret id="sifre"
+                                               value="#{girisBean.sifre}"
+                                               styleClass="form-control bg-dark text-light border-secondary"
+                                               pt:placeholder="Şifrenizi girin"
+                                               required="true" />
+                            </div>
+
+                            <div class="d-grid">
+                                <h:commandButton value="Giriş Yap"
+                                                 action="#{girisBean.girisYap}"
+                                                 styleClass="btn btn-haber" />
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</h:body>
+</html>
