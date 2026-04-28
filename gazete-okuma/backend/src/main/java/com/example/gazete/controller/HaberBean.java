@@ -1,44 +1,39 @@
 package com.example.gazete.controller;
 
 import com.example.gazete.model.entity.Haber;
-import com.example.gazete.service.HaberService;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.context.FacesContext;
+import com.example.gazete.model.facade.HaberFacade;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-@Named
-@RequestScoped
+@Named("haberBean")
+@ViewScoped
 public class HaberBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Inject
-    private HaberService haberService;
+    private HaberFacade haberFacade;
 
-    private Haber seciliHaber;
+    private List<Haber> haberler;
 
-    public List<Haber> getHaberler() {
-        return haberService.tumunuBul();
+    @PostConstruct
+    public void init() {
+        haberleriYukle();
     }
 
-    public Haber getSeciliHaber() {
-        if (seciliHaber == null) {
-            Map<String, String> parametreler = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-            String idParametresi = parametreler.get("id");
-            if (idParametresi != null) {
-                try {
-                    Long id = Long.valueOf(idParametresi);
-                    Optional<Haber> haberSecenegi = haberService.idIleBul(id);
-                    if (haberSecenegi.isPresent()) {
-                        seciliHaber = haberSecenegi.get();
-                    }
-                } catch (NumberFormatException ignored) {
-                }
-            }
-        }
-        return seciliHaber;
+    public void haberleriYukle() {
+        haberler = haberFacade.sonHaberleriGetir(10);
+    }
+
+    public List<Haber> getHaberler() {
+        return haberler;
+    }
+
+    public void setHaberler(List<Haber> haberler) {
+        this.haberler = haberler;
     }
 }

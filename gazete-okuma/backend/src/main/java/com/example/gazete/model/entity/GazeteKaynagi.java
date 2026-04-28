@@ -9,8 +9,8 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "news_sources")
-public class NewsSource implements Serializable {
+@Table(name = "gazete_kaynagi")
+public class GazeteKaynagi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class NewsSource implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ad", nullable = false, length = 100)
+    @Column(name = "ad", nullable = false, unique = true, length = 100)
     private String ad;
 
     @Column(name = "web_sitesi", length = 255)
@@ -27,7 +27,7 @@ public class NewsSource implements Serializable {
     @Column(name = "aciklama", length = 255)
     private String aciklama;
 
-    public NewsSource() {
+    public GazeteKaynagi() {
     }
 
     public Long getId() {
@@ -64,7 +64,7 @@ public class NewsSource implements Serializable {
 
     @Override
     public String toString() {
-        return "NewsSource{"
+        return "GazeteKaynagi{"
                 + "id=" + id
                 + ", ad='" + ad + '\''
                 + ", webSitesi='" + webSitesi + '\''

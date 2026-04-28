@@ -37,11 +37,11 @@ public class Haber implements Serializable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_id", nullable = false)
-    private Category kategori;
+    private Kategori kategori;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "kaynak_id", nullable = false)
-    private NewsSource haberKaynagi;
+    private GazeteKaynagi haberKaynagi;
 
     public Haber() {
     }
@@ -109,19 +109,19 @@ public class Haber implements Serializable {
         this.haberLinki = haberLinki;
     }
 
-    public Category getKategori() {
+    public Kategori getKategori() {
         return kategori;
     }
 
-    public void setKategori(Category kategori) {
+    public void setKategori(Kategori kategori) {
         this.kategori = kategori;
     }
 
-    public NewsSource getHaberKaynagi() {
+    public GazeteKaynagi getHaberKaynagi() {
         return haberKaynagi;
     }
 
-    public void setHaberKaynagi(NewsSource haberKaynagi) {
+    public void setHaberKaynagi(GazeteKaynagi haberKaynagi) {
         this.haberKaynagi = haberKaynagi;
     }
 

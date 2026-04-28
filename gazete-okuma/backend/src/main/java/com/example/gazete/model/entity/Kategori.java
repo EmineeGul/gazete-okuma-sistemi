@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "categories")
-public class Category implements Serializable {
+public class Kategori implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class Category implements Serializable {
     @Column(name = "kategori_adi", nullable = false, unique = true, length = 100)
     private String kategoriAdi;
 
-    public Category() {
+    public Kategori() {
     }
 
     public Long getId() {
@@ -42,7 +42,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "Category{"
+        return "Kategori{"
                 + "id=" + id
                 + ", kategoriAdi='" + kategoriAdi + '\''
                 + '}';

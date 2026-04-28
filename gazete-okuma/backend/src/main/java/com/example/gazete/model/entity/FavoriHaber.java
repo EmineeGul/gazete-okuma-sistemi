@@ -7,10 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "favori_haberler")
+@Table(
+        name = "favori_haberler",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"kullanici_id", "haber_id"})
+)
 public class FavoriHaber implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -19,6 +19,9 @@ public class Kullanici implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String kullaniciAdi;
+
     @Column(nullable = false, length = 100)
     private String ad;
 
@@ -26,7 +29,7 @@ public class Kullanici implements Serializable {
     private String soyad;
 
     @Column(nullable = false, unique = true, length = 150)
-    private String email;
+    private String eposta;
 
     @Column(nullable = false, length = 255)
     private String sifre;
@@ -39,10 +42,11 @@ public class Kullanici implements Serializable {
     public Kullanici() {
     }
 
-    public Kullanici(String ad, String soyad, String email, String sifre, LocalDateTime kayitTarihi) {
+    public Kullanici(String kullaniciAdi, String ad, String soyad, String eposta, String sifre, LocalDateTime kayitTarihi) {
+        this.kullaniciAdi = kullaniciAdi;
         this.ad = ad;
         this.soyad = soyad;
-        this.email = email;
+        this.eposta = eposta;
         this.sifre = sifre;
         this.kayitTarihi = kayitTarihi;
     }
@@ -53,6 +57,14 @@ public class Kullanici implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getKullaniciAdi() {
+        return kullaniciAdi;
+    }
+
+    public void setKullaniciAdi(String kullaniciAdi) {
+        this.kullaniciAdi = kullaniciAdi;
     }
 
     public String getAd() {
@@ -71,12 +83,12 @@ public class Kullanici implements Serializable {
         this.soyad = soyad;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEposta() {
+        return eposta;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEposta(String eposta) {
+        this.eposta = eposta;
     }
 
     public String getSifre() {
@@ -99,9 +111,10 @@ public class Kullanici implements Serializable {
     public String toString() {
         return "Kullanici{"
                 + "id=" + id
+                + ", kullaniciAdi='" + kullaniciAdi + '\''
                 + ", ad='" + ad + '\''
                 + ", soyad='" + soyad + '\''
-                + ", email='" + email + '\''
+                + ", eposta='" + eposta + '\''
                 + ", kayitTarihi=" + kayitTarihi
                 + '}';
     }
