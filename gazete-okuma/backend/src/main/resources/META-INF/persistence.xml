@@ -4,8 +4,11 @@
     <persistence-unit name="GazeteHaberPU" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>jdbc/gazeteHaberDS</jta-data-source>
-        <class>com.example.gazete.model.entity.Haber</class>
         <class>com.example.gazete.model.entity.Kullanici</class>
+        <class>com.example.gazete.model.entity.Category</class>
+        <class>com.example.gazete.model.entity.NewsSource</class>
+        <class>com.example.gazete.model.entity.Haber</class>
+        <class>com.example.gazete.model.entity.FavoriHaber</class>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
