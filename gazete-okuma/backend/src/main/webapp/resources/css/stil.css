@@ -56,6 +56,7 @@ body {
 }
 
 .haber-karti {
+    position: relative;
     background: linear-gradient(180deg, var(--bg-card), var(--bg-card-alt));
     border: 1px solid var(--border-soft);
     border-radius: 1rem;
@@ -76,7 +77,7 @@ body {
     height: 220px;
     object-fit: cover;
     display: block;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.18);
 }
 
 .haber-baslik {
@@ -135,7 +136,7 @@ body {
     max-height: 420px;
     object-fit: cover;
     display: block;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
 }
 
 .haber-detay-baslik {
@@ -172,4 +173,48 @@ body {
     border: 0;
     background: linear-gradient(90deg, rgba(0, 255, 255, 0.25), rgba(255, 0, 255, 0.25));
     opacity: 1;
+}
+
+.favori-form {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    z-index: 3;
+}
+
+.favori-buton {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 255, 255, 0.45);
+    background: rgba(13, 14, 28, 0.78);
+    color: var(--cyan);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.08);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.favori-buton:hover {
+    transform: scale(1.06);
+    border-color: var(--cyan);
+    color: #ffffff;
+    background: rgba(0, 255, 255, 0.08);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.18);
+}
+
+.favori-buton.aktif {
+    border-color: rgba(255, 0, 255, 0.5);
+    background: rgba(255, 0, 255, 0.12);
+    color: #ff8cff;
+    box-shadow: 0 0 18px rgba(255, 0, 255, 0.16);
+}
+
+.favori-buton.aktif:hover {
+    border-color: #ff8cff;
+    background: rgba(255, 0, 255, 0.18);
+    color: #ffffff;
 }

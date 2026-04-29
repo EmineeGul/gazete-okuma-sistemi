@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html"
       xmlns:ui="jakarta.faces.facelets">
 <h:head>
@@ -30,43 +31,62 @@
     <main class="container py-5">
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Favori Haberlerim</h1>
-            <p class="text-secondary mt-3 mb-0">Kaydettiğiniz haberleri tek ekranda görüntüleyin.</p>
+            <p class="text-secondary mt-3 mb-0">Kaydettiginiz haberleri tek ekranda goruntuleyin.</p>
         </div>
 
-        <h:panelGroup rendered="#{empty favoriEkleBean.favoriler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Henüz favori haber eklenmemiş.</h4>
-            <p class="mb-0">Beğendiğiniz haberleri favorilere eklediğinizde burada listelenecektir.</p>
+        <h:messages globalOnly="true"
+                    layout="list"
+                    infoClass="alert alert-info mb-4"
+                    warnClass="alert alert-warning mb-4"
+                    errorClass="alert alert-danger mb-4"
+                    fatalClass="alert alert-danger mb-4" />
+
+        <h:panelGroup rendered="#{empty girisBean.girisYapanKullanici}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
+            <h4 class="mb-2">Favorileri gormek icin giris yapin.</h4>
+            <p class="mb-3">Favori haberlerinize erismek icin once hesabinizla oturum acmaniz gerekiyor.</p>
+            <h:outputLink value="giris.xhtml" styleClass="btn btn-haber">Giris Yap</h:outputLink>
         </h:panelGroup>
 
-        <h:panelGroup rendered="#{not empty favoriEkleBean.favoriler}" layout="block">
+        <h:panelGroup rendered="#{not empty girisBean.girisYapanKullanici and empty favoriBean.favoriler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
+            <h4 class="mb-2">Henuz favori haber eklenmemis.</h4>
+            <p class="mb-0">Begendiginiz haberleri favorilere eklediginizde burada listelenecektir.</p>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{not empty girisBean.girisYapanKullanici and not empty favoriBean.favoriler}" layout="block">
             <div class="row g-4">
-                <ui:repeat value="#{favoriEkleBean.favoriler}" var="favori">
+                <ui:repeat value="#{favoriBean.favoriler}" var="favori">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
-                            <h:graphicImage value="#{favori.haber.gorselUrl}"
-                                            rendered="#{not empty favori.haber.gorselUrl}"
-                                            styleClass="haber-gorsel"
-                                            alt="#{favori.haber.baslik}" />
+                            <img src="#{not empty favori.haber.gorselUrl ? favori.haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                                 class="haber-gorsel"
+                                 alt="#{favori.haber.baslik}" />
 
                             <div class="card-body d-flex flex-column p-4">
                                 <div class="d-flex flex-wrap gap-2 mb-3">
-                                    <h:panelGroup rendered="#{not empty favori.haber.gazeteKaynagi and not empty favori.haber.gazeteKaynagi.ad}">
-                                        <span class="badge rounded-pill rozet-kaynak">#{favori.haber.gazeteKaynagi.ad}</span>
+                                    <h:panelGroup rendered="#{not empty favori.haber.haberKaynagi and not empty favori.haber.haberKaynagi.ad}">
+                                        <span class="badge rounded-pill rozet-kaynak">#{favori.haber.haberKaynagi.ad}</span>
                                     </h:panelGroup>
                                 </div>
 
                                 <h3 class="haber-baslik h5 mb-3">#{favori.haber.baslik}</h3>
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayın Tarihi:</strong> #{favori.haber.yayinTarihi}
+                                    <strong class="text-light">Yayin Tarihi:</strong> #{favori.haber.yayinTarihi}
                                 </p>
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{favori.haber.ozet}</p>
 
-                                <h:outputLink value="#{favori.haber.haberLinki}"
-                                              rendered="#{not empty favori.haber.haberLinki}"
-                                              styleClass="btn btn-haber align-self-start"
-                                              target="_blank">
-                                    Haberi Oku
-                                </h:outputLink>
+                                <div class="d-flex flex-wrap gap-2 mt-auto">
+                                    <h:link outcome="haber-detay.xhtml"
+                                            styleClass="btn btn-haber align-self-start">
+                                        <f:param name="haberId" value="#{favori.haber.id}" />
+                                        Haberi Oku
+                                    </h:link>
+
+                                    <h:form styleClass="d-inline-block">
+                                        <h:commandButton value="Favoriden Cikar"
+                                                         action="#{favoriBean.favoridenCikar(favori)}"
+                                                         styleClass="btn btn-outline-light" />
+                                    </h:form>
+                                </div>
                             </div>
                         </div>
                     </div>

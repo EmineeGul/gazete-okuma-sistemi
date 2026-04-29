@@ -1,17 +1,25 @@
 <ui:composition template="sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="jakarta.faces.core"
                 xmlns:h="jakarta.faces.html"
                 xmlns:ui="jakarta.faces.facelets">
 
     <ui:define name="icerik">
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Son Haberler</h1>
-            <p class="text-secondary mt-3 mb-0">Güncel gelişmeleri sade ve düzenli bir akışta takip edin.</p>
+            <p class="text-secondary mt-3 mb-0">Guncel gelismeleri sade ve duzenli bir akista takip edin.</p>
         </div>
 
+        <h:messages globalOnly="true"
+                    layout="list"
+                    infoClass="alert alert-info mb-4"
+                    warnClass="alert alert-warning mb-4"
+                    errorClass="alert alert-danger mb-4"
+                    fatalClass="alert alert-danger mb-4" />
+
         <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Henüz haber bulunamadı.</h4>
-            <p class="mb-0">Sisteme eklendiğinde haberler burada listelenecektir.</p>
+            <h4 class="mb-2">Henüz haber bulunamadi.</h4>
+            <p class="mb-0">Sisteme eklendiginde haberler burada listelenecektir.</p>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{not empty haberBean.haberler}" layout="block">
@@ -19,10 +27,15 @@
                 <ui:repeat value="#{haberBean.haberler}" var="haber">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
-                            <h:graphicImage value="#{haber.gorselUrl}"
-                                            rendered="#{not empty haber.gorselUrl}"
-                                            styleClass="haber-gorsel"
-                                            alt="#{haber.baslik}" />
+                            <h:form styleClass="favori-form">
+                                <h:commandButton value="#{favoriBean.favorideMi(haber) ? '♥' : '♡'}"
+                                                 action="#{favoriBean.favoriDegistir(haber)}"
+                                                 styleClass="#{favoriBean.favorideMi(haber) ? 'favori-buton aktif' : 'favori-buton'}" />
+                            </h:form>
+
+                            <img src="#{not empty haber.gorselUrl ? haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                                 class="haber-gorsel"
+                                 alt="#{haber.baslik}" />
 
                             <div class="card-body d-flex flex-column p-4">
                                 <div class="d-flex flex-wrap gap-2 mb-3">
@@ -30,23 +43,22 @@
                                         <span class="badge rounded-pill rozet-kategori">#{haber.kategori.kategoriAdi}</span>
                                     </h:panelGroup>
 
-                                    <h:panelGroup rendered="#{not empty haber.gazeteKaynagi and not empty haber.gazeteKaynagi.ad}">
-                                        <span class="badge rounded-pill rozet-kaynak">#{haber.gazeteKaynagi.ad}</span>
+                                    <h:panelGroup rendered="#{not empty haber.haberKaynagi and not empty haber.haberKaynagi.ad}">
+                                        <span class="badge rounded-pill rozet-kaynak">#{haber.haberKaynagi.ad}</span>
                                     </h:panelGroup>
                                 </div>
 
                                 <h3 class="haber-baslik h5 mb-3">#{haber.baslik}</h3>
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayın Tarihi:</strong> #{haber.yayinTarihi}
+                                    <strong class="text-light">Yayin Tarihi:</strong> #{haber.yayinTarihi}
                                 </p>
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>
 
-                                <h:outputLink value="#{haber.haberLinki}"
-                                              rendered="#{not empty haber.haberLinki}"
-                                              styleClass="btn btn-haber align-self-start"
-                                              target="_blank">
+                                <h:link outcome="haber-detay.xhtml"
+                                        styleClass="btn btn-haber align-self-start">
+                                    <f:param name="haberId" value="#{haber.id}" />
                                     Haberi Oku
-                                </h:outputLink>
+                                </h:link>
                             </div>
                         </div>
                     </div>

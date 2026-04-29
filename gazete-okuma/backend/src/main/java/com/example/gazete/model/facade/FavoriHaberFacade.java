@@ -26,8 +26,13 @@ public class FavoriHaberFacade extends AbstractFacade<FavoriHaber> {
     }
 
     public List<FavoriHaber> kullaniciyaGoreFavorileriGetir(Kullanici kullanici) {
+        if (kullanici == null) {
+            return Collections.emptyList();
+        }
+
         TypedQuery<FavoriHaber> sorgu = varlikYoneticisi.createQuery(
-                "SELECT f FROM FavoriHaber f WHERE f.kullanici = :kullanici", FavoriHaber.class);
+                "SELECT f FROM FavoriHaber f JOIN FETCH f.haber h WHERE f.kullanici = :kullanici ORDER BY h.yayinTarihi DESC",
+                FavoriHaber.class);
         sorgu.setParameter("kullanici", kullanici);
 
         List<FavoriHaber> favoriler = sorgu.getResultList();
@@ -47,5 +52,21 @@ public class FavoriHaberFacade extends AbstractFacade<FavoriHaber> {
 
         Long favoriSayisi = sorgu.getSingleResult();
         return favoriSayisi != null && favoriSayisi > 0;
+    }
+
+    public FavoriHaber favoriyiBul(Kullanici kullanici, Haber haber) {
+        if (kullanici == null || haber == null) {
+            return null;
+        }
+
+        TypedQuery<FavoriHaber> sorgu = varlikYoneticisi.createQuery(
+                "SELECT f FROM FavoriHaber f WHERE f.kullanici = :kullanici AND f.haber = :haber",
+                FavoriHaber.class);
+        sorgu.setParameter("kullanici", kullanici);
+        sorgu.setParameter("haber", haber);
+        sorgu.setMaxResults(1);
+
+        List<FavoriHaber> sonuc = sorgu.getResultList();
+        return sonuc.isEmpty() ? null : sonuc.get(0);
     }
 }

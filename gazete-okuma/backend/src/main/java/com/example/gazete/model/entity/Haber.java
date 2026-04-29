@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "haberler")
+@Table(name = "haber")
 public class Haber implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class Haber implements Serializable {
     private Kategori kategori;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "kaynak_id", nullable = false)
+    @JoinColumn(name = "gazete_kaynagi_id", nullable = false)
     private GazeteKaynagi haberKaynagi;
 
     public Haber() {

@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(
-        name = "favori_haberler",
+        name = "favori_haber",
         uniqueConstraints = @UniqueConstraint(columnNames = {"kullanici_id", "haber_id"})
 )
 public class FavoriHaber implements Serializable {

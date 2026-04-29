@@ -69,4 +69,8 @@ public class GirisBean implements Serializable {
     public void setAktifKullanici(Kullanici aktifKullanici) {
         this.aktifKullanici = aktifKullanici;
     }
+
+    public Kullanici getGirisYapanKullanici() {
+        return aktifKullanici;
+    }
 }

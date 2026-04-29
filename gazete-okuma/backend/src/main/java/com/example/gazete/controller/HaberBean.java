@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 @Named("haberBean")
@@ -20,15 +21,43 @@ public class HaberBean implements Serializable {
     @Inject
     private HaberFacade haberFacade;
 
+    private Long haberId;
     private List<Haber> haberler;
+    private Haber seciliHaber;
 
     @PostConstruct
     public void init() {
+        System.out.println("HaberBean init calisti.");
         haberleriYukle();
     }
 
     public void haberleriYukle() {
-        haberler = haberFacade.sonHaberleriGetir(10);
+        try {
+            haberler = haberFacade.tumHaberleriGetir();
+            System.out.println("Veritabanindan gelen haber sayisi: " + (haberler != null ? haberler.size() : 0));
+        } catch (Exception e) {
+            haberler = Collections.emptyList();
+            System.out.println("Haberler yuklenirken hata olustu: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void seciliHaberiYukle() {
+        seciliHaber = null;
+
+        if (haberId == null) {
+            return;
+        }
+
+        try {
+            seciliHaber = haberFacade.find(haberId);
+            System.out.println("Detay sayfasi icin yuklenen haber id: " + haberId
+                    + ", bulundu mu: " + (seciliHaber != null));
+        } catch (Exception e) {
+            seciliHaber = null;
+            System.out.println("Secili haber yuklenirken hata olustu: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void haberSil(Haber haber) {
@@ -64,5 +93,21 @@ public class HaberBean implements Serializable {
 
     public void setHaberler(List<Haber> haberler) {
         this.haberler = haberler;
+    }
+
+    public Long getHaberId() {
+        return haberId;
+    }
+
+    public void setHaberId(Long haberId) {
+        this.haberId = haberId;
+    }
+
+    public Haber getSeciliHaber() {
+        return seciliHaber;
+    }
+
+    public void setSeciliHaber(Haber seciliHaber) {
+        this.seciliHaber = seciliHaber;
     }
 }

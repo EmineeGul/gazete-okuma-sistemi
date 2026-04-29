@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Named("kategoriFiltreBean")
@@ -26,7 +27,7 @@ public class KategoriFiltreBean implements Serializable {
 
     private List<Haber> haberler;
     private List<Kategori> kategoriler;
-    private Kategori seciliKategori;
+    private Long secilenKategoriId;
 
     @PostConstruct
     public void init() {
@@ -39,15 +40,19 @@ public class KategoriFiltreBean implements Serializable {
     }
 
     public void kategoriyeGoreFiltrele() {
-        if (seciliKategori != null) {
-            haberler = haberFacade.kategoriyeGoreHaberleriBul(seciliKategori);
-        } else {
-            haberler = new ArrayList<>();
+        if (secilenKategoriId == null) {
+            haberler = Collections.emptyList();
+            return;
         }
+
+        Kategori kategori = kategoriFacade.find(secilenKategoriId);
+        haberler = kategori == null
+                ? Collections.emptyList()
+                : haberFacade.kategoriyeGoreHaberleriBul(kategori);
     }
 
     public void filtreyiTemizle() {
-        seciliKategori = null;
+        secilenKategoriId = null;
         haberler = new ArrayList<>();
     }
 
@@ -67,11 +72,11 @@ public class KategoriFiltreBean implements Serializable {
         this.kategoriler = kategoriler;
     }
 
-    public Kategori getSeciliKategori() {
-        return seciliKategori;
+    public Long getSecilenKategoriId() {
+        return secilenKategoriId;
     }
 
-    public void setSeciliKategori(Kategori seciliKategori) {
-        this.seciliKategori = seciliKategori;
+    public void setSecilenKategoriId(Long secilenKategoriId) {
+        this.secilenKategoriId = secilenKategoriId;
     }
 }

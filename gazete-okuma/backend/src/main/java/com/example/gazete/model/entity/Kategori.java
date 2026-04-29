@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "kategori")
 public class Kategori implements Serializable {
 
     private static final long serialVersionUID = 1L;

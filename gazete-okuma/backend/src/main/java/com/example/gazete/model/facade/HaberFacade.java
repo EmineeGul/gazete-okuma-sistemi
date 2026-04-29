@@ -27,7 +27,7 @@ public class HaberFacade extends AbstractFacade<Haber> {
 
     public List<Haber> kategoriyeGoreHaberleriBul(Kategori kategori) {
         TypedQuery<Haber> sorgu = varlikYoneticisi.createQuery(
-                "SELECT h FROM Haber h WHERE h.kategori = :kategori", Haber.class);
+                "SELECT h FROM Haber h WHERE h.kategori = :kategori ORDER BY h.yayinTarihi DESC", Haber.class);
         sorgu.setParameter("kategori", kategori);
         return listeyiBosDon(sorgu);
     }
@@ -44,6 +44,12 @@ public class HaberFacade extends AbstractFacade<Haber> {
         TypedQuery<Haber> sorgu = varlikYoneticisi.createQuery(
                 "SELECT h FROM Haber h ORDER BY h.yayinTarihi DESC", Haber.class);
         sorgu.setMaxResults(guvenliLimit);
+        return listeyiBosDon(sorgu);
+    }
+
+    public List<Haber> tumHaberleriGetir() {
+        TypedQuery<Haber> sorgu = varlikYoneticisi.createQuery(
+                "SELECT h FROM Haber h ORDER BY h.yayinTarihi DESC", Haber.class);
         return listeyiBosDon(sorgu);
     }
 

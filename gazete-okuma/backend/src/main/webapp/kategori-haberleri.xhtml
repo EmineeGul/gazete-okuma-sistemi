@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets"
-      xmlns:f="jakarta.faces.core">
+      xmlns:ui="jakarta.faces.facelets">
 <h:head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kategoriye Göre Haberler | HABER_KONSOLU</title>
+    <title>Kategoriye Gore Haberler | HABER_KONSOLU</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -23,7 +23,7 @@
             </h:outputLink>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ustMenu"
-                    aria-controls="ustMenu" aria-expanded="false" aria-label="Menüyü Aç">
+                    aria-controls="ustMenu" aria-expanded="false" aria-label="Menuyu Ac">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -37,8 +37,8 @@
 
     <main class="container py-5">
         <div class="text-center mb-5">
-            <h1 class="bolum-basligi">Kategoriye Göre Haberler</h1>
-            <p class="text-secondary mt-3 mb-0">İlgilendiğiniz kategoriye göre haberleri filtreleyin.</p>
+            <h1 class="bolum-basligi">Kategoriye Gore Haberler</h1>
+            <p class="text-secondary mt-3 mb-0">Ilgilendiginiz kategoriye gore haberleri filtreleyin.</p>
         </div>
 
         <h:form>
@@ -46,14 +46,14 @@
                 <div class="card-body p-4">
                     <div class="row g-3 align-items-end">
                         <div class="col-12 col-lg-7">
-                            <label for="kategoriSecimi" class="form-label text-light">Kategori Seçimi</label>
+                            <label for="kategoriSecimi" class="form-label text-light">Kategori Secimi</label>
                             <h:selectOneMenu id="kategoriSecimi"
-                                             value="#{kategoriFiltreBean.seciliKategori}"
+                                             value="#{kategoriFiltreBean.secilenKategoriId}"
                                              styleClass="form-select bg-dark text-light border-secondary">
-                                <f:selectItem itemLabel="Kategori seçiniz" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Kategori seciniz" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{kategoriFiltreBean.kategoriler}"
                                                var="kategori"
-                                               itemValue="#{kategori}"
+                                               itemValue="#{kategori.id}"
                                                itemLabel="#{kategori.kategoriAdi}" />
                             </h:selectOneMenu>
                         </div>
@@ -74,8 +74,8 @@
         </h:form>
 
         <h:panelGroup rendered="#{empty kategoriFiltreBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Bu kategoriye ait haber bulunamadı.</h4>
-            <p class="mb-0">Farklı bir kategori seçerek tekrar deneyebilirsiniz.</p>
+            <h4 class="mb-2">Bu kategoriye ait haber bulunamadi.</h4>
+            <p class="mb-0">Farkli bir kategori secerek tekrar deneyebilirsiniz.</p>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{not empty kategoriFiltreBean.haberler}" layout="block">
@@ -83,30 +83,28 @@
                 <ui:repeat value="#{kategoriFiltreBean.haberler}" var="haber">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
-                            <h:graphicImage value="#{haber.gorselUrl}"
-                                            rendered="#{not empty haber.gorselUrl}"
-                                            styleClass="haber-gorsel"
-                                            alt="#{haber.baslik}" />
+                            <img src="#{not empty haber.gorselUrl ? haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                                 class="haber-gorsel"
+                                 alt="#{haber.baslik}" />
 
                             <div class="card-body d-flex flex-column p-4">
                                 <div class="d-flex flex-wrap gap-2 mb-3">
-                                    <h:panelGroup rendered="#{not empty haber.gazeteKaynagi and not empty haber.gazeteKaynagi.ad}">
-                                        <span class="badge rounded-pill rozet-kaynak">#{haber.gazeteKaynagi.ad}</span>
+                                    <h:panelGroup rendered="#{not empty haber.haberKaynagi and not empty haber.haberKaynagi.ad}">
+                                        <span class="badge rounded-pill rozet-kaynak">#{haber.haberKaynagi.ad}</span>
                                     </h:panelGroup>
                                 </div>
 
                                 <h3 class="haber-baslik h5 mb-3">#{haber.baslik}</h3>
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayın Tarihi:</strong> #{haber.yayinTarihi}
+                                    <strong class="text-light">Yayin Tarihi:</strong> #{haber.yayinTarihi}
                                 </p>
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>
 
-                                <h:outputLink value="#{haber.haberLinki}"
-                                              rendered="#{not empty haber.haberLinki}"
-                                              styleClass="btn btn-haber align-self-start"
-                                              target="_blank">
+                                <h:link outcome="haber-detay.xhtml"
+                                        styleClass="btn btn-haber align-self-start">
+                                    <f:param name="haberId" value="#{haber.id}" />
                                     Haberi Oku
-                                </h:outputLink>
+                                </h:link>
                             </div>
                         </div>
                     </div>
