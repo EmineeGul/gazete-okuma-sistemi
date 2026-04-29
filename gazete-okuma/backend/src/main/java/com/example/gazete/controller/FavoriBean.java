@@ -6,10 +6,12 @@ import com.example.gazete.model.entity.Kullanici;
 import com.example.gazete.model.facade.FavoriHaberFacade;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ import java.util.Set;
 public class FavoriBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String GIRIS_UYARI_MESAJI = "Favorilere eklemek için giriş yapmalısınız.";
 
     @Inject
     private FavoriHaberFacade favoriHaberFacade;
@@ -60,7 +63,7 @@ public class FavoriBean implements Serializable {
             return null;
         }
 
-        Kullanici kullanici = girisBean.getGirisYapanKullanici();
+        Kullanici kullanici = girisZorunluYonlendir();
         if (kullanici == null) {
             return "giris.xhtml?faces-redirect=true";
         }
@@ -68,7 +71,6 @@ public class FavoriBean implements Serializable {
         FavoriHaber favoriHaber = favoriHaberFacade.favoriyiBul(kullanici, haber);
         if (favoriHaber != null) {
             favoriHaberFacade.remove(favoriHaber);
-            mesajEkle(FacesMessage.SEVERITY_INFO, "Bilgi", "Haber favorilerden cikarildi.");
         } else {
             FavoriHaber yeniFavori = new FavoriHaber();
             yeniFavori.setKullanici(kullanici);
@@ -88,15 +90,56 @@ public class FavoriBean implements Serializable {
                 && favoriHaberIdleri.contains(haber.getId());
     }
 
-    public void favoridenCikar(FavoriHaber favoriHaber) {
+    public String favoridenCikar(FavoriHaber favoriHaber) {
+        Kullanici kullanici = girisZorunluYonlendir();
+        if (kullanici == null) {
+            return "giris.xhtml?faces-redirect=true";
+        }
+
         if (favoriHaber == null || favoriHaber.getId() == null) {
             mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Cikarilacak favori kaydi bulunamadi.");
-            return;
+            return null;
+        }
+
+        if (favoriHaber.getKullanici() == null
+                || kullanici.getId() == null
+                || !kullanici.getId().equals(favoriHaber.getKullanici().getId())) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Bu favori kaydi size ait degil.");
+            favorileriYukle();
+            return null;
         }
 
         favoriHaberFacade.remove(favoriHaber);
-        mesajEkle(FacesMessage.SEVERITY_INFO, "Bilgi", "Haber favorilerden cikarildi.");
         favorileriYukle();
+        return null;
+    }
+
+    public void favorilerSayfasiErisimKontrolu() throws IOException {
+        if (girisBean.girisYapilmisMi()) {
+            favorileriYukle();
+            return;
+        }
+
+        mesajEkle(FacesMessage.SEVERITY_WARN, "Uyari", GIRIS_UYARI_MESAJI);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext.getFlash().setKeepMessages(true);
+        externalContext.redirect(externalContext.getRequestContextPath() + "/giris.xhtml");
+        facesContext.responseComplete();
+    }
+
+    private Kullanici girisZorunluYonlendir() {
+        Kullanici kullanici = girisBean.getGirisYapanKullanici();
+        if (kullanici != null) {
+            return kullanici;
+        }
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.getExternalContext().getFlash().setKeepMessages(true);
+        mesajEkle(FacesMessage.SEVERITY_WARN, "Uyari", GIRIS_UYARI_MESAJI);
+        favoriler = new ArrayList<>();
+        favoriHaberIdleri = new HashSet<>();
+        return null;
     }
 
     private void mesajEkle(FacesMessage.Severity seviye, String baslik, String detay) {

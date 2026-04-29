@@ -1,11 +1,11 @@
 :root {
-    --bg-main: #0D0E1C;
-    --bg-card: #16172D;
+    --bg-main: #0d0e1c;
+    --bg-card: #16172d;
     --bg-card-alt: #111220;
     --text-main: #e2e0f5;
     --text-muted: #9aa0c3;
-    --cyan: #00FFFF;
-    --magenta: #FF00FF;
+    --cyan: #00ffff;
+    --magenta: #ff00ff;
     --border-soft: rgba(0, 255, 255, 0.18);
 }
 
@@ -26,6 +26,15 @@ body {
     backdrop-filter: blur(8px);
 }
 
+.navbar-toggler {
+    border-color: rgba(0, 255, 255, 0.35);
+    box-shadow: none !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 255, 0.12) !important;
+}
+
 .marka-haber {
     color: var(--cyan) !important;
     font-weight: 700;
@@ -38,6 +47,65 @@ body {
 
 .nav-link:hover {
     color: var(--cyan) !important;
+}
+
+.ortak-navbar-menu {
+    gap: 0.25rem;
+}
+
+.ortak-navbar-menu .nav-link {
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ortak-navbar-menu .nav-link:hover {
+    background: rgba(0, 255, 255, 0.08);
+}
+
+.hesap-dropdown .dropdown-toggle {
+    border-radius: 999px;
+}
+
+.hesap-dropdown .dropdown-toggle.show,
+.hesap-dropdown .dropdown-toggle:focus {
+    color: var(--cyan) !important;
+    background: rgba(0, 255, 255, 0.08);
+}
+
+.hesap-dropdown-menu {
+    min-width: 14rem;
+    background: rgba(17, 18, 32, 0.96);
+    border: 1px solid rgba(0, 255, 255, 0.16);
+    box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.hesap-dropdown-menu .dropdown-item {
+    color: var(--text-main);
+    border-radius: 0.75rem;
+    padding: 0.7rem 0.9rem;
+}
+
+.hesap-dropdown-menu .dropdown-item:hover,
+.hesap-dropdown-menu .dropdown-item:focus {
+    color: #ffffff;
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.hesap-dropdown-menu .dropdown-divider {
+    border-top-color: rgba(0, 255, 255, 0.14);
+}
+
+.hesap-ozet {
+    color: var(--cyan);
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 0.55rem 0.9rem;
+}
+
+.dropdown-form {
+    margin: 0;
 }
 
 .bolum-basligi {
@@ -97,7 +165,7 @@ body {
 }
 
 .rozet-kaynak {
-    background: rgba(255, 0, 255, 0.10);
+    background: rgba(255, 0, 255, 0.1);
     color: #ff8cff;
     border: 1px solid rgba(255, 0, 255, 0.24);
 }
@@ -217,4 +285,115 @@ body {
     border-color: #ff8cff;
     background: rgba(255, 0, 255, 0.18);
     color: #ffffff;
+}
+
+.tablo-haber {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: rgba(0, 255, 255, 0.14);
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
+    --bs-table-striped-color: var(--text-main);
+    --bs-table-hover-bg: rgba(0, 255, 255, 0.05);
+    --bs-table-hover-color: #ffffff;
+}
+
+.tablo-haber thead th {
+    color: var(--cyan);
+    border-bottom-width: 1px;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.form-etiketi {
+    color: #cfd3ff;
+    font-weight: 500;
+    margin-bottom: 0.55rem;
+}
+
+.form-kontrolu,
+.form-secimi {
+    background-color: #0f1124;
+    border: 1px solid rgba(0, 255, 255, 0.18);
+    color: #f4f7ff;
+    border-radius: 0.9rem;
+    padding: 0.85rem 1rem;
+    box-shadow: none;
+}
+
+.form-kontrolu:focus,
+.form-secimi:focus {
+    background-color: #11142a;
+    color: #ffffff;
+    border-color: #00ffff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 255, 0.15);
+}
+
+.form-kontrolu::placeholder {
+    color: #7f86b5;
+}
+
+.alt-bilgi {
+    color: #9aa0c3;
+    font-size: 0.95rem;
+}
+
+.duzenle-buton {
+    background: linear-gradient(90deg, #00ffff, #00c8ff);
+    color: #0d0e1c;
+    border: 0;
+    border-radius: 999px;
+    font-weight: 700;
+    padding: 0.85rem 1.5rem;
+}
+
+.duzenle-buton:hover {
+    background: linear-gradient(90deg, #76ffff, #33d9ff);
+    color: #0d0e1c;
+}
+
+.geri-buton {
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 0.85rem 1.5rem;
+}
+
+.sayfa-sarmalayici {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-haber .navbar-collapse {
+        margin-top: 1rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(0, 255, 255, 0.14);
+    }
+
+    .ortak-navbar-menu {
+        width: 100%;
+        gap: 0.35rem;
+    }
+
+    .ortak-navbar-menu .nav-link {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 0.9rem !important;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .hesap-dropdown,
+    .hesap-dropdown .dropdown-toggle,
+    .hesap-dropdown-menu {
+        width: 100%;
+    }
+
+    .hesap-dropdown-menu {
+        margin-top: 0.35rem;
+        position: static !important;
+        transform: none !important;
+    }
+
+    .sayfa-icerik-alani {
+        padding-top: 2rem !important;
+    }
 }

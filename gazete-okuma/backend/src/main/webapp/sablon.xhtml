@@ -5,7 +5,7 @@
 <h:head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HABER_KONSOLU</title>
+    <title><ui:insert name="title">HABER_KONSOLU</ui:insert></title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -27,11 +27,38 @@
             </button>
 
             <div class="collapse navbar-collapse" id="ustMenu">
-                <div class="navbar-nav ms-auto">
+                <div class="navbar-nav ms-auto ortak-navbar-menu align-items-lg-center">
                     <h:outputLink value="index.xhtml" styleClass="nav-link px-3">Ana Sayfa</h:outputLink>
                     <h:outputLink value="kategori-haberleri.xhtml" styleClass="nav-link px-3">Kategoriler</h:outputLink>
                     <h:outputLink value="favoriler.xhtml" styleClass="nav-link px-3">Favoriler</h:outputLink>
-                    <h:outputLink value="giris.xhtml" styleClass="nav-link px-3">Giriş</h:outputLink>
+
+                    <div class="nav-item dropdown hesap-dropdown">
+                        <a class="nav-link dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Hesap
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark hesap-dropdown-menu">
+                            <h:panelGroup rendered="#{girisBean.girisYapilmisMi()}">
+                                <div class="dropdown-header hesap-ozet">#{girisBean.hesapGosterim}</div>
+                                <div><hr class="dropdown-divider" /></div>
+                                <h:form styleClass="dropdown-form">
+                                    <h:commandLink action="#{girisBean.cikisYap}" styleClass="dropdown-item">
+                                        Cikis Yap
+                                    </h:commandLink>
+                                </h:form>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{not girisBean.girisYapilmisMi()}">
+                                <h:outputLink value="giris.xhtml" styleClass="dropdown-item">
+                                    Giris Yap
+                                </h:outputLink>
+                                <h:outputLink value="kayit.xhtml" styleClass="dropdown-item">
+                                    Kayit Ol
+                                </h:outputLink>
+                            </h:panelGroup>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

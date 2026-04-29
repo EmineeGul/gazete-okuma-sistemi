@@ -27,7 +27,7 @@ public class GirisBean implements Serializable {
 
         if (kullanici == null) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kullanıcı bulunamadı", null));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kullanici bulunamadi", null));
             return null;
         }
 
@@ -37,13 +37,29 @@ public class GirisBean implements Serializable {
         }
 
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Şifre hatalı", null));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sifre hatali", null));
         return null;
     }
 
     public String cikisYap() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "giris.xhtml?faces-redirect=true";
+    }
+
+    public boolean girisYapilmisMi() {
+        return aktifKullanici != null;
+    }
+
+    public String getHesapGosterim() {
+        if (aktifKullanici == null) {
+            return "Misafir";
+        }
+
+        if (aktifKullanici.getKullaniciAdi() != null && !aktifKullanici.getKullaniciAdi().isBlank()) {
+            return aktifKullanici.getKullaniciAdi();
+        }
+
+        return aktifKullanici.getEposta();
     }
 
     public String getEposta() {
