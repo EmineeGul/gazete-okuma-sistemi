@@ -70,7 +70,7 @@ public class HaberEkleBean implements Serializable {
         haberFacade.create(haber);
 
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Başarılı", "Haber başarıyla kaydedildi."));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Başarılı", "Haber başarıyla eklendi."));
 
         alanlariTemizle();
     }
