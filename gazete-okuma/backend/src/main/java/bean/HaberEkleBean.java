@@ -3,6 +3,9 @@ package bean;
 import entity.GazeteKaynagi;
 import entity.Haber;
 import entity.Kategori;
+import facadeLocal.GazeteKaynagiFacadeLocal;
+import facadeLocal.HaberFacadeLocal;
+import facadeLocal.KategoriFacadeLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -11,16 +14,16 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import facadeLocal.GazeteKaynagiFacadeLocal;
-import facadeLocal.HaberFacadeLocal;
-import facadeLocal.KategoriFacadeLocal;
 
 @Named("haberEkleBean")
 @ViewScoped
 public class HaberEkleBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final DateTimeFormatter FORM_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     @EJB
     private HaberFacadeLocal haberFacade;
@@ -31,114 +34,102 @@ public class HaberEkleBean implements Serializable {
     @EJB
     private GazeteKaynagiFacadeLocal gazeteKaynagiFacade;
 
-    private String baslik;
-    private String ozet;
-    private String icerik;
-    private String gorselUrl;
-    private String haberLinki;
-    private Long secilenKategoriId;
-    private Long secilenKaynakId;
+    private Haber haber;
+    private String yayinTarihiText;
+    private Long kategoriId;
+    private Long kaynakId;
     private List<Kategori> kategoriler;
-    private List<GazeteKaynagi> gazeteKaynaklari;
+    private List<GazeteKaynagi> kaynaklar;
 
     @PostConstruct
     public void init() {
         kategoriler = kategoriFacade.tumunuGetir();
-        gazeteKaynaklari = gazeteKaynagiFacade.tumunuGetir();
+        kaynaklar = gazeteKaynagiFacade.tumunuGetir();
+        if (haber == null) {
+            haber = new Haber();
+        }
     }
 
-    public void haberKaydet() {
-        Kategori kategori = kategoriFacade.idIleBul(secilenKategoriId);
-        GazeteKaynagi gazeteKaynagi = gazeteKaynagiFacade.idIleBul(secilenKaynakId);
-
-        if (kategori == null || gazeteKaynagi == null) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Kategori veya gazete kaynağı bulunamadı."));
-            return;
+    public String haberEkle() {
+        if (kategoriId == null || kaynakId == null) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Kategori ve kaynak secilmelidir.");
+            return null;
         }
 
-        Haber haber = new Haber();
-        haber.setBaslik(baslik);
-        haber.setOzet(ozet);
-        haber.setIcerik(icerik);
-        haber.setGorselUrl(gorselUrl);
-        haber.setHaberLinki(haberLinki);
-        haber.setKategori(kategori);
-        haber.setHaberKaynagi(gazeteKaynagi);
-        haber.setYayinTarihi(LocalDateTime.now());
+        Kategori kategori = kategoriFacade.idIleBul(kategoriId);
+        GazeteKaynagi kaynak = gazeteKaynagiFacade.idIleBul(kaynakId);
 
+        if (kategori == null || kaynak == null) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Kategori veya kaynak bulunamadi.");
+            return null;
+        }
+
+        if (yayinTarihiText != null && !yayinTarihiText.isBlank()) {
+            haber.setYayinTarihi(LocalDateTime.parse(yayinTarihiText, FORM_FORMATTER));
+        }
+
+        haber.setKategori(kategori);
+        haber.setHaberKaynagi(kaynak);
         haberFacade.ekle(haber);
 
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Başarılı", "Haber başarıyla eklendi."));
+        FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getFlash()
+                .setKeepMessages(true);
+        mesajEkle(FacesMessage.SEVERITY_INFO, "Basarili", "Haber basariyla eklendi.");
 
         alanlariTemizle();
+        return "/panel/admin-haber-liste.xhtml?faces-redirect=true";
+    }
+
+    public String haberKaydet() {
+        return haberEkle();
     }
 
     private void alanlariTemizle() {
-        baslik = null;
-        ozet = null;
-        icerik = null;
-        gorselUrl = null;
-        haberLinki = null;
-        secilenKategoriId = null;
-        secilenKaynakId = null;
+        haber = new Haber();
+        yayinTarihiText = null;
+        kategoriId = null;
+        kaynakId = null;
     }
 
-    public String getBaslik() {
-        return baslik;
+    private void mesajEkle(FacesMessage.Severity severity, String baslik, String detay) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, baslik, detay));
     }
 
-    public void setBaslik(String baslik) {
-        this.baslik = baslik;
+    public Haber getHaber() {
+        if (haber == null) {
+            haber = new Haber();
+        }
+        return haber;
     }
 
-    public String getOzet() {
-        return ozet;
+    public void setHaber(Haber haber) {
+        this.haber = haber;
     }
 
-    public void setOzet(String ozet) {
-        this.ozet = ozet;
+    public String getYayinTarihiText() {
+        return yayinTarihiText;
     }
 
-    public String getIcerik() {
-        return icerik;
+    public void setYayinTarihiText(String yayinTarihiText) {
+        this.yayinTarihiText = yayinTarihiText;
     }
 
-    public void setIcerik(String icerik) {
-        this.icerik = icerik;
+    public Long getKategoriId() {
+        return kategoriId;
     }
 
-    public String getGorselUrl() {
-        return gorselUrl;
+    public void setKategoriId(Long kategoriId) {
+        this.kategoriId = kategoriId;
     }
 
-    public void setGorselUrl(String gorselUrl) {
-        this.gorselUrl = gorselUrl;
+    public Long getKaynakId() {
+        return kaynakId;
     }
 
-    public String getHaberLinki() {
-        return haberLinki;
-    }
-
-    public void setHaberLinki(String haberLinki) {
-        this.haberLinki = haberLinki;
-    }
-
-    public Long getSecilenKategoriId() {
-        return secilenKategoriId;
-    }
-
-    public void setSecilenKategoriId(Long secilenKategoriId) {
-        this.secilenKategoriId = secilenKategoriId;
-    }
-
-    public Long getSecilenKaynakId() {
-        return secilenKaynakId;
-    }
-
-    public void setSecilenKaynakId(Long secilenKaynakId) {
-        this.secilenKaynakId = secilenKaynakId;
+    public void setKaynakId(Long kaynakId) {
+        this.kaynakId = kaynakId;
     }
 
     public List<Kategori> getKategoriler() {
@@ -149,11 +140,11 @@ public class HaberEkleBean implements Serializable {
         this.kategoriler = kategoriler;
     }
 
-    public List<GazeteKaynagi> getGazeteKaynaklari() {
-        return gazeteKaynaklari;
+    public List<GazeteKaynagi> getKaynaklar() {
+        return kaynaklar;
     }
 
-    public void setGazeteKaynaklari(List<GazeteKaynagi> gazeteKaynaklari) {
-        this.gazeteKaynaklari = gazeteKaynaklari;
+    public void setKaynaklar(List<GazeteKaynagi> kaynaklar) {
+        this.kaynaklar = kaynaklar;
     }
 }

@@ -20,6 +20,13 @@
                                 <h1 class="h3 mb-1 haber-baslik">Haber Yonetimi</h1>
                                 <p class="text-secondary mb-0">Sistemde kayitli haberleri goruntuleyin.</p>
                             </div>
+                            <div class="d-flex justify-content-end mb-3">
+                                <h:link outcome="/panel/admin-haber-ekle.xhtml"
+                                        styleClass="btn btn-primary"
+                                        rendered="#{girisBean.adminMi()}">
+                                    + Yeni Haber Ekle
+                                </h:link>
+                            </div>
                         </div>
 
                         <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block">
