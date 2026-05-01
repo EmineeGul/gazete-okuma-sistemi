@@ -4,7 +4,7 @@
                 xmlns:pt="jakarta.faces.passthrough"
                 xmlns:ui="jakarta.faces.facelets">
 
-    <ui:define name="title">Giris | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Yonetici Girisi | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
         <div class="row justify-content-center align-items-center">
@@ -12,8 +12,8 @@
                 <div class="card haber-karti">
                     <div class="card-body p-4 p-md-5">
                         <div class="text-center mb-4">
-                            <h1 class="bolum-basligi h2 mb-3">Giris Yap</h1>
-                            <p class="text-secondary mb-0">Haber konsoluna erismek icin bilgilerinizi girin.</p>
+                            <h1 class="bolum-basligi h2 mb-3">Yonetici Girisi</h1>
+                            <p class="text-secondary mb-0">Yonetim paneline erismek icin yonetici bilgilerinizi girin.</p>
                         </div>
 
                         <h:form>
@@ -42,27 +42,22 @@
                             </div>
 
                             <div class="d-grid">
-                                <h:commandButton value="Giris Yap"
-                                                 action="#{girisBean.girisYap}"
+                                <h:commandButton value="Yonetici Girisi"
+                                                 action="#{girisBean.adminGirisYap}"
                                                  styleClass="btn btn-haber" />
                             </div>
 
-                            <div class="text-center mt-3">
-                                <h:outputLink value="admin-giris.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
-                                    Yonetici Girisi
-                                </h:outputLink>
-                            </div>
-
-                            <div class="text-center mt-2">
-                                <h:outputLink value="admin-kayit.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
-                                    Yonetici Kaydi
-                                </h:outputLink>
-                            </div>
-
                             <div class="text-center mt-4">
-                                <span class="text-secondary">Hesabin yok mu? </span>
-                                <h:outputLink value="kayit.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
-                                    Kayit ol
+                                <span class="text-secondary">Yonetici hesabin yok mu? </span>
+                                <h:outputLink value="admin-kayit.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
+                                    Yonetici kaydi olustur
+                                </h:outputLink>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <span class="text-secondary">Normal kullanici misin? </span>
+                                <h:outputLink value="giris.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
+                                    Kullanici girisine don
                                 </h:outputLink>
                             </div>
                         </h:form>

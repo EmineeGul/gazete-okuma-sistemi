@@ -1,0 +1,135 @@
+package entity;
+
+import enums.RoleEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "kullanici")
+public class Kullanici implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String kullaniciAdi;
+
+    @Column(nullable = false, length = 100)
+    private String ad;
+
+    @Column(nullable = false, length = 100)
+    private String soyad;
+
+    @Column(nullable = false, unique = true, length = 150)
+    private String eposta;
+
+    @Column(nullable = false, length = 255)
+    private String sifre;
+
+    @Column(nullable = false)
+    private LocalDateTime kayitTarihi = LocalDateTime.now();
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", length = 20)
+    private RoleEnum role = RoleEnum.USER;
+
+    public Kullanici() {
+    }
+
+    public Kullanici(String kullaniciAdi, String ad, String soyad, String eposta, String sifre, LocalDateTime kayitTarihi) {
+        this.kullaniciAdi = kullaniciAdi;
+        this.ad = ad;
+        this.soyad = soyad;
+        this.eposta = eposta;
+        this.sifre = sifre;
+        this.kayitTarihi = kayitTarihi;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getKullaniciAdi() {
+        return kullaniciAdi;
+    }
+
+    public void setKullaniciAdi(String kullaniciAdi) {
+        this.kullaniciAdi = kullaniciAdi;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public String getSoyad() {
+        return soyad;
+    }
+
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
+    }
+
+    public String getEposta() {
+        return eposta;
+    }
+
+    public void setEposta(String eposta) {
+        this.eposta = eposta;
+    }
+
+    public String getSifre() {
+        return sifre;
+    }
+
+    public void setSifre(String sifre) {
+        this.sifre = sifre;
+    }
+
+    public LocalDateTime getKayitTarihi() {
+        return kayitTarihi;
+    }
+
+    public void setKayitTarihi(LocalDateTime kayitTarihi) {
+        this.kayitTarihi = kayitTarihi;
+    }
+
+    public RoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEnum role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Kullanici{"
+                + "id=" + id
+                + ", kullaniciAdi='" + kullaniciAdi + '\''
+                + ", ad='" + ad + '\''
+                + ", soyad='" + soyad + '\''
+                + ", eposta='" + eposta + '\''
+                + ", role=" + role
+                + ", kayitTarihi=" + kayitTarihi
+                + '}';
+    }
+}

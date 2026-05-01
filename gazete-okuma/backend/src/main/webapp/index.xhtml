@@ -5,17 +5,12 @@
                 xmlns:ui="jakarta.faces.facelets">
 
     <ui:define name="icerik">
+        <div id="toastMessage" class="toast-message" aria-live="polite">Favorilere eklendi</div>
+
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Son Haberler</h1>
             <p class="text-secondary mt-3 mb-0">Guncel gelismeleri sade ve duzenli bir akista takip edin.</p>
         </div>
-
-        <h:messages globalOnly="true"
-                    layout="list"
-                    infoClass="alert alert-info mb-4"
-                    warnClass="alert alert-warning mb-4"
-                    errorClass="alert alert-danger mb-4"
-                    fatalClass="alert alert-danger mb-4" />
 
         <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
             <h4 class="mb-2">Henüz haber bulunamadi.</h4>
@@ -30,7 +25,7 @@
                             <h:form styleClass="favori-form">
                                 <h:commandButton value="#{favoriBean.favorideMi(haber) ? '♥' : '♡'}"
                                                  action="#{favoriBean.favoriDegistir(haber)}"
-                                                 styleClass="#{favoriBean.favorideMi(haber) ? 'favori-buton aktif' : 'favori-buton'}" />
+                                                 styleClass="#{favoriBean.favorideMi(haber) ? 'favori-buton aktif' : (girisBean.girisYapilmisMi() ? 'favori-buton js-favori-ekle' : 'favori-buton')}" />
                             </h:form>
 
                             <img src="#{not empty haber.gorselUrl ? haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
@@ -65,6 +60,34 @@
                 </ui:repeat>
             </div>
         </h:panelGroup>
+
+        <h:outputScript target="body">
+            function showToast() {
+                const toast = document.getElementById("toastMessage");
+                if (!toast) {
+                    return;
+                }
+
+                toast.classList.add("show");
+
+                window.setTimeout(function () {
+                    toast.classList.remove("show");
+                }, 2000);
+            }
+
+            window.addEventListener("load", function () {
+                document.querySelectorAll(".js-favori-ekle").forEach(function (button) {
+                    button.addEventListener("click", function () {
+                        window.sessionStorage.setItem("favoriToast", "1");
+                    });
+                });
+
+                if (window.sessionStorage.getItem("favoriToast") === "1") {
+                    window.sessionStorage.removeItem("favoriToast");
+                    showToast();
+                }
+            });
+        </h:outputScript>
     </ui:define>
 
 </ui:composition>

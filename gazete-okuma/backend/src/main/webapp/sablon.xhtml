@@ -10,16 +10,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <h:outputStylesheet library="css" name="bootstrap.css" />
     <h:outputStylesheet library="css" name="stil.css" />
 </h:head>
 
 <h:body styleClass="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark navbar-haber mt-3 mx-3 mx-md-4 rounded-4">
         <div class="container-fluid px-3 px-md-4">
-            <h:outputLink value="index.xhtml" styleClass="navbar-brand marka-haber text-decoration-none">
+            <h:link outcome="/index.xhtml" styleClass="navbar-brand marka-haber text-decoration-none">
                 HABER_KONSOLU
-            </h:outputLink>
+            </h:link>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ustMenu"
                     aria-controls="ustMenu" aria-expanded="false" aria-label="Menüyü Aç">
@@ -28,9 +28,14 @@
 
             <div class="collapse navbar-collapse" id="ustMenu">
                 <div class="navbar-nav ms-auto ortak-navbar-menu align-items-lg-center">
-                    <h:outputLink value="index.xhtml" styleClass="nav-link px-3">Ana Sayfa</h:outputLink>
-                    <h:outputLink value="kategori-haberleri.xhtml" styleClass="nav-link px-3">Kategoriler</h:outputLink>
-                    <h:outputLink value="favoriler.xhtml" styleClass="nav-link px-3">Favoriler</h:outputLink>
+                    <h:link outcome="/index.xhtml" styleClass="nav-link px-3">Ana Sayfa</h:link>
+                    <h:link outcome="/kategori-haberleri.xhtml" styleClass="nav-link px-3">Kategoriler</h:link>
+                    <h:link outcome="/panel/favoriler.xhtml" styleClass="nav-link px-3">Favoriler</h:link>
+                    <h:link outcome="/panel/admin-haber-liste.xhtml"
+                            rendered="#{girisBean.adminMi()}"
+                            styleClass="nav-link px-3">
+                        Admin Panel
+                    </h:link>
 
                     <div class="nav-item dropdown hesap-dropdown">
                         <a class="nav-link dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown"
@@ -50,12 +55,12 @@
                             </h:panelGroup>
 
                             <h:panelGroup rendered="#{not girisBean.girisYapilmisMi()}">
-                                <h:outputLink value="giris.xhtml" styleClass="dropdown-item">
+                                <h:link outcome="/giris.xhtml" styleClass="dropdown-item">
                                     Giris Yap
-                                </h:outputLink>
-                                <h:outputLink value="kayit.xhtml" styleClass="dropdown-item">
+                                </h:link>
+                                <h:link outcome="/kayit.xhtml" styleClass="dropdown-item">
                                     Kayit Ol
-                                </h:outputLink>
+                                </h:link>
                             </h:panelGroup>
                         </div>
                     </div>
@@ -74,6 +79,6 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <h:outputScript library="js" name="bootstrap.bundle.js" target="body" />
 </h:body>
 </html>

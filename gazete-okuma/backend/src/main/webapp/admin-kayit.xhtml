@@ -4,7 +4,7 @@
                 xmlns:pt="jakarta.faces.passthrough"
                 xmlns:ui="jakarta.faces.facelets">
 
-    <ui:define name="title">Kayit Ol | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Yonetici Kaydi | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
         <div class="row justify-content-center align-items-center">
@@ -12,8 +12,8 @@
                 <div class="card haber-karti">
                     <div class="card-body p-4 p-md-5">
                         <div class="text-center mb-4">
-                            <h1 class="bolum-basligi h2 mb-3">Kayit Ol</h1>
-                            <p class="text-secondary mb-0">Yeni hesap olusturup haber konsoluna katilin.</p>
+                            <h1 class="bolum-basligi h2 mb-3">Yonetici Kaydi</h1>
+                            <p class="text-secondary mb-0">Yonetici hesabi olusturup panel erisiminizi etkinlestirin.</p>
                         </div>
 
                         <h:form>
@@ -87,20 +87,14 @@
                             </div>
 
                             <div class="d-grid mt-4">
-                                <h:commandButton value="Kayit Ol"
-                                                 action="#{kayitBean.kayitOl}"
+                                <h:commandButton value="Yonetici Kaydi Olustur"
+                                                 action="#{kayitBean.adminKayitOl}"
                                                  styleClass="btn btn-haber" />
                             </div>
 
                             <div class="text-center mt-3">
                                 <h:outputLink value="admin-giris.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
-                                    Yonetici Girisi
-                                </h:outputLink>
-                            </div>
-
-                            <div class="text-center mt-2">
-                                <h:outputLink value="admin-kayit.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
-                                    Yonetici Kaydi
+                                    Yonetici Girisine Don
                                 </h:outputLink>
                             </div>
                         </h:form>

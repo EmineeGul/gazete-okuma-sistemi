@@ -1,0 +1,106 @@
+<ui:composition template="/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <f:metadata>
+        <f:viewAction action="#{girisBean.adminKontrolu}" />
+        <f:viewParam name="haberId" value="#{haberGuncelleBean.haberId}" />
+        <f:viewAction action="#{haberGuncelleBean.haberiYukle}" />
+    </f:metadata>
+
+    <ui:define name="title">Haber Duzenle | HABER_KONSOLU</ui:define>
+
+    <ui:define name="icerik">
+        <div class="sayfa-sarmalayici">
+            <div class="w-100">
+                <div class="haber-karti p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h1 class="bolum-basligi haber-baslik mb-3">Haber Duzenle</h1>
+                        <p class="alt-bilgi mb-0">Secilen haberin bilgilerini guncelleyip degisiklikleri kaydedebilirsiniz.</p>
+                    </div>
+
+                    <h:messages globalOnly="true"
+                                layout="list"
+                                infoClass="alert alert-info mb-4"
+                                warnClass="alert alert-warning mb-4"
+                                errorClass="alert alert-danger mb-4"
+                                fatalClass="alert alert-danger mb-4" />
+
+                    <h:form rendered="#{not empty haberGuncelleBean.haber}">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <label for="baslik" class="form-etiketi">Haber Basligi</label>
+                                <h:inputText id="baslik"
+                                             value="#{haberGuncelleBean.haber.baslik}"
+                                             styleClass="form-control form-kontrolu"
+                                             required="true"
+                                             requiredMessage="Haber basligi zorunludur."
+                                             pt:placeholder="Haber basligini girin" />
+                            </div>
+
+                            <div class="col-12">
+                                <label for="ozet" class="form-etiketi">Ozet</label>
+                                <h:inputTextarea id="ozet"
+                                                 value="#{haberGuncelleBean.haber.ozet}"
+                                                 styleClass="form-control form-kontrolu"
+                                                 rows="3"
+                                                 pt:placeholder="Haber ozetini girin" />
+                            </div>
+
+                            <div class="col-12">
+                                <label for="icerik" class="form-etiketi">Icerik</label>
+                                <h:inputTextarea id="icerik"
+                                                 value="#{haberGuncelleBean.haber.icerik}"
+                                                 styleClass="form-control form-kontrolu"
+                                                 rows="7"
+                                                 pt:placeholder="Haber icerigini girin" />
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="gorselUrl" class="form-etiketi">Gorsel URL</label>
+                                <h:inputText id="gorselUrl"
+                                             value="#{haberGuncelleBean.haber.gorselUrl}"
+                                             styleClass="form-control form-kontrolu"
+                                             pt:placeholder="https://ornek.com/gorsel.jpg" />
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="haberLinki" class="form-etiketi">Haber Linki</label>
+                                <h:inputText id="haberLinki"
+                                             value="#{haberGuncelleBean.haber.haberLinki}"
+                                             styleClass="form-control form-kontrolu"
+                                             pt:placeholder="https://ornek.com/haber" />
+                            </div>
+
+                            <div class="col-12">
+                                <label for="yayinTarihi" class="form-etiketi">Yayin Tarihi</label>
+                                <h:inputText id="yayinTarihi"
+                                             value="#{haberGuncelleBean.yayinTarihiText}"
+                                             styleClass="form-control form-kontrolu"
+                                             pt:type="datetime-local"
+                                             pt:placeholder="Yayin tarihi" />
+                            </div>
+
+                            <div class="col-12 d-flex flex-column flex-md-row gap-3 justify-content-between align-items-stretch align-items-md-center pt-2">
+                                <h:link outcome="/panel/admin-haber-liste.xhtml" styleClass="btn btn-outline-info geri-buton">Listeye Don</h:link>
+                                <h:commandButton value="Guncelle"
+                                                 action="#{haberGuncelleBean.haberGuncelle}"
+                                                 styleClass="btn duzenle-buton" />
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <h:panelGroup rendered="#{empty haberGuncelleBean.haber}" layout="block">
+                        <div class="alert alert-danger mb-0 text-center">
+                            Guncellenecek haber bilgisi yuklenemedi.
+                        </div>
+                    </h:panelGroup>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

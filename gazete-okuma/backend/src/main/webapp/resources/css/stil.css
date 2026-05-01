@@ -287,6 +287,29 @@ body {
     color: #ffffff;
 }
 
+.toast-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.toast-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .tablo-haber {
     --bs-table-bg: transparent;
     --bs-table-color: var(--text-main);
@@ -395,5 +418,13 @@ body {
 
     .sayfa-icerik-alani {
         padding-top: 2rem !important;
+    }
+
+    .toast-message {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        padding: 12px 14px;
+        text-align: center;
     }
 }
