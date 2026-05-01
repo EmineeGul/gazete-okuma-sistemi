@@ -1,0 +1,89 @@
+<ui:composition template="/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <f:metadata>
+        <f:viewAction action="#{girisBean.adminKontrolu}" />
+        <f:viewAction action="#{yorumBean.tumYorumlariYukle}" />
+    </f:metadata>
+
+    <ui:define name="title">Yorum Yonetimi | HABER_KONSOLU</ui:define>
+
+    <ui:define name="icerik">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-11">
+                <div class="card haber-karti">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+                            <div>
+                                <h1 class="h3 mb-2 haber-baslik">Yorum Yonetimi</h1>
+                                <p class="text-secondary mb-0">
+                                    Haber yorumlarini tek ekrandan inceleyebilir ve gerektiginde silebilirsiniz.
+                                </p>
+                            </div>
+                            <h:link outcome="/panel/admin-haber-liste.xhtml"
+                                    styleClass="btn btn-geri-don"
+                                    rendered="#{girisBean.adminMi()}">
+                                Haber Yonetimine Don
+                            </h:link>
+                        </div>
+
+                        <h:panelGroup rendered="#{empty yorumBean.tumYorumlar}" layout="block">
+                            <div class="bos-liste-kutusu p-4 text-center">
+                                Henuz yorum yapilmamis.
+                            </div>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{not empty yorumBean.tumYorumlar}" layout="block">
+                            <div class="row g-4">
+                                <ui:repeat value="#{yorumBean.tumYorumlar}" var="yorum">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="yorum-yonetim-karti">
+                                            <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                                                <div>
+                                                    <h2 class="h5 yorum-yonetim-baslik mb-1">#{yorum.haber.baslik}</h2>
+                                                    <div class="yorum-yonetim-meta">
+                                                        <div>Yorum yapan kullanici: #{yorum.kullanici.kullaniciAdi}</div>
+                                                        <div>Yorum tarihi: #{yorum.yorumTarihi}</div>
+                                                        <h:panelGroup rendered="#{not empty yorum.haber.kategori and not empty yorum.haber.kategori.kategoriAdi}">
+                                                            <div>Kategori: #{yorum.haber.kategori.kategoriAdi}</div>
+                                                        </h:panelGroup>
+                                                        <h:panelGroup rendered="#{not empty yorum.haber.haberKaynagi and not empty yorum.haber.haberKaynagi.ad}">
+                                                            <div>Gazete kaynagi: #{yorum.haber.haberKaynagi.ad}</div>
+                                                        </h:panelGroup>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="yorum-yonetim-icerik mb-3">
+                                                #{yorum.icerik}
+                                            </div>
+
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <h:link outcome="/haber-detay.xhtml"
+                                                        styleClass="btn btn-geri-don">
+                                                    <f:param name="haberId" value="#{yorum.haber.id}" />
+                                                    Habere Git
+                                                </h:link>
+
+                                                <h:form>
+                                                    <h:commandButton value="Yorumu Sil"
+                                                                     action="#{yorumBean.yorumSil(yorum)}"
+                                                                     styleClass="btn btn-danger btn-sm"
+                                                                     onclick="return confirm('Bu yorumu silmek istediginize emin misiniz?');" />
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </h:panelGroup>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

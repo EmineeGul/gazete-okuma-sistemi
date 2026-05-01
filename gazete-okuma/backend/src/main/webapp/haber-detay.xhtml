@@ -107,9 +107,39 @@
                                 #{haberBean.seciliHaber.ozet}
                             </p>
 
-                            <p>
-                                #{haberBean.seciliHaber.icerik}
-                            </p>
+                            <div class="row g-3 mt-1">
+                                <div class="col-12 col-md-4">
+                                    <div class="bilgi-etiket">Yayin Tarihi</div>
+                                    <div class="bilgi-deger">#{haberBean.seciliHaber.yayinTarihi}</div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="bilgi-etiket">Kategori</div>
+                                    <div class="bilgi-deger">#{haberBean.seciliHaber.kategori.kategoriAdi}</div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="bilgi-etiket">Gazete Kaynagi</div>
+                                    <div class="bilgi-deger">#{haberBean.seciliHaber.haberKaynagi.ad}</div>
+                                </div>
+                            </div>
+
+                            <hr class="bolum-cizgisi my-4" />
+
+                            <div class="haber-detay-icerik">
+                                <h:outputText value="#{haberBean.seciliHaber.icerik}" escape="false" />
+                            </div>
+
+                            <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+                                <h:outputLink value="index.xhtml" styleClass="btn btn-geri-don">
+                                    Geri Dön
+                                </h:outputLink>
+
+                                <h:outputLink value="#{haberBean.seciliHaber.haberLinki}"
+                                              rendered="#{haberBean.seciliHaber.haberLinki ne null and haberBean.seciliHaber.haberLinki ne ''}"
+                                              styleClass="btn btn-haber"
+                                              target="_blank">
+                                    Haber Kaynağına Git
+                                </h:outputLink>
+                            </div>
 
                             <!-- ===== YORUMLAR ===== -->
                             <section class="yorum-bolumu">
@@ -154,9 +184,18 @@
                                 <ui:repeat value="#{yorumBean.yorumlar}" var="yorum">
                                     <div class="yorum-karti">
 
-                                        <strong class="yorum-yazar">
-                                            #{yorum.kullanici.kullaniciAdi}
-                                        </strong>
+                                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                                            <strong class="yorum-yazar">
+                                                #{yorum.kullanici.kullaniciAdi}
+                                            </strong>
+
+                                            <h:form rendered="#{girisBean.adminMi()}">
+                                                <h:commandButton value="Sil"
+                                                                 action="#{yorumBean.yorumSil(yorum)}"
+                                                                 styleClass="btn btn-danger btn-sm"
+                                                                 onclick="return confirm('Bu yorumu silmek istediğinize emin misiniz?');" />
+                                            </h:form>
+                                        </div>
 
                                         <p class="yorum-metin">
                                             #{yorum.icerik}

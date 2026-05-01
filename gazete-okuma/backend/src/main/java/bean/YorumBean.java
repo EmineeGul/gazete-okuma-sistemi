@@ -34,10 +34,12 @@ public class YorumBean implements Serializable {
     private Haber haber;
     private String yorumIcerik;
     private List<Yorum> yorumlar;
+    private List<Yorum> tumYorumlar;
 
     @PostConstruct
     public void init() {
         yorumlar = Collections.emptyList();
+        tumYorumlar = Collections.emptyList();
     }
 
     public void yorumlariYukle() {
@@ -50,6 +52,16 @@ public class YorumBean implements Serializable {
                 yorumlar = yorumFacade.habereGoreYorumlariGetir(haber);
             }
         }
+    }
+
+    public void tumYorumlariYukle() {
+        tumYorumlar = Collections.emptyList();
+
+        if (!adminMi()) {
+            return;
+        }
+
+        tumYorumlar = yorumFacade.tumYorumlariGetir();
     }
 
     public String yorumEkle() {
@@ -107,10 +119,14 @@ public class YorumBean implements Serializable {
             return null;
         }
 
-        if (yorum != null && yorum.getId() != null) {
-            yorumFacade.sil(yorum);
-            yorumlariYukle();
+        if (yorum == null || yorum.getId() == null) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Silinecek yorum bulunamadi.");
+            return null;
         }
+
+        yorumFacade.sil(yorum);
+        tumYorumlariYukle();
+        yorumlariYukle();
 
         return null;
     }
@@ -185,5 +201,13 @@ public class YorumBean implements Serializable {
 
     public void setYorumlar(List<Yorum> yorumlar) {
         this.yorumlar = yorumlar;
+    }
+
+    public List<Yorum> getTumYorumlar() {
+        return tumYorumlar;
+    }
+
+    public void setTumYorumlar(List<Yorum> tumYorumlar) {
+        this.tumYorumlar = tumYorumlar;
     }
 }

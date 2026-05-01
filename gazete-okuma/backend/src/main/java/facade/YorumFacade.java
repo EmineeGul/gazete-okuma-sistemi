@@ -25,11 +25,21 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
         Yorum silinecek = entityManager.merge(yorum);
         entityManager.remove(silinecek);
         entityManager.flush();
+        entityManager.clear();
     }
 
     @Override
     public Yorum bul(Long id) {
         return entityManager.find(Yorum.class, id);
+    }
+
+    @Override
+    public List<Yorum> tumYorumlariGetir() {
+        entityManager.clear();
+        return entityManager.createQuery(
+                "SELECT y FROM Yorum y ORDER BY y.yorumTarihi DESC",
+                Yorum.class
+        ).getResultList();
     }
 
     @Override

@@ -174,15 +174,19 @@ body {
 .btn-haber,
 .btn-geri-don {
     background: transparent;
-    color: var(--cyan);
-    border: 1px solid rgba(0, 255, 255, 0.4);
+    color: #00ffff !important;
+    border: 1px solid #00ffff;
+    border-radius: 0.75rem;
+    padding: 10px 20px;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .btn-haber:hover,
 .btn-geri-don:hover {
-    background: rgba(0, 255, 255, 0.08);
-    color: #ffffff;
-    border-color: var(--cyan);
+    background: rgba(0, 255, 255, 0.12);
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(0, 255, 255, 0.18);
 }
 
 .bos-liste-kutusu {
@@ -215,25 +219,34 @@ body {
 }
 
 .haber-detay-ozet {
-    color: #c7c4e6;
-    font-size: 1.05rem;
+    color: #c8c6e8 !important;
+    font-size: 18px;
+    line-height: 1.6;
 }
 
 .haber-detay-icerik {
-    color: var(--text-main);
-    line-height: 1.85;
+    color: #e2e0f5 !important;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-top: 24px;
     white-space: pre-line;
 }
 
+.haber-detay-icerik p,
+.haber-detay-icerik span,
+.haber-detay-icerik div {
+    color: #e2e0f5 !important;
+}
+
 .bilgi-etiket {
-    color: var(--text-muted);
+    color: #9aa0c3 !important;
     font-size: 0.88rem;
     text-transform: uppercase;
     letter-spacing: 0.08rem;
 }
 
 .bilgi-deger {
-    color: var(--text-main);
+    color: #e2e0f5 !important;
     font-weight: 500;
 }
 
@@ -375,6 +388,37 @@ body {
     color: #e2e0f5;
     margin-top: 10px;
     line-height: 1.6;
+    white-space: pre-line;
+}
+
+.yorum-yonetim-karti {
+    background: linear-gradient(180deg, #16172d, #111220);
+    border: 1px solid rgba(0, 255, 255, 0.16);
+    border-radius: 1rem;
+    padding: 1.35rem;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.05);
+    height: 100%;
+}
+
+.yorum-yonetim-baslik {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.yorum-yonetim-meta {
+    color: #9aa0c3;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.yorum-yonetim-icerik {
+    background: rgba(13, 14, 28, 0.72);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    border-radius: 0.9rem;
+    color: #e2e0f5;
+    padding: 1rem;
+    line-height: 1.7;
     white-space: pre-line;
 }
 

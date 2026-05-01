@@ -34,10 +34,6 @@ public class KayitBean implements Serializable {
         return kayitOl(RoleEnum.USER, "giris.xhtml?faces-redirect=true");
     }
 
-    public String adminKayitOl() {
-        return kayitOl(RoleEnum.ADMIN, "admin-giris.xhtml?faces-redirect=true");
-    }
-
     private String kayitOl(RoleEnum rol, String yonlendirme) {
         if (bosAlanVarMi()) {
             mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Tum alanlarin doldurulmasi zorunludur.");
