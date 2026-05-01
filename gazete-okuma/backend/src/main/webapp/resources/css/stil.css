@@ -140,6 +140,7 @@ body {
     box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
 }
 
+
 .haber-gorsel {
     width: 100%;
     height: 220px;
@@ -427,4 +428,5 @@ body {
         padding: 12px 14px;
         text-align: center;
     }
+
 }

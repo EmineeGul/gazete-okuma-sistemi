@@ -23,6 +23,9 @@
 
                         <h:form>
                             <h:messages globalOnly="true"
+                                        showSummary="true"
+                                        showDetail="true"
+                                        styleClass="form-message"
                                         layout="list"
                                         infoClass="alert alert-info mb-4"
                                         warnClass="alert alert-warning mb-4"
@@ -83,7 +86,7 @@
                                     <h:inputText id="yayinTarihi"
                                                  value="#{haberEkleBean.yayinTarihiText}"
                                                  styleClass="form-control bg-dark text-light border-secondary"
-                                                 pt:type="datetime-local"
+                                                 type="datetime-local"
                                                  required="true"
                                                  requiredMessage="Yayin tarihi zorunludur." />
                                 </div>
@@ -93,7 +96,7 @@
                                     <h:selectOneMenu id="kategori"
                                                      value="#{haberEkleBean.kategoriId}"
                                                      required="true"
-                                                     requiredMessage="Kategori secimi zorunludur."
+                                                     requiredMessage="Kategori secilmelidir."
                                                      styleClass="form-control bg-dark text-light border-secondary">
                                         <f:selectItem itemLabel="Kategori seciniz" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{haberEkleBean.kategoriler}"
@@ -108,7 +111,7 @@
                                     <h:selectOneMenu id="kaynak"
                                                      value="#{haberEkleBean.kaynakId}"
                                                      required="true"
-                                                     requiredMessage="Gazete kaynagi secimi zorunludur."
+                                                     requiredMessage="Gazete kaynagi secilmelidir."
                                                      styleClass="form-control bg-dark text-light border-secondary">
                                         <f:selectItem itemLabel="Kaynak seciniz" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{haberEkleBean.kaynaklar}"
@@ -121,7 +124,7 @@
                                 <div class="col-12 d-grid">
                                     <h:commandButton value="Haberi Kaydet"
                                                      action="#{haberEkleBean.haberEkle}"
-                                                     styleClass="btn btn-primary btn-lg" />
+                                                     styleClass="btn btn-primary" />
                                 </div>
                             </div>
                         </h:form>

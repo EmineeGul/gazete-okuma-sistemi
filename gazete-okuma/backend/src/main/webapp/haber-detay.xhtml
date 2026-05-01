@@ -14,7 +14,7 @@
             <div class="col-12 col-lg-10 col-xl-9">
                 <h:panelGroup rendered="#{not empty haberBean.seciliHaber}" layout="block">
                     <div class="card haber-detay-karti">
-                        <img src="#{not empty haberBean.seciliHaber.gorselUrl ? haberBean.seciliHaber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                        <img src="#{haberBean.seciliHaber.gorselUrlHariciBaglantiMi() ? haberBean.seciliHaber.gorselKaynagi : request.contextPath.concat(haberBean.seciliHaber.gorselKaynagi)}"
                              class="haber-detay-gorsel"
                              alt="#{haberBean.seciliHaber.baslik}" />
 

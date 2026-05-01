@@ -28,7 +28,7 @@
                                                  styleClass="#{favoriBean.favorideMi(haber) ? 'favori-buton aktif' : (girisBean.girisYapilmisMi() ? 'favori-buton js-favori-ekle' : 'favori-buton')}" />
                             </h:form>
 
-                            <img src="#{not empty haber.gorselUrl ? haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                            <img src="#{haber.gorselUrlHariciBaglantiMi() ? haber.gorselKaynagi : request.contextPath.concat(haber.gorselKaynagi)}"
                                  class="haber-gorsel"
                                  alt="#{haber.baslik}" />
 

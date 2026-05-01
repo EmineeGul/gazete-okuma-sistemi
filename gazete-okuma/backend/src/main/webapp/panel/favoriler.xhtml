@@ -28,7 +28,7 @@
                 <ui:repeat value="#{favoriBean.favoriler}" var="favori">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
-                            <img src="#{not empty favori.haber.gorselUrl ? favori.haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                            <img src="#{favori.haber.gorselUrlHariciBaglantiMi() ? favori.haber.gorselKaynagi : request.contextPath.concat(favori.haber.gorselKaynagi)}"
                                  class="haber-gorsel"
                                  alt="#{favori.haber.baslik}" />
 

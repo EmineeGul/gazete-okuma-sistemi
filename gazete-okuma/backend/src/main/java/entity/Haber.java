@@ -101,6 +101,23 @@ public class Haber implements Serializable {
         this.gorselUrl = gorselUrl;
     }
 
+    public boolean gorselUrlHariciBaglantiMi() {
+        return gorselUrl != null
+                && (gorselUrl.startsWith("http://") || gorselUrl.startsWith("https://"));
+    }
+
+    public String getGorselKaynagi() {
+        if (gorselUrl == null || gorselUrl.isBlank()) {
+            return "/resources/images/default-news.jpg";
+        }
+
+        if (gorselUrlHariciBaglantiMi()) {
+            return gorselUrl;
+        }
+
+        return "/resources/images/" + gorselUrl;
+    }
+
     public String getHaberLinki() {
         return haberLinki;
     }
@@ -123,6 +140,14 @@ public class Haber implements Serializable {
 
     public void setHaberKaynagi(GazeteKaynagi haberKaynagi) {
         this.haberKaynagi = haberKaynagi;
+    }
+
+    public GazeteKaynagi getGazeteKaynagi() {
+        return haberKaynagi;
+    }
+
+    public void setGazeteKaynagi(GazeteKaynagi gazeteKaynagi) {
+        this.haberKaynagi = gazeteKaynagi;
     }
 
     @Override

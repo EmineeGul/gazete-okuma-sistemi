@@ -54,7 +54,7 @@
                 <ui:repeat value="#{kategoriFiltreBean.haberler}" var="haber">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
-                            <img src="#{not empty haber.gorselUrl ? haber.gorselUrl : request.contextPath.concat('/resources/images/default-news.jpg')}"
+                            <img src="#{haber.gorselUrlHariciBaglantiMi() ? haber.gorselKaynagi : request.contextPath.concat(haber.gorselKaynagi)}"
                                  class="haber-gorsel"
                                  alt="#{haber.baslik}" />
 

@@ -15,6 +15,8 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 
 @Named("haberEkleBean")
@@ -43,43 +45,86 @@ public class HaberEkleBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        haber = new Haber();
         kategoriler = kategoriFacade.tumunuGetir();
         kaynaklar = gazeteKaynagiFacade.tumunuGetir();
-        if (haber == null) {
-            haber = new Haber();
+        if (kategoriler == null) {
+            kategoriler = Collections.emptyList();
+        }
+        if (kaynaklar == null) {
+            kaynaklar = Collections.emptyList();
+        }
+        System.out.println("Kategori sayisi: " + kategoriler.size());
+        System.out.println("Kaynak sayisi: " + kaynaklar.size());
+
+        if (kategoriler.isEmpty() || kaynaklar.isEmpty()) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Once kategori ve gazete kaynagi verisi eklenmelidir.");
         }
     }
 
     public String haberEkle() {
-        if (kategoriId == null || kaynakId == null) {
-            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Kategori ve kaynak secilmelidir.");
+        if (haber == null) {
+            haber = new Haber();
+        }
+
+        if (kategoriler == null || kategoriler.isEmpty() || kaynaklar == null || kaynaklar.isEmpty()) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Once kategori ve gazete kaynagi verisi eklenmelidir.");
             return null;
         }
 
-        Kategori kategori = kategoriFacade.idIleBul(kategoriId);
-        GazeteKaynagi kaynak = gazeteKaynagiFacade.idIleBul(kaynakId);
-
-        if (kategori == null || kaynak == null) {
-            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Kategori veya kaynak bulunamadi.");
+        if (kategoriId == null) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Kategori secilmelidir.");
             return null;
         }
 
-        if (yayinTarihiText != null && !yayinTarihiText.isBlank()) {
-            haber.setYayinTarihi(LocalDateTime.parse(yayinTarihiText, FORM_FORMATTER));
+        if (kaynakId == null) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Gazete kaynagi secilmelidir.");
+            return null;
         }
 
-        haber.setKategori(kategori);
-        haber.setHaberKaynagi(kaynak);
-        haberFacade.ekle(haber);
+        if (yayinTarihiText == null || yayinTarihiText.isBlank()) {
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Yayin tarihi zorunludur.");
+            return null;
+        }
 
-        FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getFlash()
-                .setKeepMessages(true);
-        mesajEkle(FacesMessage.SEVERITY_INFO, "Basarili", "Haber basariyla eklendi.");
+        try {
+            Kategori kategori = kategoriFacade.idIleBul(kategoriId);
+            GazeteKaynagi kaynak = gazeteKaynagiFacade.idIleBul(kaynakId);
 
-        alanlariTemizle();
-        return "/panel/admin-haber-liste.xhtml?faces-redirect=true";
+            if (kategori == null) {
+                mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Secilen kategori bulunamadi.");
+                return null;
+            }
+
+            if (kaynak == null) {
+                mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Secilen gazete kaynagi bulunamadi.");
+                return null;
+            }
+
+            try {
+                haber.setYayinTarihi(LocalDateTime.parse(yayinTarihiText, FORM_FORMATTER));
+            } catch (DateTimeParseException e) {
+                mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Yayin tarihi formati hatalidir.");
+                return null;
+            }
+
+            haber.setKategori(kategori);
+            haber.setGazeteKaynagi(kaynak);
+            haberFacade.ekle(haber);
+
+            FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getFlash()
+                    .setKeepMessages(true);
+            mesajEkle(FacesMessage.SEVERITY_INFO, "Basarili", "Haber basariyla eklendi.");
+
+            alanlariTemizle();
+            return "/panel/admin-haber-liste.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            e.printStackTrace();
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Haber eklenirken hata olustu: " + e.getMessage());
+            return null;
+        }
     }
 
     public String haberKaydet() {
