@@ -9,6 +9,7 @@
         <class>entity.GazeteKaynagi</class>
         <class>entity.Haber</class>
         <class>entity.FavoriHaber</class>
+        <class>entity.Yorum</class>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
         </properties>

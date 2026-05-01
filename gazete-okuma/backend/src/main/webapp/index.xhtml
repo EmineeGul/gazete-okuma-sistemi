@@ -22,13 +22,13 @@
                 <ui:repeat value="#{haberBean.haberler}" var="haber">
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card haber-karti">
-                            <h:form styleClass="favori-form">
+                            <h:form styleClass="favori-form" rendered="#{not girisBean.adminMi()}">
                                 <h:commandButton value="#{favoriBean.favorideMi(haber) ? '♥' : '♡'}"
                                                  action="#{favoriBean.favoriDegistir(haber)}"
                                                  styleClass="#{favoriBean.favorideMi(haber) ? 'favori-buton aktif' : (girisBean.girisYapilmisMi() ? 'favori-buton js-favori-ekle' : 'favori-buton')}" />
                             </h:form>
 
-                            <img src="#{haber.gorselUrlHariciBaglantiMi() ? haber.gorselKaynagi : request.contextPath.concat(haber.gorselKaynagi)}"
+                            <img src="#{gorselYoluBean.gorselYoluGetir(haber)}"
                                  class="haber-gorsel"
                                  alt="#{haber.baslik}" />
 

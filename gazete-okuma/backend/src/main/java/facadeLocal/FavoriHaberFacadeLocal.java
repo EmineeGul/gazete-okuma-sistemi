@@ -28,4 +28,6 @@ public interface FavoriHaberFacadeLocal {
     boolean favoriVarMi(Kullanici kullanici, Haber haber);
 
     FavoriHaber kullanicininFavorisiniBul(Kullanici kullanici, Haber haber);
+
+    void habereAitFavorileriSil(Haber haber);
 }

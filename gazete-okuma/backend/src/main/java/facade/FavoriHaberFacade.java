@@ -57,4 +57,17 @@ public class FavoriHaberFacade extends AbstractFacade<FavoriHaber> implements Fa
                 .getResultList();
         return sonuc.isEmpty() ? null : sonuc.get(0);
     }
+
+    @Override
+    public void habereAitFavorileriSil(Haber haber) {
+        if (haber == null || haber.getId() == null) {
+            return;
+        }
+
+        entityManager.createQuery("DELETE FROM FavoriHaber f WHERE f.haber = :haber")
+                .setParameter("haber", haber)
+                .executeUpdate();
+        entityManager.flush();
+        entityManager.clear();
+    }
 }

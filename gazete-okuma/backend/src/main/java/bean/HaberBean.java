@@ -1,9 +1,11 @@
 package bean;
 
 import entity.Haber;
+import facadeLocal.FavoriHaberFacadeLocal;
 import facadeLocal.HaberFacadeLocal;
-import jakarta.ejb.EJB;
+import facadeLocal.YorumFacadeLocal;
 import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -20,6 +22,12 @@ public class HaberBean implements Serializable {
 
     @EJB
     private HaberFacadeLocal haberFacade;
+
+    @EJB
+    private FavoriHaberFacadeLocal favoriHaberFacade;
+
+    @EJB
+    private YorumFacadeLocal yorumFacade;
 
     private Long haberId;
     private List<Haber> haberler;
@@ -52,31 +60,36 @@ public class HaberBean implements Serializable {
         }
     }
 
-    public void haberSil(Haber haber) {
+    public String haberSil(Haber haber) {
         if (haber == null || haber.getId() == null) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Silinecek haber bulunamadı."));
-            return;
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Silinecek haber bulunamadi.");
+            return null;
         }
 
         try {
             Haber silinecekHaber = haberFacade.idIleBul(haber.getId());
 
             if (silinecekHaber == null) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Haber veritabanında bulunamadı."));
-                return;
+                mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Haber veritabaninda bulunamadi.");
+                return null;
             }
 
+            yorumFacade.habereAitYorumlariSil(silinecekHaber);
+            favoriHaberFacade.habereAitFavorileriSil(silinecekHaber);
             haberFacade.sil(silinecekHaber);
             haberleriYukle();
+            seciliHaber = null;
 
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Başarılı", "Haber başarıyla silindi."));
+            mesajEkle(FacesMessage.SEVERITY_INFO, "Basarili", "Haber basariyla silindi.");
+            return "/panel/admin-haber-liste.xhtml?faces-redirect=true";
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hata", "Haber silinemedi."));
+            mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Haber silinemedi.");
+            return null;
         }
+    }
+
+    private void mesajEkle(FacesMessage.Severity seviye, String baslik, String detay) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(seviye, baslik, detay));
     }
 
     public List<Haber> getHaberler() {

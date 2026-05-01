@@ -3,13 +3,14 @@ package bean;
 import entity.FavoriHaber;
 import entity.Haber;
 import entity.Kullanici;
+import enums.RoleEnum;
+import facadeLocal.FavoriHaberFacadeLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
-import facadeLocal.FavoriHaberFacadeLocal;
 import jakarta.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
@@ -23,7 +24,7 @@ import java.util.Set;
 public class FavoriBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final String GIRIS_UYARI_MESAJI = "Favorilere eklemek için giriş yapmalısınız.";
+    private static final String GIRIS_UYARI_MESAJI = "Favorilere eklemek icin giris yapmalisiniz.";
 
     @EJB
     private FavoriHaberFacadeLocal favoriHaberFacade;
@@ -38,7 +39,7 @@ public class FavoriBean implements Serializable {
 
     public void favorileriYukle() {
         Kullanici kullanici = sessionKullanicisiniGetir();
-        if (kullanici == null) {
+        if (kullanici == null || adminKullanicisiMi(kullanici)) {
             favoriler = new ArrayList<>();
             favoriHaberIdleri = new HashSet<>();
             return;
@@ -63,6 +64,10 @@ public class FavoriBean implements Serializable {
         Kullanici kullanici = girisZorunluYonlendir();
         if (kullanici == null) {
             return "/giris.xhtml?faces-redirect=true";
+        }
+
+        if (adminKullanicisiMi(kullanici)) {
+            return "/index.xhtml?faces-redirect=true";
         }
 
         FavoriHaber favoriHaber = favoriHaberFacade.kullanicininFavorisiniBul(kullanici, haber);
@@ -92,6 +97,10 @@ public class FavoriBean implements Serializable {
             return "/giris.xhtml?faces-redirect=true";
         }
 
+        if (adminKullanicisiMi(kullanici)) {
+            return "/index.xhtml?faces-redirect=true";
+        }
+
         if (favoriHaber == null || favoriHaber.getId() == null) {
             mesajEkle(FacesMessage.SEVERITY_ERROR, "Hata", "Cikarilacak favori kaydi bulunamadi.");
             return null;
@@ -111,14 +120,22 @@ public class FavoriBean implements Serializable {
     }
 
     public void favorilerSayfasiErisimKontrolu() throws IOException {
-        if (sessionKullanicisiniGetir() != null) {
+        Kullanici kullanici = sessionKullanicisiniGetir();
+        if (kullanici != null && !adminKullanicisiMi(kullanici)) {
             favorileriYukle();
             return;
         }
 
-        mesajEkle(FacesMessage.SEVERITY_WARN, "Uyari", GIRIS_UYARI_MESAJI);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
+
+        if (kullanici != null) {
+            externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+            facesContext.responseComplete();
+            return;
+        }
+
+        mesajEkle(FacesMessage.SEVERITY_WARN, "Uyari", GIRIS_UYARI_MESAJI);
         externalContext.getFlash().setKeepMessages(true);
         externalContext.redirect(externalContext.getRequestContextPath() + "/giris.xhtml");
         facesContext.responseComplete();
@@ -148,6 +165,12 @@ public class FavoriBean implements Serializable {
                 .getSessionMap()
                 .get("user");
         return kullanici instanceof Kullanici ? (Kullanici) kullanici : null;
+    }
+
+    private boolean adminKullanicisiMi(Kullanici kullanici) {
+        return kullanici != null
+                && kullanici.getRole() != null
+                && kullanici.getRole() == RoleEnum.ADMIN;
     }
 
     public List<FavoriHaber> getFavoriler() {

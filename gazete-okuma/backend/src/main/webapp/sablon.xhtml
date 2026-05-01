@@ -30,7 +30,11 @@
                 <div class="navbar-nav ms-auto ortak-navbar-menu align-items-lg-center">
                     <h:link outcome="/index.xhtml" styleClass="nav-link px-3">Ana Sayfa</h:link>
                     <h:link outcome="/kategori-haberleri.xhtml" styleClass="nav-link px-3">Kategoriler</h:link>
-                    <h:link outcome="/panel/favoriler.xhtml" styleClass="nav-link px-3">Favoriler</h:link>
+                    <h:link outcome="/panel/favoriler.xhtml"
+                            rendered="#{girisBean.girisYapilmisMi() and not girisBean.adminMi()}"
+                            styleClass="nav-link px-3">
+                        Favoriler
+                    </h:link>
                     <h:link outcome="/panel/admin-haber-liste.xhtml"
                             rendered="#{girisBean.adminMi()}"
                             styleClass="nav-link px-3">

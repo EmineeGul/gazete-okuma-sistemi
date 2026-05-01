@@ -16,6 +16,14 @@ public class HaberFacade extends AbstractFacade<Haber> implements HaberFacadeLoc
     }
 
     @Override
+    public void sil(Haber haber) {
+        Haber silinecek = entityManager.merge(haber);
+        entityManager.remove(silinecek);
+        entityManager.flush();
+        entityManager.clear();
+    }
+
+    @Override
     public Haber guncelle(Haber haber) {
         System.out.println("MERGE CALISTI: " + haber.getId());
         Haber guncellenen = entityManager.merge(haber);

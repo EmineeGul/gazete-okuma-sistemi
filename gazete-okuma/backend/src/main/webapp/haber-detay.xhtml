@@ -6,91 +6,173 @@
 
     <f:metadata>
         <f:viewParam name="haberId" value="#{haberBean.haberId}" />
+        <f:viewParam name="haberId" value="#{yorumBean.haberId}" />
         <f:viewAction action="#{haberBean.seciliHaberiYukle}" />
+        <f:viewAction action="#{yorumBean.yorumlariYukle}" />
     </f:metadata>
 
     <ui:define name="icerik">
+
+        <!-- ===== YORUM CSS ===== -->
+        <style>
+            .yorum-bolumu {
+                margin-top: 40px;
+                padding: 32px;
+                background: #16172D;
+                border: 1px solid rgba(0,255,255,0.18);
+                border-radius: 1rem;
+                box-shadow: 0 0 20px rgba(0,255,255,0.05);
+            }
+
+            .yorum-baslik {
+                color: #FFFFFF;
+                font-size: 28px;
+                font-weight: 700;
+            }
+
+            .yorum-sayisi {
+                color: #9AA0C3;
+            }
+
+            .yorum-textarea {
+                width: 100%;
+                min-height: 160px;
+                background: #111220;
+                color: #E2E0F5;
+                border: 1px solid rgba(0,255,255,0.3);
+                border-radius: 1rem;
+                padding: 15px;
+                resize: vertical;
+            }
+
+            .yorum-textarea:focus {
+                border-color: #00FFFF;
+                box-shadow: 0 0 10px rgba(0,255,255,0.2);
+                outline: none;
+            }
+
+            .yorum-buton {
+                background: transparent;
+                border: 1px solid #00FFFF;
+                color: #00FFFF;
+                padding: 10px 20px;
+                border-radius: 0.7rem;
+                font-weight: bold;
+                transition: 0.2s;
+            }
+
+            .yorum-buton:hover {
+                background: rgba(0,255,255,0.1);
+                color: white;
+            }
+
+            .yorum-karti {
+                background: #111220;
+                border: 1px solid rgba(0,255,255,0.1);
+                border-radius: 1rem;
+                padding: 15px;
+                margin-top: 15px;
+            }
+
+            .yorum-yazar {
+                color: #00FFFF;
+            }
+
+            .yorum-metin {
+                color: #E2E0F5;
+            }
+
+            .yorum-yardim {
+                color: #9AA0C3;
+            }
+        </style>
+
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-9">
-                <h:panelGroup rendered="#{not empty haberBean.seciliHaber}" layout="block">
+
+                <!-- ===== HABER ===== -->
+                <h:panelGroup rendered="#{not empty haberBean.seciliHaber}">
                     <div class="card haber-detay-karti">
-                        <img src="#{haberBean.seciliHaber.gorselUrlHariciBaglantiMi() ? haberBean.seciliHaber.gorselKaynagi : request.contextPath.concat(haberBean.seciliHaber.gorselKaynagi)}"
-                             class="haber-detay-gorsel"
-                             alt="#{haberBean.seciliHaber.baslik}" />
 
-                        <div class="card-body p-4 p-md-5">
-                            <div class="d-flex flex-wrap gap-2 mb-3">
-                                <h:panelGroup rendered="#{not empty haberBean.seciliHaber.kategori and not empty haberBean.seciliHaber.kategori.kategoriAdi}">
-                                    <span class="badge rounded-pill rozet-kategori">#{haberBean.seciliHaber.kategori.kategoriAdi}</span>
-                                </h:panelGroup>
+                        <img src="#{gorselYoluBean.gorselYoluGetir(haberBean.seciliHaber)}"
+                             class="haber-detay-gorsel" />
 
-                                <h:panelGroup rendered="#{not empty haberBean.seciliHaber.haberKaynagi and not empty haberBean.seciliHaber.haberKaynagi.ad}">
-                                    <span class="badge rounded-pill rozet-kaynak">#{haberBean.seciliHaber.haberKaynagi.ad}</span>
-                                </h:panelGroup>
-                            </div>
+                        <div class="card-body">
 
-                            <h1 class="haber-detay-baslik display-6 mb-3">#{haberBean.seciliHaber.baslik}</h1>
-                            <p class="haber-detay-ozet mb-4">#{haberBean.seciliHaber.ozet}</p>
+                            <h1 class="haber-detay-baslik">
+                                #{haberBean.seciliHaber.baslik}
+                            </h1>
 
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-4">
-                                    <div class="bilgi-etiket mb-1">Yayin Tarihi</div>
-                                    <div class="bilgi-deger">#{haberBean.seciliHaber.yayinTarihi}</div>
+                            <p class="haber-detay-ozet">
+                                #{haberBean.seciliHaber.ozet}
+                            </p>
+
+                            <p>
+                                #{haberBean.seciliHaber.icerik}
+                            </p>
+
+                            <!-- ===== YORUMLAR ===== -->
+                            <section class="yorum-bolumu">
+
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <h2 class="yorum-baslik">Yorumlar</h2>
+                                    <span class="yorum-sayisi">
+                                        #{empty yorumBean.yorumlar ? 0 : yorumBean.yorumlar.size()} yorum
+                                    </span>
                                 </div>
 
-                                <h:panelGroup rendered="#{not empty haberBean.seciliHaber.kategori and not empty haberBean.seciliHaber.kategori.kategoriAdi}"
-                                              layout="block"
-                                              styleClass="col-md-4">
-                                    <div class="bilgi-etiket mb-1">Kategori</div>
-                                    <div class="bilgi-deger">#{haberBean.seciliHaber.kategori.kategoriAdi}</div>
+                                <!-- FORM -->
+                                <h:form rendered="#{not girisBean.adminMi()}">
+
+                                    <h:messages globalOnly="true" />
+
+                                    <h:inputTextarea value="#{yorumBean.yorumIcerik}"
+                                                     styleClass="yorum-textarea"
+                                                     maxlength="300"
+                                                     required="true"
+                                                     requiredMessage="Yorum bos olamaz." />
+
+                                    <br/><br/>
+
+                                    <div style="display:flex; justify-content:space-between;">
+                                        <span class="yorum-yardim">En fazla 300 karakter</span>
+
+                                        <h:commandButton value="Yorum Yap"
+                                                         action="#{yorumBean.yorumEkle}"
+                                                         styleClass="yorum-buton" />
+                                    </div>
+                                </h:form>
+
+                                <!-- BOS -->
+                                <h:panelGroup rendered="#{empty yorumBean.yorumlar}">
+                                    <p class="yorum-yardim">
+                                        Bu habere henuz yorum yapilmamis.
+                                    </p>
                                 </h:panelGroup>
 
-                                <h:panelGroup rendered="#{not empty haberBean.seciliHaber.haberKaynagi and not empty haberBean.seciliHaber.haberKaynagi.ad}"
-                                              layout="block"
-                                              styleClass="col-md-4">
-                                    <div class="bilgi-etiket mb-1">Gazete Kaynagi</div>
-                                    <div class="bilgi-deger">#{haberBean.seciliHaber.haberKaynagi.ad}</div>
-                                </h:panelGroup>
-                            </div>
+                                <!-- LISTE -->
+                                <ui:repeat value="#{yorumBean.yorumlar}" var="yorum">
+                                    <div class="yorum-karti">
 
-                            <hr class="bolum-cizgisi my-4" />
+                                        <strong class="yorum-yazar">
+                                            #{yorum.kullanici.kullaniciAdi}
+                                        </strong>
 
-                            <div class="haber-detay-icerik mb-4">
-                                <h:outputText value="#{haberBean.seciliHaber.icerik}" escape="false" />
-                            </div>
+                                        <p class="yorum-metin">
+                                            #{yorum.icerik}
+                                        </p>
 
-                            <div class="d-flex flex-column flex-sm-row gap-3">
-                                <h:outputLink value="index.xhtml" styleClass="btn btn-geri-don">
-                                    Geri Don
-                                </h:outputLink>
+                                    </div>
+                                </ui:repeat>
 
-                                <h:outputLink value="#{haberBean.seciliHaber.haberLinki}"
-                                              rendered="#{not empty haberBean.seciliHaber.haberLinki}"
-                                              styleClass="btn btn-haber"
-                                              target="_blank">
-                                    Haber Kaynagina Git
-                                </h:outputLink>
-                            </div>
+                            </section>
+
                         </div>
                     </div>
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{empty haberBean.seciliHaber}" layout="block">
-                    <div class="card haber-detay-karti p-4 p-md-5 text-center">
-                        <h1 class="haber-detay-baslik h3 mb-3">Haber Bulunamadi</h1>
-                        <p class="haber-detay-ozet mb-4">
-                            Gosterilmek istenen haber kaydi bulunamadi ya da haberId parametresi eksik geldi.
-                        </p>
-
-                        <div>
-                            <h:outputLink value="index.xhtml" styleClass="btn btn-geri-don">
-                                Ana Sayfaya Don
-                            </h:outputLink>
-                        </div>
-                    </div>
-                </h:panelGroup>
             </div>
         </div>
-    </ui:define>
 
+    </ui:define>
 </ui:composition>
