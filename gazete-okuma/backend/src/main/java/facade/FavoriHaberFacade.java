@@ -70,4 +70,35 @@ public class FavoriHaberFacade extends AbstractFacade<FavoriHaber> implements Fa
         entityManager.flush();
         entityManager.clear();
     }
+
+    @Override
+    public long kullaniciFavoriSayisi(Kullanici kullanici) {
+        if (kullanici == null) {
+            return 0L;
+        }
+
+        return entityManager.createQuery(
+                "SELECT COUNT(f) FROM FavoriHaber f WHERE f.kullanici = :kullanici",
+                Long.class
+        ).setParameter("kullanici", kullanici).getSingleResult();
+    }
+
+    @Override
+    public void kullaniciFavorileriniSil(Kullanici kullanici) {
+        if (kullanici == null || kullanici.getId() == null) {
+            return;
+        }
+
+        List<FavoriHaber> favoriler = entityManager.createQuery(
+                "SELECT f FROM FavoriHaber f WHERE f.kullanici = :kullanici",
+                FavoriHaber.class
+        ).setParameter("kullanici", kullanici).getResultList();
+
+        for (FavoriHaber favori : favoriler) {
+            entityManager.remove(entityManager.merge(favori));
+        }
+
+        entityManager.flush();
+        entityManager.clear();
+    }
 }

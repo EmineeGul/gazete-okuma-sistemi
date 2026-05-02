@@ -24,4 +24,6 @@ public interface KullaniciFacadeLocal {
     Kullanici kullaniciAdiIleBul(String kullaniciAdi);
 
     Kullanici epostaIleBul(String eposta);
+
+    List<Kullanici> tumKullanicilariGetir();
 }

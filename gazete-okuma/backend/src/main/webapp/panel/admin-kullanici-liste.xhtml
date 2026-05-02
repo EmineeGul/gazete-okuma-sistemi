@@ -1,0 +1,147 @@
+<ui:composition template="/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <f:metadata>
+        <f:viewAction action="#{girisBean.adminKontrolu}" />
+    </f:metadata>
+
+    <ui:define name="title">Kullanıcı Yönetimi | HABER_KONSOLU</ui:define>
+
+    <ui:define name="icerik">
+
+        <style>
+            .admin-kullanici-sayfa {
+                background: #16172D;
+                border: 1px solid rgba(0, 255, 255, 0.18);
+                border-radius: 1rem;
+                padding: 32px;
+                box-shadow: 0 0 24px rgba(0, 255, 255, 0.05);
+            }
+
+            .admin-kullanici-sayfa-baslik {
+                color: #FFFFFF !important;
+                font-size: 32px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .admin-kullanici-aciklama {
+                color: #9AA0C3 !important;
+                font-size: 16px;
+            }
+
+            .admin-kullanici-karti {
+                background: #111220;
+                border: 1px solid rgba(0, 255, 255, 0.22);
+                border-radius: 1rem;
+                padding: 24px;
+                height: 100%;
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+            }
+
+            .admin-kullanici-baslik {
+                color: #FFFFFF !important;
+                font-size: 26px;
+                font-weight: 700;
+                margin-bottom: 16px;
+            }
+
+            .admin-kullanici-meta,
+            .admin-kullanici-istatistik {
+                color: #E2E0F5 !important;
+                font-size: 15px;
+                line-height: 1.8;
+            }
+
+            .admin-kullanici-meta strong,
+            .admin-kullanici-istatistik strong {
+                color: #00FFFF !important;
+            }
+
+            .admin-kullanici-actions {
+                margin-top: 18px;
+            }
+
+            .admin-kullanici-bos {
+                color: #9AA0C3 !important;
+                border: 1px dashed rgba(0, 255, 255, 0.25);
+                border-radius: 1rem;
+                padding: 28px;
+                text-align: center;
+            }
+        </style>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-11">
+                <div class="admin-kullanici-sayfa">
+
+                    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+                        <div>
+                            <h1 class="admin-kullanici-sayfa-baslik">Kullanıcı Yönetimi</h1>
+                            <p class="admin-kullanici-aciklama mb-0">
+                                Sistemde kayıtlı normal kullanıcıları, yorumlarını ve favori sayılarını buradan inceleyebilirsiniz.
+                            </p>
+                        </div>
+
+                        <h:link outcome="/panel/admin-haber-liste.xhtml"
+                                styleClass="btn btn-geri-don"
+                                rendered="#{girisBean.adminMi()}">
+                            Haber Yönetimine Dön
+                        </h:link>
+                    </div>
+
+                    <h:messages globalOnly="true"
+                                showSummary="true"
+                                showDetail="true"
+                                styleClass="yorum-mesajlari mb-4" />
+
+                    <h:panelGroup rendered="#{empty adminKullaniciBean.kullanicilar}" layout="block">
+                        <div class="admin-kullanici-bos">
+                            Sistemde gösterilecek normal kullanıcı bulunamadı.
+                        </div>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{not empty adminKullaniciBean.kullanicilar}" layout="block">
+                        <div class="row g-4">
+                            <ui:repeat value="#{adminKullaniciBean.kullanicilar}" var="kullanici">
+                                <div class="col-12 col-lg-6">
+                                    <div class="admin-kullanici-karti">
+                                        <h2 class="admin-kullanici-baslik">#{kullanici.kullaniciAdi}</h2>
+
+                                        <div class="admin-kullanici-meta">
+                                            <div><strong>Ad Soyad:</strong> #{kullanici.ad} #{kullanici.soyad}</div>
+                                            <div><strong>E-posta:</strong> #{kullanici.eposta}</div>
+                                            <div><strong>Rol:</strong> #{kullanici.role}</div>
+
+                                            <h:panelGroup rendered="#{not empty kullanici.kayitTarihi}">
+                                                <div><strong>Kayıt Tarihi:</strong> #{kullanici.kayitTarihi}</div>
+                                            </h:panelGroup>
+                                        </div>
+
+                                        <div class="admin-kullanici-istatistik mt-3">
+                                            <div><strong>Yorum Sayısı:</strong> #{adminKullaniciBean.yorumSayisiGetir(kullanici)}</div>
+                                            <div><strong>Favori Sayısı:</strong> #{adminKullaniciBean.favoriSayisiGetir(kullanici)}</div>
+                                        </div>
+
+                                        <div class="admin-kullanici-actions">
+                                            <h:form>
+                                                <h:commandButton value="Kullanıcıyı Sil"
+                                                                 action="#{adminKullaniciBean.kullaniciSil(kullanici)}"
+                                                                 styleClass="btn btn-danger btn-sm"
+                                                                 onclick="return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz? Kullanıcının yorumları ve favorileri de silinir.');" />
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </h:panelGroup>
+
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

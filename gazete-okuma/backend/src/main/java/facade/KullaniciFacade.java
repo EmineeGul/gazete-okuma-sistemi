@@ -26,6 +26,23 @@ public class KullaniciFacade extends AbstractFacade<Kullanici> implements Kullan
                 eposta);
     }
 
+    @Override
+    public List<Kullanici> tumKullanicilariGetir() {
+        entityManager.clear();
+        return entityManager.createQuery(
+                "SELECT k FROM Kullanici k ORDER BY k.id DESC",
+                Kullanici.class
+        ).getResultList();
+    }
+
+    @Override
+    public void sil(Kullanici kullanici) {
+        Kullanici silinecek = entityManager.merge(kullanici);
+        entityManager.remove(silinecek);
+        entityManager.flush();
+        entityManager.clear();
+    }
+
     private Kullanici tekKullaniciGetir(String sorguMetni, String parametreAdi, String parametreDegeri) {
         @SuppressWarnings("unchecked")
         List<Kullanici> kullanicilar = entityManager.createQuery(sorguMetni)

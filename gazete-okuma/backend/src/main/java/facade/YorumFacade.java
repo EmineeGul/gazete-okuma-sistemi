@@ -1,6 +1,7 @@
 package facade;
 
 import entity.Haber;
+import entity.Kullanici;
 import entity.Yorum;
 import facadeLocal.YorumFacadeLocal;
 import jakarta.ejb.Stateless;
@@ -64,6 +65,37 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
         entityManager.createQuery("DELETE FROM Yorum y WHERE y.haber = :haber")
                 .setParameter("haber", haber)
                 .executeUpdate();
+        entityManager.flush();
+        entityManager.clear();
+    }
+
+    @Override
+    public long kullaniciYorumSayisi(Kullanici kullanici) {
+        if (kullanici == null) {
+            return 0L;
+        }
+
+        return entityManager.createQuery(
+                "SELECT COUNT(y) FROM Yorum y WHERE y.kullanici = :kullanici",
+                Long.class
+        ).setParameter("kullanici", kullanici).getSingleResult();
+    }
+
+    @Override
+    public void kullaniciYorumlariniSil(Kullanici kullanici) {
+        if (kullanici == null || kullanici.getId() == null) {
+            return;
+        }
+
+        List<Yorum> yorumlar = entityManager.createQuery(
+                "SELECT y FROM Yorum y WHERE y.kullanici = :kullanici",
+                Yorum.class
+        ).setParameter("kullanici", kullanici).getResultList();
+
+        for (Yorum yorum : yorumlar) {
+            entityManager.remove(entityManager.merge(yorum));
+        }
+
         entityManager.flush();
         entityManager.clear();
     }

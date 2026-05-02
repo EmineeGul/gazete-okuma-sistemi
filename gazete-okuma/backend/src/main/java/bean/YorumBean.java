@@ -68,7 +68,6 @@ public class YorumBean implements Serializable {
         Kullanici kullanici = getGirisYapanKullanici();
 
         if (kullanici == null) {
-            mesajEkle(FacesMessage.SEVERITY_WARN, "Uyari", "Yorum yapmak icin giris yapmalisiniz.");
             return "/giris.xhtml?faces-redirect=true";
         }
 

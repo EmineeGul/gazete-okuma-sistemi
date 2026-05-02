@@ -169,6 +169,7 @@
 
                                         <h:commandButton value="Yorum Yap"
                                                          action="#{yorumBean.yorumEkle}"
+                                                         immediate="#{not girisBean.girisYapilmisMi()}"
                                                          styleClass="yorum-buton" />
                                     </div>
                                 </h:form>

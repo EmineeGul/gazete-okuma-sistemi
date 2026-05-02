@@ -391,35 +391,106 @@ body {
     white-space: pre-line;
 }
 
-.yorum-yonetim-karti {
-    background: linear-gradient(180deg, #16172d, #111220);
-    border: 1px solid rgba(0, 255, 255, 0.16);
+.admin-yorum-karti {
+    background: #111220;
+    border: 1px solid rgba(0, 255, 255, 0.18);
     border-radius: 1rem;
-    padding: 1.35rem;
-    box-shadow: 0 0 18px rgba(0, 255, 255, 0.05);
+    padding: 24px;
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
     height: 100%;
 }
 
-.yorum-yonetim-baslik {
-    color: #ffffff;
+.admin-yorum-haber-baslik {
+    color: #ffffff !important;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin-bottom: 12px;
+    line-height: 1.35;
 }
 
-.yorum-yonetim-meta {
-    color: #9aa0c3;
-    font-size: 0.95rem;
+.admin-yorum-meta {
+    color: #9aa0c3 !important;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.admin-yorum-meta strong {
+    color: #00ffff !important;
+}
+
+.admin-yorum-metin {
+    color: #e2e0f5 !important;
+    font-size: 16px;
     line-height: 1.7;
+    margin-bottom: 20px;
+    white-space: pre-line;
 }
 
-.yorum-yonetim-icerik {
+.admin-yorum-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-yorum-sayfa-baslik {
+    color: #ffffff !important;
+}
+
+.admin-yorum-aciklama {
+    color: #9aa0c3 !important;
+}
+
+.admin-kullanici-aciklama {
+    color: #9aa0c3 !important;
+}
+
+.admin-kullanici-karti {
+    background: linear-gradient(180deg, #16172d, #111220);
+    border: 1px solid rgba(0, 255, 255, 0.18);
+    border-radius: 1rem;
+    padding: 24px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+    height: 100%;
+}
+
+.admin-kullanici-baslik {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.admin-kullanici-meta {
+    color: #9aa0c3;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.admin-kullanici-meta strong {
+    color: #00ffff;
+}
+
+.admin-kullanici-istatistik {
     background: rgba(13, 14, 28, 0.72);
-    border: 1px solid rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(255, 0, 255, 0.14);
     border-radius: 0.9rem;
     color: #e2e0f5;
-    padding: 1rem;
-    line-height: 1.7;
-    white-space: pre-line;
+    padding: 16px 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.admin-kullanici-istatistik strong {
+    color: #ff8cff;
+}
+
+.admin-kullanici-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 textarea.yorum-textarea {

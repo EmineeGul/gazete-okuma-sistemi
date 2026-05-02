@@ -1,6 +1,7 @@
 package facadeLocal;
 
 import entity.Haber;
+import entity.Kullanici;
 import entity.Yorum;
 import jakarta.ejb.Local;
 import java.util.List;
@@ -19,4 +20,8 @@ public interface YorumFacadeLocal {
     List<Yorum> habereGoreYorumlariGetir(Haber haber);
 
     void habereAitYorumlariSil(Haber haber);
+
+    long kullaniciYorumSayisi(Kullanici kullanici);
+
+    void kullaniciYorumlariniSil(Kullanici kullanici);
 }

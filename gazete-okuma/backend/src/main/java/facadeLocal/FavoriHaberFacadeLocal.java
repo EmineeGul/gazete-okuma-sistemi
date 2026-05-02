@@ -30,4 +30,8 @@ public interface FavoriHaberFacadeLocal {
     FavoriHaber kullanicininFavorisiniBul(Kullanici kullanici, Haber haber);
 
     void habereAitFavorileriSil(Haber haber);
+
+    long kullaniciFavoriSayisi(Kullanici kullanici);
+
+    void kullaniciFavorileriniSil(Kullanici kullanici);
 }
