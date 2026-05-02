@@ -27,6 +27,8 @@ public interface HaberFacadeLocal {
 
     List<Haber> kaynagaAitHaberleriGetir(GazeteKaynagi gazeteKaynagi);
 
+    List<Haber> kategoriVeKaynagaGoreHaberleriBul(Kategori kategori, GazeteKaynagi gazeteKaynagi);
+
     List<Haber> enSonHaberleriGetir(int limit);
 
     List<Haber> tumHaberleriGetir();

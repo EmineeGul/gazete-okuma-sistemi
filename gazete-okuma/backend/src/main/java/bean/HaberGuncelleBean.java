@@ -57,6 +57,7 @@ public class HaberGuncelleBean implements Serializable {
             if (yayinTarihiText != null && !yayinTarihiText.isBlank()) {
                 haber.setYayinTarihi(LocalDateTime.parse(yayinTarihiText, FORM_FORMATTER));
             }
+
             haber = haberFacade.guncelle(haber);
             FacesContext.getCurrentInstance()
                     .getExternalContext()
@@ -100,4 +101,5 @@ public class HaberGuncelleBean implements Serializable {
     public void setYayinTarihiText(String yayinTarihiText) {
         this.yayinTarihiText = yayinTarihiText;
     }
+
 }

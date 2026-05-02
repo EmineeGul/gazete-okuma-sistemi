@@ -52,6 +52,19 @@ public class HaberFacade extends AbstractFacade<Haber> implements HaberFacadeLoc
         return sonucYoksaBosListeDon(haberler);
     }
 
+    @Override
+    public List<Haber> kategoriVeKaynagaGoreHaberleriBul(Kategori kategori, GazeteKaynagi gazeteKaynagi) {
+        entityManager.clear();
+        @SuppressWarnings("unchecked")
+        List<Haber> haberler = entityManager
+                .createQuery("SELECT h FROM Haber h WHERE h.kategori = :kategori "
+                        + "AND h.haberKaynagi = :gazeteKaynagi ORDER BY h.yayinTarihi DESC")
+                .setParameter("kategori", kategori)
+                .setParameter("gazeteKaynagi", gazeteKaynagi)
+                .getResultList();
+        return sonucYoksaBosListeDon(haberler);
+    }
+
     public List<Haber> enSonHaberleriGetir(int limit) {
         int guvenliLimit = (limit > 0) ? limit : 10;
         entityManager.clear();

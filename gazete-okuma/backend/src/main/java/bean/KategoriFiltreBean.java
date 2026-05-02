@@ -1,15 +1,18 @@
 package bean;
 
+import entity.GazeteKaynagi;
 import entity.Haber;
 import entity.Kategori;
+import facadeLocal.GazeteKaynagiFacadeLocal;
+import facadeLocal.HaberFacadeLocal;
+import facadeLocal.KategoriFacadeLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
-import facadeLocal.HaberFacadeLocal;
-import facadeLocal.KategoriFacadeLocal;
 
 @Named("kategoriFiltreBean")
 @ViewScoped
@@ -23,35 +26,62 @@ public class KategoriFiltreBean implements Serializable {
     @EJB
     private KategoriFacadeLocal kategoriFacade;
 
+    @EJB
+    private GazeteKaynagiFacadeLocal gazeteKaynagiFacade;
+
     private List<Haber> haberler;
     private List<Kategori> kategoriler;
-    private Long secilenKategoriId;
+    private List<GazeteKaynagi> gazeteKaynaklari;
+    private Long seciliKategoriId;
+    private Long seciliKaynakId;
 
     @PostConstruct
     public void init() {
-        kategorileriYukle();
+        kategoriler = guvenliListe(kategoriFacade.tumunuGetir());
+        gazeteKaynaklari = guvenliListe(gazeteKaynagiFacade.tumunuGetir());
         haberler = haberFacade.tumHaberleriGetir();
     }
 
-    public void kategorileriYukle() {
-        kategoriler = kategoriFacade.tumunuGetir();
-    }
-
-    public void kategoriyeGoreFiltrele() {
-        if (secilenKategoriId == null) {
+    public void filtrele() {
+        if (seciliKategoriId == null && seciliKaynakId == null) {
             haberler = haberFacade.tumHaberleriGetir();
             return;
         }
 
-        Kategori kategori = kategoriFacade.idIleBul(secilenKategoriId);
-        haberler = kategori == null
-                ? haberFacade.tumHaberleriGetir()
-                : haberFacade.kategoriyeAitHaberleriGetir(kategori);
+        Kategori kategori = seciliKategoriId == null ? null : kategoriFacade.idIleBul(seciliKategoriId);
+        GazeteKaynagi gazeteKaynagi = seciliKaynakId == null ? null : gazeteKaynagiFacade.idIleBul(seciliKaynakId);
+
+        if (seciliKategoriId != null && kategori == null) {
+            haberler = Collections.emptyList();
+            return;
+        }
+
+        if (seciliKaynakId != null && gazeteKaynagi == null) {
+            haberler = Collections.emptyList();
+            return;
+        }
+
+        if (kategori != null && gazeteKaynagi != null) {
+            haberler = haberFacade.kategoriVeKaynagaGoreHaberleriBul(kategori, gazeteKaynagi);
+            return;
+        }
+
+        if (kategori != null) {
+            haberler = haberFacade.kategoriyeAitHaberleriGetir(kategori);
+            return;
+        }
+
+        haberler = haberFacade.kaynagaAitHaberleriGetir(gazeteKaynagi);
     }
 
     public void filtreyiTemizle() {
-        secilenKategoriId = null;
+        seciliKategoriId = null;
+        seciliKaynakId = null;
         haberler = haberFacade.tumHaberleriGetir();
+    }
+
+    private <T> List<T> guvenliListe(List<T> liste) {
+        return liste == null ? Collections.emptyList() : liste;
     }
 
     public List<Haber> getHaberler() {
@@ -70,11 +100,27 @@ public class KategoriFiltreBean implements Serializable {
         this.kategoriler = kategoriler;
     }
 
-    public Long getSecilenKategoriId() {
-        return secilenKategoriId;
+    public List<GazeteKaynagi> getGazeteKaynaklari() {
+        return gazeteKaynaklari;
     }
 
-    public void setSecilenKategoriId(Long secilenKategoriId) {
-        this.secilenKategoriId = secilenKategoriId;
+    public void setGazeteKaynaklari(List<GazeteKaynagi> gazeteKaynaklari) {
+        this.gazeteKaynaklari = gazeteKaynaklari;
+    }
+
+    public Long getSeciliKategoriId() {
+        return seciliKategoriId;
+    }
+
+    public void setSeciliKategoriId(Long seciliKategoriId) {
+        this.seciliKategoriId = seciliKategoriId;
+    }
+
+    public Long getSeciliKaynakId() {
+        return seciliKaynakId;
+    }
+
+    public void setSeciliKaynakId(Long seciliKaynakId) {
+        this.seciliKaynakId = seciliKaynakId;
     }
 }

@@ -98,6 +98,14 @@ public class YorumBean implements Serializable {
             return null;
         }
 
+        if (yorumFacade.ayniYorumVarMi(kullanici, haber, yorumIcerik.trim())) {
+            FacesMessage mesaj = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Bu yorumu zaten eklediniz.",
+                    null);
+            FacesContext.getCurrentInstance().addMessage(null, mesaj);
+            return null;
+        }
+
         Yorum yorum = new Yorum();
         yorum.setHaber(haber);
         yorum.setKullanici(kullanici);

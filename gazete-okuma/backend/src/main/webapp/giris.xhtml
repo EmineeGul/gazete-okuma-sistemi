@@ -7,6 +7,26 @@
     <ui:define name="title">Giris | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
+
+        <style>
+            .giris-input,
+            .giris-input:focus,
+            .giris-input:-webkit-autofill,
+            .giris-input:-webkit-autofill:hover,
+            .giris-input:-webkit-autofill:focus {
+                background-color: #111220 !important;
+                color: #FFFFFF !important;
+                -webkit-text-fill-color: #FFFFFF !important;
+                border: 1px solid rgba(0, 255, 255, 0.35) !important;
+                box-shadow: 0 0 0 1000px #111220 inset !important;
+                caret-color: #FFFFFF !important;
+            }
+
+            .giris-input::placeholder {
+                color: #9AA0C3 !important;
+            }
+        </style>
+
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-8 col-lg-5">
                 <div class="card haber-karti">
@@ -16,7 +36,7 @@
                             <p class="text-secondary mb-0">Haber konsoluna erismek icin bilgilerinizi girin.</p>
                         </div>
 
-                        <h:form>
+                        <h:form pt:autocomplete="off">
                             <h:panelGroup id="mesajAlani" layout="block" styleClass="mb-4">
                                 <h:messages globalOnly="true"
                                             layout="list"
@@ -27,8 +47,9 @@
                                 <label for="eposta" class="form-label text-light">E-posta</label>
                                 <h:inputText id="eposta"
                                              value="#{girisBean.eposta}"
-                                             styleClass="form-control bg-dark text-light border-secondary"
+                                             styleClass="form-control giris-input"
                                              pt:placeholder="eposta@example.com"
+                                             pt:autocomplete="new-password"
                                              required="true" />
                             </div>
 
@@ -36,8 +57,9 @@
                                 <label for="sifre" class="form-label text-light">Sifre</label>
                                 <h:inputSecret id="sifre"
                                                value="#{girisBean.sifre}"
-                                               styleClass="form-control bg-dark text-light border-secondary"
+                                               styleClass="form-control giris-input"
                                                pt:placeholder="Sifrenizi girin"
+                                               pt:autocomplete="new-password"
                                                required="true" />
                             </div>
 
@@ -56,14 +78,18 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                <h:outputLink value="admin-giris.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
+                                <h:outputLink value="admin-giris.xhtml"
+                                              styleClass="text-decoration-none"
+                                              style="color: #00FFFF;">
                                     Yonetici Girisi
                                 </h:outputLink>
                             </div>
 
                             <div class="text-center mt-4">
                                 <span class="text-secondary">Hesabin yok mu? </span>
-                                <h:outputLink value="kayit.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
+                                <h:outputLink value="kayit.xhtml"
+                                              styleClass="text-decoration-none"
+                                              style="color: #00FFFF;">
                                     Kayit ol
                                 </h:outputLink>
                             </div>

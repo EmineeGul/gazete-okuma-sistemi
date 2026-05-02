@@ -192,4 +192,5 @@ public class HaberEkleBean implements Serializable {
     public void setKaynaklar(List<GazeteKaynagi> kaynaklar) {
         this.kaynaklar = kaynaklar;
     }
+
 }

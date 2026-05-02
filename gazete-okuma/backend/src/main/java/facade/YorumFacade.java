@@ -78,6 +78,26 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
     }
 
     @Override
+    public boolean ayniYorumVarMi(Kullanici kullanici, Haber haber, String icerik) {
+        if (kullanici == null || haber == null || icerik == null || icerik.trim().isEmpty()) {
+            return false;
+        }
+
+        Long yorumSayisi = entityManager.createQuery(
+                "SELECT COUNT(y) FROM Yorum y "
+                + "WHERE y.kullanici = :kullanici "
+                + "AND y.haber = :haber "
+                + "AND LOWER(TRIM(y.icerik)) = LOWER(:icerik)",
+                Long.class
+        ).setParameter("kullanici", kullanici)
+                .setParameter("haber", haber)
+                .setParameter("icerik", icerik.trim())
+                .getSingleResult();
+
+        return yorumSayisi != null && yorumSayisi > 0;
+    }
+
+    @Override
     public void habereAitYorumlariSil(Haber haber) {
         if (haber == null || haber.getId() == null) {
             return;

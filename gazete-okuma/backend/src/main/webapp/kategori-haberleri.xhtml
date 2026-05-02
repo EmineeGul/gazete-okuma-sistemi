@@ -4,24 +4,24 @@
                 xmlns:h="jakarta.faces.html"
                 xmlns:ui="jakarta.faces.facelets">
 
-    <ui:define name="title">Kategoriye Gore Haberler | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Haberleri Filtrele | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
         <div class="text-center mb-5">
-            <h1 class="bolum-basligi">Kategoriye Gore Haberler</h1>
-            <p class="text-secondary mt-3 mb-0">Ilgilendiginiz kategoriye gore haberleri filtreleyin.</p>
+            <h1 class="bolum-basligi">Haberleri Filtrele</h1>
+            <p class="text-secondary mt-3 mb-0">Kategori ve kaynak secerek size uygun haberleri filtreleyin.</p>
         </div>
 
         <h:form>
             <div class="card haber-karti mb-5">
                 <div class="card-body p-4">
                     <div class="row g-3 align-items-end">
-                        <div class="col-12 col-lg-7">
+                        <div class="col-12 col-lg-5">
                             <label for="kategoriSecimi" class="form-label text-light">Kategori Secimi</label>
                             <h:selectOneMenu id="kategoriSecimi"
-                                             value="#{kategoriFiltreBean.secilenKategoriId}"
+                                             value="#{kategoriFiltreBean.seciliKategoriId}"
                                              styleClass="form-select bg-dark text-light border-secondary">
-                                <f:selectItem itemLabel="Kategori seciniz" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Tum Kategoriler" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{kategoriFiltreBean.kategoriler}"
                                                var="kategori"
                                                itemValue="#{kategori.id}"
@@ -30,9 +30,22 @@
                         </div>
 
                         <div class="col-12 col-lg-5">
+                            <label for="kaynakSecimi" class="form-label text-light">Kaynak Secimi</label>
+                            <h:selectOneMenu id="kaynakSecimi"
+                                             value="#{kategoriFiltreBean.seciliKaynakId}"
+                                             styleClass="form-select bg-dark text-light border-secondary">
+                                <f:selectItem itemLabel="Tum Kaynaklar" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{kategoriFiltreBean.gazeteKaynaklari}"
+                                               var="kaynak"
+                                               itemValue="#{kaynak.id}"
+                                               itemLabel="#{kaynak.ad}" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div class="col-12 col-lg-2">
                             <div class="d-flex flex-wrap gap-2">
                                 <h:commandButton value="Filtrele"
-                                                 action="#{kategoriFiltreBean.kategoriyeGoreFiltrele}"
+                                                 action="#{kategoriFiltreBean.filtrele}"
                                                  styleClass="btn btn-haber" />
                                 <h:commandButton value="Temizle"
                                                  action="#{kategoriFiltreBean.filtreyiTemizle}"
@@ -45,8 +58,8 @@
         </h:form>
 
         <h:panelGroup rendered="#{empty kategoriFiltreBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Bu kategoriye ait haber bulunamadi.</h4>
-            <p class="mb-0">Farkli bir kategori secerek tekrar deneyebilirsiniz.</p>
+            <h4 class="mb-2">Secilen filtrelere uygun haber bulunamadi.</h4>
+            <p class="mb-0">Farkli kategori veya kaynak secerek tekrar deneyebilirsiniz.</p>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{not empty kategoriFiltreBean.haberler}" layout="block">

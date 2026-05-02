@@ -118,4 +118,5 @@ public class HaberBean implements Serializable {
     public void setSeciliHaber(Haber seciliHaber) {
         this.seciliHaber = seciliHaber;
     }
+
 }

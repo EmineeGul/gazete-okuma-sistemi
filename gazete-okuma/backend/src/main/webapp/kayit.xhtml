@@ -7,6 +7,26 @@
     <ui:define name="title">Kayit Ol | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
+
+        <style>
+            .kayit-input,
+            .kayit-input:focus,
+            .kayit-input:-webkit-autofill,
+            .kayit-input:-webkit-autofill:hover,
+            .kayit-input:-webkit-autofill:focus {
+                background-color: #111220 !important;
+                color: #FFFFFF !important;
+                -webkit-text-fill-color: #FFFFFF !important;
+                border: 1px solid rgba(0, 255, 255, 0.35) !important;
+                box-shadow: 0 0 0 1000px #111220 inset !important;
+                caret-color: #FFFFFF !important;
+            }
+
+            .kayit-input::placeholder {
+                color: #9AA0C3 !important;
+            }
+        </style>
+
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-9 col-lg-6">
                 <div class="card haber-karti">
@@ -16,7 +36,7 @@
                             <p class="text-secondary mb-0">Yeni hesap olusturup haber konsoluna katilin.</p>
                         </div>
 
-                        <h:form>
+                        <h:form pt:autocomplete="off">
                             <h:panelGroup layout="block" styleClass="mb-4">
                                 <h:messages globalOnly="true"
                                             layout="list"
@@ -31,8 +51,9 @@
                                     <label for="kullaniciAdi" class="form-label text-light">Kullanici Adi</label>
                                     <h:inputText id="kullaniciAdi"
                                                  value="#{kayitBean.kullaniciAdi}"
-                                                 styleClass="form-control bg-dark text-light border-secondary"
+                                                 styleClass="form-control kayit-input"
                                                  pt:placeholder="kullaniciadi"
+                                                 pt:autocomplete="new-password"
                                                  required="true" />
                                 </div>
 
@@ -40,8 +61,9 @@
                                     <label for="ad" class="form-label text-light">Ad</label>
                                     <h:inputText id="ad"
                                                  value="#{kayitBean.ad}"
-                                                 styleClass="form-control bg-dark text-light border-secondary"
+                                                 styleClass="form-control kayit-input"
                                                  pt:placeholder="Adiniz"
+                                                 pt:autocomplete="new-password"
                                                  required="true" />
                                 </div>
 
@@ -49,8 +71,9 @@
                                     <label for="soyad" class="form-label text-light">Soyad</label>
                                     <h:inputText id="soyad"
                                                  value="#{kayitBean.soyad}"
-                                                 styleClass="form-control bg-dark text-light border-secondary"
+                                                 styleClass="form-control kayit-input"
                                                  pt:placeholder="Soyadiniz"
+                                                 pt:autocomplete="new-password"
                                                  required="true" />
                                 </div>
 
@@ -58,8 +81,9 @@
                                     <label for="eposta" class="form-label text-light">E-posta</label>
                                     <h:inputText id="eposta"
                                                  value="#{kayitBean.eposta}"
-                                                 styleClass="form-control bg-dark text-light border-secondary"
+                                                 styleClass="form-control kayit-input"
                                                  pt:placeholder="eposta@example.com"
+                                                 pt:autocomplete="new-password"
                                                  required="true" />
                                 </div>
 
@@ -67,8 +91,9 @@
                                     <label for="sifre" class="form-label text-light">Sifre</label>
                                     <h:inputSecret id="sifre"
                                                    value="#{kayitBean.sifre}"
-                                                   styleClass="form-control bg-dark text-light border-secondary"
+                                                   styleClass="form-control kayit-input"
                                                    pt:placeholder="Sifrenizi girin"
+                                                   pt:autocomplete="new-password"
                                                    required="true" />
                                 </div>
 
@@ -76,14 +101,17 @@
                                     <label for="sifreTekrar" class="form-label text-light">Sifre Tekrar</label>
                                     <h:inputSecret id="sifreTekrar"
                                                    value="#{kayitBean.sifreTekrar}"
-                                                   styleClass="form-control bg-dark text-light border-secondary"
+                                                   styleClass="form-control kayit-input"
                                                    pt:placeholder="Sifreyi tekrar girin"
+                                                   pt:autocomplete="new-password"
                                                    required="true" />
                                 </div>
                             </div>
 
                             <div class="mt-3">
-                                <small class="text-secondary">Sifre en az 8 karakter olmali; buyuk harf, kucuk harf ve ozel karakter icermelidir.</small>
+                                <small class="text-secondary">
+                                    Sifre en az 8 karakter olmali; buyuk harf, kucuk harf ve ozel karakter icermelidir.
+                                </small>
                             </div>
 
                             <div class="d-grid mt-4">
@@ -93,7 +121,9 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                <h:outputLink value="admin-giris.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
+                                <h:outputLink value="admin-giris.xhtml"
+                                              styleClass="text-decoration-none"
+                                              style="color: #00FFFF;">
                                     Yonetici Girisi
                                 </h:outputLink>
                             </div>

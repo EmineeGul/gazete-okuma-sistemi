@@ -23,6 +23,8 @@ public interface YorumFacadeLocal {
 
     List<Yorum> kullaniciyaGoreYorumlariGetir(Kullanici kullanici);
 
+    boolean ayniYorumVarMi(Kullanici kullanici, Haber haber, String icerik);
+
     void habereAitYorumlariSil(Haber haber);
 
     long kullaniciYorumSayisi(Kullanici kullanici);
