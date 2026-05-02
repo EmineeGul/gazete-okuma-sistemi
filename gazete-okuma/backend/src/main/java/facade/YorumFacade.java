@@ -22,6 +22,14 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
     }
 
     @Override
+    public Yorum guncelle(Yorum yorum) {
+        Yorum guncellenen = entityManager.merge(yorum);
+        entityManager.flush();
+        entityManager.clear();
+        return guncellenen;
+    }
+
+    @Override
     public void sil(Yorum yorum) {
         Yorum silinecek = entityManager.merge(yorum);
         entityManager.remove(silinecek);
@@ -54,6 +62,19 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
                 "SELECT y FROM Yorum y WHERE y.haber = :haber ORDER BY y.yorumTarihi DESC",
                 Yorum.class
         ).setParameter("haber", haber).getResultList();
+    }
+
+    @Override
+    public List<Yorum> kullaniciyaGoreYorumlariGetir(Kullanici kullanici) {
+        if (kullanici == null) {
+            return Collections.emptyList();
+        }
+
+        entityManager.clear();
+        return entityManager.createQuery(
+                "SELECT y FROM Yorum y WHERE y.kullanici = :kullanici ORDER BY y.yorumTarihi DESC",
+                Yorum.class
+        ).setParameter("kullanici", kullanici).getResultList();
     }
 
     @Override

@@ -1,0 +1,492 @@
+<ui:composition template="/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:pt="jakarta.faces.passthrough"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <ui:define name="title">Profilim | HABER_KONSOLU</ui:define>
+
+    <ui:define name="icerik">
+
+        <style>
+            .profil-sayfa-karti {
+                background: #16172D;
+                border: 1px solid rgba(0, 255, 255, 0.18);
+                border-radius: 1.2rem;
+                padding: 32px;
+                box-shadow: 0 0 24px rgba(0, 255, 255, 0.05);
+            }
+
+            .profil-ust-baslik {
+                color: #FFFFFF;
+                font-size: 34px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .profil-aciklama {
+                color: #9AA0C3;
+                font-size: 16px;
+            }
+
+            .profil-bilgi-karti,
+            .profil-liste-karti,
+            .profil-form-karti {
+                background: linear-gradient(180deg, #16172D, #111220);
+                border: 1px solid rgba(0, 255, 255, 0.18);
+                border-radius: 1rem;
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+            }
+
+            .profil-bilgi-karti,
+            .profil-form-karti {
+                padding: 28px;
+            }
+
+            .profil-liste-karti {
+                padding: 24px;
+                height: 100%;
+            }
+
+            .profil-bilgi-baslik,
+            .profil-bolum-baslik {
+                color: #FFFFFF;
+                font-size: 26px;
+                font-weight: 700;
+                margin-bottom: 18px;
+            }
+
+            .profil-etiket {
+                color: #00FFFF;
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 0.08rem;
+                text-transform: uppercase;
+                margin-bottom: 6px;
+            }
+
+            .profil-deger {
+                color: #E2E0F5;
+                font-size: 16px;
+                word-break: break-word;
+            }
+
+            .profil-ozet-kutu {
+                background: rgba(13, 14, 28, 0.72);
+                border: 1px solid rgba(255, 0, 255, 0.16);
+                border-radius: 0.9rem;
+                padding: 16px 18px;
+                height: 100%;
+            }
+
+            .profil-liste-ogesi {
+                background: #111220;
+                border: 1px solid rgba(0, 255, 255, 0.12);
+                border-radius: 1rem;
+                padding: 20px;
+            }
+
+            .profil-liste-ogesi + .profil-liste-ogesi {
+                margin-top: 16px;
+            }
+
+            .profil-liste-baslik {
+                color: #FFFFFF;
+                font-size: 21px;
+                font-weight: 700;
+                line-height: 1.4;
+                margin-bottom: 12px;
+            }
+
+            .profil-liste-metin {
+                color: #E2E0F5;
+                font-size: 15px;
+                line-height: 1.7;
+                margin-bottom: 12px;
+            }
+
+            .profil-meta {
+                color: #9AA0C3;
+                font-size: 15px;
+                line-height: 1.8;
+                margin-bottom: 14px;
+            }
+
+            .profil-meta strong {
+                color: #00FFFF;
+            }
+
+            .profil-bos {
+                color: #9AA0C3;
+                border: 1px dashed rgba(0, 255, 255, 0.22);
+                border-radius: 1rem;
+                padding: 24px;
+                text-align: center;
+                background: rgba(17, 18, 32, 0.62);
+            }
+
+            .profil-yardim {
+                color: #9AA0C3;
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .profil-mesajlar .alert {
+                margin-bottom: 0;
+            }
+
+            .profil-mesajlar {
+                background: rgba(0, 255, 255, 0.06) !important;
+                border: 1px solid rgba(0, 255, 255, 0.32) !important;
+                color: #E2E0F5 !important;
+                border-radius: 0.9rem !important;
+                padding: 14px 18px !important;
+                margin-bottom: 24px !important;
+                box-shadow: 0 0 18px rgba(0, 255, 255, 0.06) !important;
+                list-style-position: inside !important;
+            }
+
+            .profil-mesajlar li {
+                color: #E2E0F5 !important;
+                font-weight: 600;
+                font-size: 15px;
+            }
+
+            .profil-mesajlar li::marker {
+                color: #00FFFF;
+            }
+
+            input.form-kontrolu,
+            input.form-kontrolu:focus,
+            input.form-kontrolu:-webkit-autofill,
+            input.form-kontrolu:-webkit-autofill:hover,
+            input.form-kontrolu:-webkit-autofill:focus {
+                background-color: #111220 !important;
+                color: #FFFFFF !important;
+                -webkit-text-fill-color: #FFFFFF !important;
+                border: 1px solid rgba(0, 255, 255, 0.35) !important;
+                box-shadow: 0 0 0 1000px #111220 inset !important;
+                caret-color: #FFFFFF !important;
+            }
+
+            input.form-kontrolu::placeholder {
+                color: #9AA0C3 !important;
+            }
+
+            .yorum-aksiyonlari {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 14px;
+            }
+
+            .yorum-duzenleme-alani {
+                width: 100%;
+                background: #111220;
+                color: #FFFFFF;
+                border: 1px solid rgba(0, 255, 255, 0.28);
+                border-radius: 0.8rem;
+                min-height: 110px;
+                resize: vertical;
+                padding: 14px 16px;
+            }
+
+            .yorum-duzenleme-alani:focus {
+                background: #111220;
+                color: #FFFFFF;
+                border-color: #00FFFF;
+                box-shadow: 0 0 0 0.15rem rgba(0, 255, 255, 0.14);
+                outline: none;
+            }
+
+            .btn-haber-outline {
+                background: transparent;
+                color: #00FFFF;
+                border: 1px solid rgba(0, 255, 255, 0.45);
+                border-radius: 0.75rem;
+                padding: 10px 20px;
+                font-weight: 700;
+                text-decoration: none;
+            }
+
+            .btn-haber-outline:hover {
+                background: rgba(0, 255, 255, 0.1);
+                color: #FFFFFF;
+                box-shadow: 0 0 16px rgba(0, 255, 255, 0.14);
+            }
+
+            .btn-haber-tehlike {
+                color: #FF00FF;
+                border: 1px solid rgba(255, 0, 255, 0.55);
+                background: transparent;
+                border-radius: 0.75rem;
+                padding: 10px 20px;
+                font-weight: 700;
+            }
+
+            .btn-haber-tehlike:hover {
+                color: #FFFFFF;
+                background: rgba(255, 0, 255, 0.18);
+            }
+        </style>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-11">
+                <div class="profil-sayfa-karti">
+                    <div class="mb-4">
+                        <h1 class="profil-ust-baslik">Profilim</h1>
+                        <p class="profil-aciklama mb-0">
+                            Hesap bilgilerinizi, favori haberlerinizi ve yaptiginiz yorumlari bu ekrandan takip edebilirsiniz.
+                        </p>
+                    </div>
+
+                    <h:messages globalOnly="true"
+                                layout="list"
+                                styleClass="profil-mesajlar" />
+
+                    <div class="profil-bilgi-karti mb-4">
+                        <h2 class="profil-bilgi-baslik">Kullanici Bilgileri</h2>
+
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="profil-ozet-kutu">
+                                    <div class="profil-etiket">Kullanici Adi</div>
+                                    <div class="profil-deger">#{profilBean.kullanici.kullaniciAdi}</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="profil-ozet-kutu">
+                                    <div class="profil-etiket">Ad</div>
+                                    <div class="profil-deger">#{profilBean.kullanici.ad}</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="profil-ozet-kutu">
+                                    <div class="profil-etiket">Soyad</div>
+                                    <div class="profil-deger">#{profilBean.kullanici.soyad}</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="profil-ozet-kutu">
+                                    <div class="profil-etiket">E-Posta</div>
+                                    <div class="profil-deger">#{profilBean.kullanici.eposta}</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="profil-ozet-kutu">
+                                    <div class="profil-etiket">Kayit Tarihi</div>
+                                    <div class="profil-deger">#{profilBean.kullanici.kayitTarihi}</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <div class="profil-ozet-kutu">
+                                    <div class="profil-etiket">Rol</div>
+                                    <div class="profil-deger">#{profilBean.kullanici.role}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-12 col-xl-6">
+                            <div class="profil-form-karti h-100">
+                                <h2 class="profil-bolum-baslik">Bilgilerimi Guncelle</h2>
+
+                                <h:form>
+                                    <div class="mb-3">
+                                        <label for="kullaniciAdi" class="form-etiketi">Kullanici Adi</label>
+                                        <h:inputText id="kullaniciAdi"
+                                                     value="#{profilBean.kullaniciAdi}"
+                                                     styleClass="form-control form-kontrolu"
+                                                     pt:placeholder="Kullanici adinizi girin"
+                                                     required="true"
+                                                     requiredMessage="Kullanici adi bos birakilamaz." />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="ad" class="form-etiketi">Ad</label>
+                                        <h:inputText id="ad"
+                                                     value="#{profilBean.ad}"
+                                                     styleClass="form-control form-kontrolu"
+                                                     pt:placeholder="Adinizi girin"
+                                                     required="true"
+                                                     requiredMessage="Ad alani bos birakilamaz." />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="soyad" class="form-etiketi">Soyad</label>
+                                        <h:inputText id="soyad"
+                                                     value="#{profilBean.soyad}"
+                                                     styleClass="form-control form-kontrolu"
+                                                     pt:placeholder="Soyadinizi girin"
+                                                     required="true"
+                                                     requiredMessage="Soyad alani bos birakilamaz." />
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <h:commandButton value="Bilgilerimi Guncelle"
+                                                         action="#{profilBean.bilgileriGuncelle}"
+                                                         styleClass="btn btn-haber" />
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xl-6">
+                            <div class="profil-form-karti h-100">
+                                <h2 class="profil-bolum-baslik">Sifre Degistir</h2>
+
+                                <h:form>
+                                    <div class="mb-3">
+                                        <label for="mevcutSifre" class="form-etiketi">Mevcut Sifre</label>
+                                        <h:inputSecret id="mevcutSifre"
+                                                       value="#{profilBean.mevcutSifre}"
+                                                       styleClass="form-control form-kontrolu"
+                                                       pt:autocomplete="new-password"
+                                                       pt:placeholder="Mevcut sifrenizi girin"
+                                                       required="true"
+                                                       requiredMessage="Mevcut sifre bos birakilamaz." />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="yeniSifre" class="form-etiketi">Yeni Sifre</label>
+                                        <h:inputSecret id="yeniSifre"
+                                                       value="#{profilBean.yeniSifre}"
+                                                       styleClass="form-control form-kontrolu"
+                                                       pt:placeholder="Yeni sifrenizi girin"
+                                                       required="true"
+                                                       requiredMessage="Yeni sifre bos birakilamaz." />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="yeniSifreTekrar" class="form-etiketi">Yeni Sifre Tekrar</label>
+                                        <h:inputSecret id="yeniSifreTekrar"
+                                                       value="#{profilBean.yeniSifreTekrar}"
+                                                       styleClass="form-control form-kontrolu"
+                                                       pt:placeholder="Yeni sifrenizi tekrar girin"
+                                                       required="true"
+                                                       requiredMessage="Yeni sifre tekrar alani bos birakilamaz." />
+                                    </div>
+
+                                    <p class="profil-yardim mb-4">
+                                        Yeni sifre en az 8 karakter olmali; buyuk harf, kucuk harf ve ozel karakter icermelidir.
+                                    </p>
+
+                                    <div class="d-grid">
+                                        <h:commandButton value="Sifremi Degistir"
+                                                         action="#{profilBean.sifreDegistir}"
+                                                         styleClass="btn btn-haber" />
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-12 col-xl-6">
+                            <div class="profil-liste-karti">
+                                <h2 class="profil-bolum-baslik">Favori Haberlerim</h2>
+
+                                <h:panelGroup rendered="#{empty profilBean.favoriHaberler}" layout="block">
+                                    <div class="profil-bos">Henuz favori haberiniz yok.</div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{not empty profilBean.favoriHaberler}" layout="block">
+                                    <ui:repeat value="#{profilBean.favoriHaberler}" var="favori">
+                                        <div class="profil-liste-ogesi">
+                                            <h3 class="profil-liste-baslik">#{favori.haber.baslik}</h3>
+
+                                            <div class="profil-meta">
+                                                <div><strong>Kategori:</strong> #{favori.haber.kategori.kategoriAdi}</div>
+                                                <div><strong>Gazete Kaynagi:</strong> #{favori.haber.haberKaynagi.ad}</div>
+                                            </div>
+
+                                            <p class="profil-liste-metin">#{favori.haber.ozet}</p>
+
+                                            <h:link outcome="/haber-detay.xhtml"
+                                                    styleClass="btn btn-haber">
+                                                <f:param name="haberId" value="#{favori.haber.id}" />
+                                                Haber Detayina Git
+                                            </h:link>
+                                        </div>
+                                    </ui:repeat>
+                                </h:panelGroup>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xl-6">
+                            <div class="profil-liste-karti">
+                                <h2 class="profil-bolum-baslik">Yorumlarim</h2>
+
+                                <h:panelGroup rendered="#{empty profilBean.yorumlar}" layout="block">
+                                    <div class="profil-bos">Henuz yorum yapmadiniz.</div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{not empty profilBean.yorumlar}" layout="block">
+                                    <ui:repeat value="#{profilBean.yorumlar}" var="yorum">
+                                        <div class="profil-liste-ogesi">
+                                            <h3 class="profil-liste-baslik">#{yorum.haber.baslik}</h3>
+
+                                            <div class="profil-meta">
+                                                <div><strong>Yorum Tarihi:</strong> #{yorum.yorumTarihi}</div>
+                                            </div>
+
+                                            <h:panelGroup rendered="#{profilBean.duzenlenenYorumId ne yorum.id}" layout="block">
+                                                <p class="profil-liste-metin">#{yorum.icerik}</p>
+
+                                                <div class="yorum-aksiyonlari">
+                                                    <h:link outcome="/haber-detay.xhtml"
+                                                            styleClass="btn btn-haber">
+                                                        <f:param name="haberId" value="#{yorum.haber.id}" />
+                                                        Haber Detayina Git
+                                                    </h:link>
+
+                                                    <h:form styleClass="d-inline-block">
+                                                        <h:commandButton value="Yorumu Duzenle"
+                                                                         action="#{profilBean.yorumuDuzenlemeyeBasla(yorum)}"
+                                                                         styleClass="btn btn-haber-outline" />
+                                                    </h:form>
+
+                                                    <h:form styleClass="d-inline-block">
+                                                        <h:commandButton value="Yorumu Sil"
+                                                                         action="#{profilBean.yorumuSil(yorum)}"
+                                                                         styleClass="btn btn-haber-tehlike"
+                                                                         onclick="return confirm('Bu yorumu silmek istediginize emin misiniz?');" />
+                                                    </h:form>
+                                                </div>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{profilBean.duzenlenenYorumId eq yorum.id}" layout="block">
+                                                <h:form>
+                                                    <div class="mb-3">
+                                                        <h:inputTextarea value="#{profilBean.duzenlenenYorumIcerik}"
+                                                                         styleClass="yorum-duzenleme-alani"
+                                                                         maxlength="300"
+                                                                         required="true"
+                                                                         requiredMessage="Yorum bos olamaz." />
+                                                    </div>
+
+                                                    <div class="yorum-aksiyonlari">
+                                                        <h:commandButton value="Kaydet"
+                                                                         action="#{profilBean.yorumuGuncelle}"
+                                                                         styleClass="btn btn-haber" />
+
+                                                        <h:commandButton value="Vazgec"
+                                                                         action="#{profilBean.yorumDuzenlemeIptal}"
+                                                                         immediate="true"
+                                                                         styleClass="btn btn-haber-outline" />
+                                                    </div>
+                                                </h:form>
+                                            </h:panelGroup>
+                                        </div>
+                                    </ui:repeat>
+                                </h:panelGroup>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

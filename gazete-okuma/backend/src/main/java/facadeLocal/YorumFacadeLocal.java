@@ -11,6 +11,8 @@ public interface YorumFacadeLocal {
 
     void ekle(Yorum yorum);
 
+    Yorum guncelle(Yorum yorum);
+
     void sil(Yorum yorum);
 
     Yorum bul(Long id);
@@ -18,6 +20,8 @@ public interface YorumFacadeLocal {
     List<Yorum> tumYorumlariGetir();
 
     List<Yorum> habereGoreYorumlariGetir(Haber haber);
+
+    List<Yorum> kullaniciyaGoreYorumlariGetir(Kullanici kullanici);
 
     void habereAitYorumlariSil(Haber haber);
 

@@ -61,6 +61,11 @@
                             <h:panelGroup rendered="#{girisBean.girisYapilmisMi()}">
                                 <div class="dropdown-header hesap-ozet">#{girisBean.hesapGosterim}</div>
                                 <div><hr class="dropdown-divider" /></div>
+                                <h:outputLink value="#{request.contextPath}/panel/profil.xhtml"
+                                              rendered="#{not girisBean.adminMi()}"
+                                              styleClass="dropdown-item">
+                                    Profilim
+                                </h:outputLink>
                                 <h:form styleClass="dropdown-form">
                                     <h:commandLink action="#{girisBean.cikisYap}" styleClass="dropdown-item">
                                         Cikis Yap
