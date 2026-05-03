@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -11,15 +12,15 @@
         <f:viewAction action="#{haberGuncelleBean.haberiYukle}" />
     </f:metadata>
 
-    <ui:define name="title">Haber Duzenle | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Haber Düzenle | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
         <div class="sayfa-sarmalayici">
             <div class="w-100">
                 <div class="haber-karti p-4 p-md-5">
                     <div class="text-center mb-4">
-                        <h1 class="bolum-basligi haber-baslik mb-3">Haber Duzenle</h1>
-                        <p class="alt-bilgi mb-0">Secilen haberin bilgilerini guncelleyip degisiklikleri kaydedebilirsiniz.</p>
+                        <h1 class="bolum-basligi haber-baslik mb-3">Haber Düzenle</h1>
+                        <p class="alt-bilgi mb-0">Seçilen haberin bilgilerini güncelleyip değişiklikleri kaydedebilirsiniz.</p>
                     </div>
 
                     <h:messages globalOnly="true"
@@ -32,35 +33,35 @@
                     <h:form rendered="#{not empty haberGuncelleBean.haber}">
                         <div class="row g-4">
                             <div class="col-12">
-                                <label for="baslik" class="form-etiketi">Haber Basligi</label>
+                                <label for="baslik" class="form-etiketi">Haber Başlığı</label>
                                 <h:inputText id="baslik"
                                              value="#{haberGuncelleBean.haber.baslik}"
                                              styleClass="form-control form-kontrolu"
                                              required="true"
-                                             requiredMessage="Haber basligi zorunludur."
-                                             pt:placeholder="Haber basligini girin" />
+                                             requiredMessage="Haber başlığı zorunludur."
+                                             pt:placeholder="Haber başlığını girin" />
                             </div>
 
                             <div class="col-12">
-                                <label for="ozet" class="form-etiketi">Ozet</label>
+                                <label for="ozet" class="form-etiketi">Özet</label>
                                 <h:inputTextarea id="ozet"
                                                  value="#{haberGuncelleBean.haber.ozet}"
                                                  styleClass="form-control form-kontrolu"
                                                  rows="3"
-                                                 pt:placeholder="Haber ozetini girin" />
+                                                 pt:placeholder="Haber özetini girin" />
                             </div>
 
                             <div class="col-12">
-                                <label for="icerik" class="form-etiketi">Icerik</label>
+                                <label for="icerik" class="form-etiketi">İçerik</label>
                                 <h:inputTextarea id="icerik"
                                                  value="#{haberGuncelleBean.haber.icerik}"
                                                  styleClass="form-control form-kontrolu"
                                                  rows="7"
-                                                 pt:placeholder="Haber icerigini girin" />
+                                                 pt:placeholder="Haber içeriğini girin" />
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="gorselUrl" class="form-etiketi">Gorsel URL</label>
+                                <label for="gorselUrl" class="form-etiketi">Görsel URL</label>
                                 <h:inputText id="gorselUrl"
                                              value="#{haberGuncelleBean.haber.gorselUrl}"
                                              styleClass="form-control form-kontrolu"
@@ -76,17 +77,17 @@
                             </div>
 
                             <div class="col-12">
-                                <label for="yayinTarihi" class="form-etiketi">Yayin Tarihi</label>
+                                <label for="yayinTarihi" class="form-etiketi">Yayın Tarihi</label>
                                 <h:inputText id="yayinTarihi"
                                              value="#{haberGuncelleBean.yayinTarihiText}"
                                              styleClass="form-control form-kontrolu"
                                              pt:type="datetime-local"
-                                             pt:placeholder="Yayin tarihi" />
+                                             pt:placeholder="Yayın tarihi" />
                             </div>
 
                             <div class="col-12 d-flex flex-column flex-md-row gap-3 justify-content-between align-items-stretch align-items-md-center pt-2">
-                                <h:link outcome="/panel/admin-haber-liste.xhtml" styleClass="btn btn-outline-info geri-buton">Listeye Don</h:link>
-                                <h:commandButton value="Guncelle"
+                                <h:link outcome="/panel/admin-haber-liste.xhtml" styleClass="btn btn-outline-info geri-buton">Listeye Dön</h:link>
+                                <h:commandButton value="Güncelle"
                                                  action="#{haberGuncelleBean.haberGuncelle}"
                                                  styleClass="btn duzenle-buton" />
                             </div>
@@ -95,7 +96,7 @@
 
                     <h:panelGroup rendered="#{empty haberGuncelleBean.haber}" layout="block">
                         <div class="alert alert-danger mb-0 text-center">
-                            Guncellenecek haber bilgisi yuklenemedi.
+                            Güncellenecek haber bilgisi yüklenemedi.
                         </div>
                     </h:panelGroup>
                 </div>

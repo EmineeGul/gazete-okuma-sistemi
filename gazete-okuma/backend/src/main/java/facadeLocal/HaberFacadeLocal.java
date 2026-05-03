@@ -32,4 +32,8 @@ public interface HaberFacadeLocal {
     List<Haber> enSonHaberleriGetir(int limit);
 
     List<Haber> tumHaberleriGetir();
+
+    List<Haber> haberleriSayfaliGetir(int ilkKayit, int sayfaBoyutu);
+
+    Long toplamHaberSayisi();
 }

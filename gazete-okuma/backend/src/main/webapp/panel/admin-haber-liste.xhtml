@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -17,8 +18,8 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>
-                                <h1 class="h3 mb-1 haber-baslik">Haber Yonetimi</h1>
-                                <p class="text-secondary mb-0">Sistemde kayitli haberleri goruntuleyin.</p>
+                                <h1 class="h3 mb-1 haber-baslik">Haber Yönetimi</h1>
+                                <p class="text-secondary mb-0">Sistemde kayıtlı haberleri görüntüleyin.</p>
                             </div>
                             <div class="d-flex justify-content-end mb-3">
                                 <h:link outcome="/panel/admin-haber-ekle.xhtml"
@@ -31,7 +32,7 @@
 
                         <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block">
                             <div class="alert alert-secondary mb-0">
-                                Henuz haber bulunmamaktadir.
+                                Henüz haber bulunmamaktadır.
                             </div>
                         </h:panelGroup>
 
@@ -41,13 +42,13 @@
                                     <table class="table tablo-haber table-hover align-middle mb-0">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Baslik</th>
-                                                <th scope="col">Ozet</th>
+                                                <th scope="col">Başlık</th>
+                                                <th scope="col">Özet</th>
                                                 <th scope="col">Kategori</th>
                                                 <th scope="col">Kaynak</th>
-                                                <th scope="col">Yayin Tarihi</th>
+                                                <th scope="col">Yayın Tarihi</th>
                                                 <th scope="col">Haber Linki</th>
-                                                <th scope="col" class="text-center">Islemler</th>
+                                                <th scope="col" class="text-center">İşlemler</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -63,7 +64,7 @@
                                                                       rendered="#{not empty haber.haberLinki}"
                                                                       styleClass="btn btn-outline-info btn-sm"
                                                                       target="_blank">
-                                                            Linki Ac
+                                                            Linki Aç
                                                         </h:outputLink>
                                                         <h:panelGroup rendered="#{empty haber.haberLinki}">
                                                             <span class="text-muted">Yok</span>
@@ -74,12 +75,12 @@
                                                             <h:link outcome="/panel/admin-haber-duzenle.xhtml"
                                                                     styleClass="btn btn-outline-light btn-sm">
                                                                 <f:param name="haberId" value="#{haber.id}" />
-                                                                Duzenle
+                                                                Düzenle
                                                             </h:link>
                                                             <h:commandButton value="Sil"
                                                                              action="#{haberBean.haberSil(haber)}"
                                                                              styleClass="btn btn-danger btn-sm"
-                                                                             onclick="return confirm('Bu haberi silmek istediginize emin misiniz?');" />
+                                                                             onclick="return confirm('Bu haberi silmek istediğinize emin misiniz?');" />
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="jakarta.faces.html"
                 xmlns:pt="jakarta.faces.passthrough"
                 xmlns:ui="jakarta.faces.facelets">
 
-    <ui:define name="title">Sifremi Unuttum | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Şifremi Unuttum | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
         <div class="row justify-content-center align-items-center">
@@ -12,9 +13,9 @@
                 <div class="card haber-karti">
                     <div class="card-body p-4 p-md-5">
                         <div class="text-center mb-4">
-                            <h1 class="bolum-basligi h2 mb-3">Sifremi Unuttum</h1>
-                            <p class="text-secondary mb-2">Bu ozellik demo amacli hazirlanmistir.</p>
-                            <p class="text-secondary mb-0">Kayitli e-posta adresinizi dogrulayip yeni sifrenizi belirleyebilirsiniz.</p>
+                            <h1 class="bolum-basligi h2 mb-3">Şifremi Unuttum</h1>
+                            <p class="text-secondary mb-2">Bu özellik demo amaçlı hazırlanmıştır.</p>
+                            <p class="text-secondary mb-0">Kayıtlı e-posta adresinizi doğrulayıp yeni şifrenizi belirleyebilirsiniz.</p>
                         </div>
 
                         <h:form rendered="#{not sifremiUnuttumBean.epostaDogrulandi}">
@@ -31,11 +32,11 @@
                                              styleClass="form-control form-kontrolu"
                                              pt:placeholder="eposta@example.com"
                                              required="true"
-                                             requiredMessage="E-posta alani bos birakilamaz." />
+                                             requiredMessage="E-posta alanı boş bırakılamaz." />
                             </div>
 
                             <div class="d-grid">
-                                <h:commandButton value="E-postayi Dogrula"
+                                <h:commandButton value="E-postayı Doğrula"
                                                  action="#{sifremiUnuttumBean.epostaDogrula}"
                                                  styleClass="btn btn-haber" />
                             </div>
@@ -49,31 +50,31 @@
                             </h:panelGroup>
 
                             <div class="mb-3">
-                                <label for="yeniSifre" class="form-label text-light">Yeni Sifre</label>
+                                <label for="yeniSifre" class="form-label text-light">Yeni Şifre</label>
                                 <h:inputSecret id="yeniSifre"
                                                value="#{sifremiUnuttumBean.yeniSifre}"
                                                styleClass="form-control form-kontrolu"
-                                               pt:placeholder="Yeni sifrenizi girin"
+                                               pt:placeholder="Yeni şifrenizi girin"
                                                required="true"
-                                               requiredMessage="Yeni sifre bos birakilamaz." />
+                                               requiredMessage="Yeni şifre boş bırakılamaz." />
                             </div>
 
                             <div class="mb-3">
-                                <label for="yeniSifreTekrar" class="form-label text-light">Yeni Sifre Tekrar</label>
+                                <label for="yeniSifreTekrar" class="form-label text-light">Yeni Şifre Tekrar</label>
                                 <h:inputSecret id="yeniSifreTekrar"
                                                value="#{sifremiUnuttumBean.yeniSifreTekrar}"
                                                styleClass="form-control form-kontrolu"
-                                               pt:placeholder="Yeni sifrenizi tekrar girin"
+                                               pt:placeholder="Yeni şifrenizi tekrar girin"
                                                required="true"
-                                               requiredMessage="Yeni sifre tekrar alani bos birakilamaz." />
+                                               requiredMessage="Yeni şifre tekrar alanı boş bırakılamaz." />
                             </div>
 
                             <p class="text-secondary small mb-4">
-                                Yeni sifre en az 8 karakter olmali; buyuk harf, kucuk harf ve ozel karakter icermelidir.
+                                Yeni şifre en az 8 karakter olmalı; büyük harf, küçük harf ve özel karakter içermelidir.
                             </p>
 
                             <div class="d-grid">
-                                <h:commandButton value="Sifreyi Yenile"
+                                <h:commandButton value="Şifreyi Yenile"
                                                  action="#{sifremiUnuttumBean.sifreyiYenile}"
                                                  styleClass="btn btn-haber" />
                             </div>
@@ -81,7 +82,7 @@
 
                         <div class="text-center mt-4">
                             <h:outputLink value="giris.xhtml" styleClass="text-decoration-none" style="color: #00FFFF;">
-                                Giris sayfasina don
+                                Giriş sayfasına dön
                             </h:outputLink>
                         </div>
                     </div>

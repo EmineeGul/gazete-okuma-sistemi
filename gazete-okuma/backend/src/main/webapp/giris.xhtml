@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="jakarta.faces.html"
                 xmlns:pt="jakarta.faces.passthrough"
                 xmlns:ui="jakarta.faces.facelets">
 
-    <ui:define name="title">Giris | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Giriş Yap | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
 
@@ -32,8 +33,8 @@
                 <div class="card haber-karti">
                     <div class="card-body p-4 p-md-5">
                         <div class="text-center mb-4">
-                            <h1 class="bolum-basligi h2 mb-3">Giris Yap</h1>
-                            <p class="text-secondary mb-0">Haber konsoluna erismek icin bilgilerinizi girin.</p>
+                            <h1 class="bolum-basligi h2 mb-3">Giriş Yap</h1>
+                            <p class="text-secondary mb-0">Haber konsoluna erişmek için bilgilerinizi girin.</p>
                         </div>
 
                         <h:form pt:autocomplete="off">
@@ -54,17 +55,17 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="sifre" class="form-label text-light">Sifre</label>
+                                <label for="sifre" class="form-label text-light">Şifre</label>
                                 <h:inputSecret id="sifre"
                                                value="#{girisBean.sifre}"
                                                styleClass="form-control giris-input"
-                                               pt:placeholder="Sifrenizi girin"
+                                               pt:placeholder="Şifrenizi girin"
                                                pt:autocomplete="new-password"
                                                required="true" />
                             </div>
 
                             <div class="d-grid">
-                                <h:commandButton value="Giris Yap"
+                                <h:commandButton value="Giriş Yap"
                                                  action="#{girisBean.girisYap}"
                                                  styleClass="btn btn-haber" />
                             </div>
@@ -73,7 +74,7 @@
                                 <h:outputLink value="sifremi-unuttum.xhtml"
                                               styleClass="text-decoration-none"
                                               style="color: #00FFFF;">
-                                    Sifremi unuttum
+                                    Şifremi unuttum
                                 </h:outputLink>
                             </div>
 
@@ -81,16 +82,16 @@
                                 <h:outputLink value="admin-giris.xhtml"
                                               styleClass="text-decoration-none"
                                               style="color: #00FFFF;">
-                                    Yonetici Girisi
+                                    Yönetici Girişi
                                 </h:outputLink>
                             </div>
 
                             <div class="text-center mt-4">
-                                <span class="text-secondary">Hesabin yok mu? </span>
+                                <span class="text-secondary">Hesabın yok mu? </span>
                                 <h:outputLink value="kayit.xhtml"
                                               styleClass="text-decoration-none"
                                               style="color: #00FFFF;">
-                                    Kayit ol
+                                    Kayıt ol
                                 </h:outputLink>
                             </div>
                         </h:form>

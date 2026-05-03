@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -18,7 +19,7 @@
                     <div class="card-body p-4 p-md-5">
                         <div class="mb-4">
                             <h1 class="h3 mb-2 haber-baslik">Yeni Haber Ekle</h1>
-                            <p class="text-secondary mb-0">Yeni haber kaydi icin asagidaki formu doldurun.</p>
+                            <p class="text-secondary mb-0">Yeni haber kaydı için aşağıdaki formu doldurun.</p>
                         </div>
 
                         <h:form>
@@ -34,39 +35,39 @@
 
                             <div class="row g-4">
                                 <div class="col-12">
-                                    <label for="baslik" class="form-label text-light">Haber Basligi</label>
+                                    <label for="baslik" class="form-label text-light">Haber Başlığı</label>
                                     <h:inputText id="baslik"
                                                  value="#{haberEkleBean.haber.baslik}"
                                                  styleClass="form-control bg-dark text-light border-secondary"
                                                  required="true"
-                                                 requiredMessage="Haber basligi zorunludur."
-                                                 pt:placeholder="Haber basligini girin" />
+                                                 requiredMessage="Haber başlığı zorunludur."
+                                                 pt:placeholder="Haber başlığını girin" />
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="ozet" class="form-label text-light">Ozet</label>
+                                    <label for="ozet" class="form-label text-light">Özet</label>
                                     <h:inputTextarea id="ozet"
                                                      value="#{haberEkleBean.haber.ozet}"
                                                      styleClass="form-control bg-dark text-light border-secondary"
                                                      rows="3"
                                                      required="true"
-                                                     requiredMessage="Ozet zorunludur."
-                                                     pt:placeholder="Kisa haber ozeti" />
+                                                     requiredMessage="Özet zorunludur."
+                                                     pt:placeholder="Kısa haber özeti" />
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="icerik" class="form-label text-light">Icerik</label>
+                                    <label for="icerik" class="form-label text-light">İçerik</label>
                                     <h:inputTextarea id="icerik"
                                                      value="#{haberEkleBean.haber.icerik}"
                                                      styleClass="form-control bg-dark text-light border-secondary"
                                                      rows="6"
                                                      required="true"
-                                                     requiredMessage="Icerik zorunludur."
-                                                     pt:placeholder="Haber icerigini girin" />
+                                                     requiredMessage="İçerik zorunludur."
+                                                     pt:placeholder="Haber içeriğini girin" />
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    <label for="gorselUrl" class="form-label text-light">Gorsel URL</label>
+                                    <label for="gorselUrl" class="form-label text-light">Görsel URL</label>
                                     <h:inputText id="gorselUrl"
                                                  value="#{haberEkleBean.haber.gorselUrl}"
                                                  styleClass="form-control bg-dark text-light border-secondary"
@@ -82,13 +83,13 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="yayinTarihi" class="form-label text-light">Yayin Tarihi</label>
+                                    <label for="yayinTarihi" class="form-label text-light">Yayın Tarihi</label>
                                     <h:inputText id="yayinTarihi"
                                                  value="#{haberEkleBean.yayinTarihiText}"
                                                  styleClass="form-control bg-dark text-light border-secondary"
                                                  type="datetime-local"
                                                  required="true"
-                                                 requiredMessage="Yayin tarihi zorunludur." />
+                                                 requiredMessage="Yayın tarihi zorunludur." />
                                 </div>
 
                                 <div class="col-12 col-md-6">
@@ -96,9 +97,9 @@
                                     <h:selectOneMenu id="kategori"
                                                      value="#{haberEkleBean.kategoriId}"
                                                      required="true"
-                                                     requiredMessage="Kategori secilmelidir."
+                                                     requiredMessage="Kategori seçilmelidir."
                                                      styleClass="form-control bg-dark text-light border-secondary">
-                                        <f:selectItem itemLabel="Kategori seciniz" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Kategori seçiniz" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{haberEkleBean.kategoriler}"
                                                        var="k"
                                                        itemValue="#{k.id}"
@@ -107,13 +108,13 @@
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    <label for="kaynak" class="form-label text-light">Gazete Kaynagi</label>
+                                    <label for="kaynak" class="form-label text-light">Gazete Kaynağı</label>
                                     <h:selectOneMenu id="kaynak"
                                                      value="#{haberEkleBean.kaynakId}"
                                                      required="true"
-                                                     requiredMessage="Gazete kaynagi secilmelidir."
+                                                     requiredMessage="Gazete kaynağı seçilmelidir."
                                                      styleClass="form-control bg-dark text-light border-secondary">
-                                        <f:selectItem itemLabel="Kaynak seciniz" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Kaynak seçiniz" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{haberEkleBean.kaynaklar}"
                                                        var="g"
                                                        itemValue="#{g.id}"

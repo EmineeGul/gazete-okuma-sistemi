@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
@@ -43,12 +44,12 @@
                     <h:link outcome="/panel/admin-yorum-liste.xhtml"
                             rendered="#{girisBean.adminMi()}"
                             styleClass="nav-link px-3">
-                        Yorum Yonetimi
+                        Yorum Yönetimi
                     </h:link>
                     <h:link outcome="/panel/admin-kullanici-liste.xhtml"
                             rendered="#{girisBean.adminMi()}"
                             styleClass="nav-link px-3">
-                        Kullanici Yonetimi
+                        Kullanıcı Yönetimi
                     </h:link>
                     <div class="nav-item dropdown hesap-dropdown">
                         <a class="nav-link dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown"
@@ -67,17 +68,17 @@
                                 </h:outputLink>
                                 <h:form styleClass="dropdown-form">
                                     <h:commandLink action="#{girisBean.cikisYap}" styleClass="dropdown-item">
-                                        Cikis Yap
+                                        Çıkış Yap
                                     </h:commandLink>
                                 </h:form>
                             </h:panelGroup>
 
                             <h:panelGroup rendered="#{not girisBean.girisYapilmisMi()}">
                                 <h:link outcome="/giris.xhtml" styleClass="dropdown-item">
-                                    Giris Yap
+                                    Giriş Yap
                                 </h:link>
                                 <h:link outcome="/kayit.xhtml" styleClass="dropdown-item">
-                                    Kayit Ol
+                                    Kayıt Ol
                                 </h:link>
                             </h:panelGroup>
                         </div>

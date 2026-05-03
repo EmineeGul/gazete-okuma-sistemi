@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -237,7 +238,7 @@
                     <div class="mb-4">
                         <h1 class="profil-ust-baslik">Profilim</h1>
                         <p class="profil-aciklama mb-0">
-                            Hesap bilgilerinizi, favori haberlerinizi ve yaptiginiz yorumlari bu ekrandan takip edebilirsiniz.
+                            Hesap bilgilerinizi, favori haberlerinizi ve yaptığınız yorumları bu ekrandan takip edebilirsiniz.
                         </p>
                     </div>
 
@@ -246,12 +247,12 @@
                                 styleClass="profil-mesajlar" />
 
                     <div class="profil-bilgi-karti mb-4">
-                        <h2 class="profil-bilgi-baslik">Kullanici Bilgileri</h2>
+                        <h2 class="profil-bilgi-baslik">Kullanıcı Bilgileri</h2>
 
                         <div class="row g-3">
                             <div class="col-12 col-md-6 col-xl-4">
                                 <div class="profil-ozet-kutu">
-                                    <div class="profil-etiket">Kullanici Adi</div>
+                                    <div class="profil-etiket">Kullanıcı Adı</div>
                                     <div class="profil-deger">#{profilBean.kullanici.kullaniciAdi}</div>
                                 </div>
                             </div>
@@ -275,7 +276,7 @@
                             </div>
                             <div class="col-12 col-md-6 col-xl-4">
                                 <div class="profil-ozet-kutu">
-                                    <div class="profil-etiket">Kayit Tarihi</div>
+                                    <div class="profil-etiket">Kayıt Tarihi</div>
                                     <div class="profil-deger">#{profilBean.kullanici.kayitTarihi}</div>
                                 </div>
                             </div>
@@ -291,17 +292,17 @@
                     <div class="row g-4 mb-4">
                         <div class="col-12 col-xl-6">
                             <div class="profil-form-karti h-100">
-                                <h2 class="profil-bolum-baslik">Bilgilerimi Guncelle</h2>
+                                <h2 class="profil-bolum-baslik">Bilgilerimi Güncelle</h2>
 
                                 <h:form>
                                     <div class="mb-3">
-                                        <label for="kullaniciAdi" class="form-etiketi">Kullanici Adi</label>
+                                        <label for="kullaniciAdi" class="form-etiketi">Kullanıcı Adı</label>
                                         <h:inputText id="kullaniciAdi"
                                                      value="#{profilBean.kullaniciAdi}"
                                                      styleClass="form-control form-kontrolu"
-                                                     pt:placeholder="Kullanici adinizi girin"
+                                                     pt:placeholder="Kullanıcı adınızı girin"
                                                      required="true"
-                                                     requiredMessage="Kullanici adi bos birakilamaz." />
+                                                     requiredMessage="Kullanıcı adı boş bırakılamaz." />
                                     </div>
 
                                     <div class="mb-3">
@@ -309,9 +310,9 @@
                                         <h:inputText id="ad"
                                                      value="#{profilBean.ad}"
                                                      styleClass="form-control form-kontrolu"
-                                                     pt:placeholder="Adinizi girin"
+                                                     pt:placeholder="Adınızı girin"
                                                      required="true"
-                                                     requiredMessage="Ad alani bos birakilamaz." />
+                                                     requiredMessage="Ad alanı boş bırakılamaz." />
                                     </div>
 
                                     <div class="mb-4">
@@ -319,13 +320,13 @@
                                         <h:inputText id="soyad"
                                                      value="#{profilBean.soyad}"
                                                      styleClass="form-control form-kontrolu"
-                                                     pt:placeholder="Soyadinizi girin"
+                                                     pt:placeholder="Soyadınızı girin"
                                                      required="true"
-                                                     requiredMessage="Soyad alani bos birakilamaz." />
+                                                     requiredMessage="Soyad alanı boş bırakılamaz." />
                                     </div>
 
                                     <div class="d-grid">
-                                        <h:commandButton value="Bilgilerimi Guncelle"
+                                        <h:commandButton value="Bilgilerimi Güncelle"
                                                          action="#{profilBean.bilgileriGuncelle}"
                                                          styleClass="btn btn-haber" />
                                     </div>
@@ -335,46 +336,46 @@
 
                         <div class="col-12 col-xl-6">
                             <div class="profil-form-karti h-100">
-                                <h2 class="profil-bolum-baslik">Sifre Degistir</h2>
+                                <h2 class="profil-bolum-baslik">Şifre Değiştir</h2>
 
                                 <h:form>
                                     <div class="mb-3">
-                                        <label for="mevcutSifre" class="form-etiketi">Mevcut Sifre</label>
+                                        <label for="mevcutSifre" class="form-etiketi">Mevcut Şifre</label>
                                         <h:inputSecret id="mevcutSifre"
                                                        value="#{profilBean.mevcutSifre}"
                                                        styleClass="form-control form-kontrolu"
                                                        pt:autocomplete="new-password"
-                                                       pt:placeholder="Mevcut sifrenizi girin"
+                                                       pt:placeholder="Mevcut şifrenizi girin"
                                                        required="true"
-                                                       requiredMessage="Mevcut sifre bos birakilamaz." />
+                                                       requiredMessage="Mevcut şifre boş bırakılamaz." />
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="yeniSifre" class="form-etiketi">Yeni Sifre</label>
+                                        <label for="yeniSifre" class="form-etiketi">Yeni Şifre</label>
                                         <h:inputSecret id="yeniSifre"
                                                        value="#{profilBean.yeniSifre}"
                                                        styleClass="form-control form-kontrolu"
-                                                       pt:placeholder="Yeni sifrenizi girin"
+                                                       pt:placeholder="Yeni şifrenizi girin"
                                                        required="true"
-                                                       requiredMessage="Yeni sifre bos birakilamaz." />
+                                                       requiredMessage="Yeni şifre boş bırakılamaz." />
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="yeniSifreTekrar" class="form-etiketi">Yeni Sifre Tekrar</label>
+                                        <label for="yeniSifreTekrar" class="form-etiketi">Yeni Şifre Tekrar</label>
                                         <h:inputSecret id="yeniSifreTekrar"
                                                        value="#{profilBean.yeniSifreTekrar}"
                                                        styleClass="form-control form-kontrolu"
-                                                       pt:placeholder="Yeni sifrenizi tekrar girin"
+                                                       pt:placeholder="Yeni şifrenizi tekrar girin"
                                                        required="true"
-                                                       requiredMessage="Yeni sifre tekrar alani bos birakilamaz." />
+                                                       requiredMessage="Yeni şifre tekrar alanı boş bırakılamaz." />
                                     </div>
 
                                     <p class="profil-yardim mb-4">
-                                        Yeni sifre en az 8 karakter olmali; buyuk harf, kucuk harf ve ozel karakter icermelidir.
+                                        Yeni şifre en az 8 karakter olmalı; büyük harf, küçük harf ve özel karakter içermelidir.
                                     </p>
 
                                     <div class="d-grid">
-                                        <h:commandButton value="Sifremi Degistir"
+                                        <h:commandButton value="Şifremi Değiştir"
                                                          action="#{profilBean.sifreDegistir}"
                                                          styleClass="btn btn-haber" />
                                     </div>
@@ -389,7 +390,7 @@
                                 <h2 class="profil-bolum-baslik">Favori Haberlerim</h2>
 
                                 <h:panelGroup rendered="#{empty profilBean.favoriHaberler}" layout="block">
-                                    <div class="profil-bos">Henuz favori haberiniz yok.</div>
+                                    <div class="profil-bos">Henüz favori haberiniz yok.</div>
                                 </h:panelGroup>
 
                                 <h:panelGroup rendered="#{not empty profilBean.favoriHaberler}" layout="block">
@@ -399,7 +400,7 @@
 
                                             <div class="profil-meta">
                                                 <div><strong>Kategori:</strong> #{favori.haber.kategori.kategoriAdi}</div>
-                                                <div><strong>Gazete Kaynagi:</strong> #{favori.haber.haberKaynagi.ad}</div>
+                                                <div><strong>Gazete Kaynağı:</strong> #{favori.haber.haberKaynagi.ad}</div>
                                             </div>
 
                                             <p class="profil-liste-metin">#{favori.haber.ozet}</p>
@@ -407,7 +408,7 @@
                                             <h:link outcome="/haber-detay.xhtml"
                                                     styleClass="btn btn-haber">
                                                 <f:param name="haberId" value="#{favori.haber.id}" />
-                                                Haber Detayina Git
+                                                Haber Detayına Git
                                             </h:link>
                                         </div>
                                     </ui:repeat>
@@ -417,10 +418,10 @@
 
                         <div class="col-12 col-xl-6">
                             <div class="profil-liste-karti">
-                                <h2 class="profil-bolum-baslik">Yorumlarim</h2>
+                                <h2 class="profil-bolum-baslik">Yorumlarım</h2>
 
                                 <h:panelGroup rendered="#{empty profilBean.yorumlar}" layout="block">
-                                    <div class="profil-bos">Henuz yorum yapmadiniz.</div>
+                                    <div class="profil-bos">Henüz yorum yapmadınız.</div>
                                 </h:panelGroup>
 
                                 <h:panelGroup rendered="#{not empty profilBean.yorumlar}" layout="block">
@@ -439,11 +440,11 @@
                                                     <h:link outcome="/haber-detay.xhtml"
                                                             styleClass="btn btn-haber">
                                                         <f:param name="haberId" value="#{yorum.haber.id}" />
-                                                        Haber Detayina Git
+                                                        Haber Detayına Git
                                                     </h:link>
 
                                                     <h:form styleClass="d-inline-block">
-                                                        <h:commandButton value="Yorumu Duzenle"
+                                                        <h:commandButton value="Yorumu Düzenle"
                                                                          action="#{profilBean.yorumuDuzenlemeyeBasla(yorum)}"
                                                                          styleClass="btn btn-haber-outline" />
                                                     </h:form>
@@ -452,7 +453,7 @@
                                                         <h:commandButton value="Yorumu Sil"
                                                                          action="#{profilBean.yorumuSil(yorum)}"
                                                                          styleClass="btn btn-haber-tehlike"
-                                                                         onclick="return confirm('Bu yorumu silmek istediginize emin misiniz?');" />
+                                                                         onclick="return confirm('Bu yorumu silmek istediğinize emin misiniz?');" />
                                                     </h:form>
                                                 </div>
                                             </h:panelGroup>
@@ -464,7 +465,7 @@
                                                                          styleClass="yorum-duzenleme-alani"
                                                                          maxlength="300"
                                                                          required="true"
-                                                                         requiredMessage="Yorum bos olamaz." />
+                                                                         requiredMessage="Yorum boş olamaz." />
                                                     </div>
 
                                                     <div class="yorum-aksiyonlari">
@@ -472,7 +473,7 @@
                                                                          action="#{profilBean.yorumuGuncelle}"
                                                                          styleClass="btn btn-haber" />
 
-                                                        <h:commandButton value="Vazgec"
+                                                        <h:commandButton value="Vazgeç"
                                                                          action="#{profilBean.yorumDuzenlemeIptal}"
                                                                          immediate="true"
                                                                          styleClass="btn btn-haber-outline" />

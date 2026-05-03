@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -11,9 +12,10 @@
         <f:viewAction action="#{yorumBean.yorumlariYukle}" />
     </f:metadata>
 
+    <ui:define name="title">Haber Detayı | HABER_KONSOLU</ui:define>
+
     <ui:define name="icerik">
 
-        <!-- ===== YORUM CSS ===== -->
         <style>
             .yorum-bolumu {
                 margin-top: 40px;
@@ -91,7 +93,6 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-9">
 
-                <!-- ===== HABER ===== -->
                 <h:panelGroup rendered="#{not empty haberBean.seciliHaber}">
                     <div class="card haber-detay-karti">
 
@@ -110,7 +111,7 @@
 
                             <div class="row g-3 mt-1">
                                 <div class="col-12 col-md-4">
-                                    <div class="bilgi-etiket">Yayin Tarihi</div>
+                                    <div class="bilgi-etiket">Yayın Tarihi</div>
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.yayinTarihi}</div>
                                 </div>
                                 <div class="col-12 col-md-4">
@@ -118,7 +119,7 @@
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.kategori.kategoriAdi}</div>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    <div class="bilgi-etiket">Gazete Kaynagi</div>
+                                    <div class="bilgi-etiket">Gazete Kaynağı</div>
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.haberKaynagi.ad}</div>
                                 </div>
                             </div>
@@ -142,7 +143,6 @@
                                 </h:outputLink>
                             </div>
 
-                            <!-- ===== YORUMLAR ===== -->
                             <section class="yorum-bolumu">
 
                                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -152,7 +152,6 @@
                                     </span>
                                 </div>
 
-                                <!-- FORM -->
                                 <h:form rendered="#{not girisBean.adminMi()}">
 
                                     <h:messages globalOnly="true" />
@@ -161,7 +160,7 @@
                                                      styleClass="yorum-textarea"
                                                      maxlength="300"
                                                      required="true"
-                                                     requiredMessage="Yorum bos olamaz." />
+                                                     requiredMessage="Yorum boş olamaz." />
 
                                     <br/><br/>
 
@@ -175,14 +174,12 @@
                                     </div>
                                 </h:form>
 
-                                <!-- BOS -->
                                 <h:panelGroup rendered="#{empty yorumBean.yorumlar}">
                                     <p class="yorum-yardim">
-                                        Bu habere henuz yorum yapilmamis.
+                                        Bu habere henüz yorum yapılmamış.
                                     </p>
                                 </h:panelGroup>
 
-                                <!-- LISTE -->
                                 <ui:repeat value="#{yorumBean.yorumlar}" var="yorum">
                                     <div class="yorum-karti">
 

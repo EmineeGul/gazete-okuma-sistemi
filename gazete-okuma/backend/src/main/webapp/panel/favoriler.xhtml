@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -13,13 +14,13 @@
     <ui:define name="icerik">
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Favori Haberlerim</h1>
-            <p class="text-secondary mt-3 mb-0">Kaydettiginiz haberleri tek ekranda goruntuleyin.</p>
+            <p class="text-secondary mt-3 mb-0">Kaydettiğiniz haberleri tek ekranda görüntüleyin.</p>
         </div>
 
         <h:panelGroup rendered="#{empty favoriBean.favoriler}" layout="block">
             <div class="empty-favorites-box bos-liste-kutusu p-5 text-center">
-                <h3>Henuz favori haber eklenmemis.</h3>
-                <p class="mb-0">Begendiginiz haberleri favorilere eklediginizde burada listelenecektir.</p>
+                <h3>Henüz favori haber eklenmemiş.</h3>
+                <p class="mb-0">Beğendiğiniz haberleri favorilere eklediğinizde burada listelenecektir.</p>
             </div>
         </h:panelGroup>
 
@@ -41,7 +42,7 @@
 
                                 <h3 class="haber-baslik h5 mb-3">#{favori.haber.baslik}</h3>
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayin Tarihi:</strong> #{favori.haber.yayinTarihi}
+                                    <strong class="text-light">Yayın Tarihi:</strong> #{favori.haber.yayinTarihi}
                                 </p>
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{favori.haber.ozet}</p>
 
@@ -53,7 +54,7 @@
                                     </h:link>
 
                                     <h:form styleClass="d-inline-block">
-                                        <h:commandButton value="Favoriden Cikar"
+                                        <h:commandButton value="Favoriden Çıkar"
                                                          action="#{favoriBean.favoridenCikar(favori)}"
                                                          styleClass="btn btn-outline-light" />
                                     </h:form>

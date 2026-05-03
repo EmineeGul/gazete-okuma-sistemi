@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -9,7 +10,7 @@
     <ui:define name="icerik">
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Haberleri Filtrele</h1>
-            <p class="text-secondary mt-3 mb-0">Kategori ve kaynak secerek size uygun haberleri filtreleyin.</p>
+            <p class="text-secondary mt-3 mb-0">Kategori ve kaynak seçerek size uygun haberleri filtreleyin.</p>
         </div>
 
         <h:form>
@@ -17,11 +18,11 @@
                 <div class="card-body p-4">
                     <div class="row g-3 align-items-end">
                         <div class="col-12 col-lg-5">
-                            <label for="kategoriSecimi" class="form-label text-light">Kategori Secimi</label>
+                            <label for="kategoriSecimi" class="form-label text-light">Kategori Seçimi</label>
                             <h:selectOneMenu id="kategoriSecimi"
                                              value="#{kategoriFiltreBean.seciliKategoriId}"
                                              styleClass="form-select bg-dark text-light border-secondary">
-                                <f:selectItem itemLabel="Tum Kategoriler" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Tüm Kategoriler" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{kategoriFiltreBean.kategoriler}"
                                                var="kategori"
                                                itemValue="#{kategori.id}"
@@ -30,11 +31,11 @@
                         </div>
 
                         <div class="col-12 col-lg-5">
-                            <label for="kaynakSecimi" class="form-label text-light">Kaynak Secimi</label>
+                            <label for="kaynakSecimi" class="form-label text-light">Kaynak Seçimi</label>
                             <h:selectOneMenu id="kaynakSecimi"
                                              value="#{kategoriFiltreBean.seciliKaynakId}"
                                              styleClass="form-select bg-dark text-light border-secondary">
-                                <f:selectItem itemLabel="Tum Kaynaklar" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Tüm Kaynaklar" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{kategoriFiltreBean.gazeteKaynaklari}"
                                                var="kaynak"
                                                itemValue="#{kaynak.id}"
@@ -58,8 +59,8 @@
         </h:form>
 
         <h:panelGroup rendered="#{empty kategoriFiltreBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Secilen filtrelere uygun haber bulunamadi.</h4>
-            <p class="mb-0">Farkli kategori veya kaynak secerek tekrar deneyebilirsiniz.</p>
+            <h4 class="mb-2">Seçilen filtrelere uygun haber bulunamadı.</h4>
+            <p class="mb-0">Farklı kategori veya kaynak seçerek tekrar deneyebilirsiniz.</p>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{not empty kategoriFiltreBean.haberler}" layout="block">
@@ -80,7 +81,7 @@
 
                                 <h3 class="haber-baslik h5 mb-3">#{haber.baslik}</h3>
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayin Tarihi:</strong> #{haber.yayinTarihi}
+                                    <strong class="text-light">Yayın Tarihi:</strong> #{haber.yayinTarihi}
                                 </p>
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>
 

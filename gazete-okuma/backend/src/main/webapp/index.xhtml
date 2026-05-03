@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -5,16 +6,60 @@
                 xmlns:ui="jakarta.faces.facelets">
 
     <ui:define name="icerik">
+        <style>
+            .sayfalama-kapsayici {
+                margin-top: 36px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .sayfalama {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .sayfa-buton {
+                min-width: 42px;
+                padding: 9px 14px;
+                border-radius: 999px;
+                border: 1px solid rgba(0, 255, 255, 0.35);
+                background: #111220;
+                color: #E2E0F5;
+                font-weight: 700;
+                transition: all 0.2s ease;
+            }
+
+            .sayfa-buton:hover {
+                background: rgba(0, 255, 255, 0.10);
+                color: #FFFFFF;
+                border-color: #00FFFF;
+            }
+
+            .aktif-sayfa {
+                background: rgba(0, 255, 255, 0.18);
+                color: #00FFFF;
+                border-color: #00FFFF;
+                box-shadow: 0 0 14px rgba(0, 255, 255, 0.18);
+            }
+
+            .sayfa-buton:disabled {
+                opacity: 0.45;
+                cursor: not-allowed;
+            }
+        </style>
+
         <div id="toastMessage" class="toast-message" aria-live="polite">Favorilere eklendi</div>
 
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Son Haberler</h1>
-            <p class="text-secondary mt-3 mb-0">Guncel gelismeleri sade ve duzenli bir akista takip edin.</p>
+            <p class="text-secondary mt-3 mb-0">Güncel gelişmeleri sade ve düzenli bir akışta takip edin.</p>
         </div>
 
         <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
-            <h4 class="mb-2">Henüz haber bulunamadi.</h4>
-            <p class="mb-0">Sisteme eklendiginde haberler burada listelenecektir.</p>
+            <h4 class="mb-2">Henüz haber bulunamadı.</h4>
+            <p class="mb-0">Sisteme eklendiğinde haberler burada listelenecektir.</p>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{not empty haberBean.haberler}" layout="block">
@@ -45,7 +90,7 @@
 
                                 <h3 class="haber-baslik h5 mb-3">#{haber.baslik}</h3>
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayin Tarihi:</strong> #{haber.yayinTarihi}
+                                    <strong class="text-light">Yayın Tarihi:</strong> #{haber.yayinTarihi}
                                 </p>
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>
 
@@ -59,6 +104,30 @@
                     </div>
                 </ui:repeat>
             </div>
+
+            <h:panelGroup rendered="#{haberBean.toplamSayfaSayisi gt 1}" layout="block" styleClass="sayfalama-kapsayici">
+                <h:form prependId="false">
+                    <div class="sayfalama">
+                        <h:commandButton value="Önceki"
+                                         action="#{haberBean.oncekiSayfa}"
+                                         disabled="#{not haberBean.oncekiSayfaVarMi()}"
+                                         styleClass="sayfa-buton" />
+
+                        <ui:repeat value="#{haberBean.sayfaNumaralari}" var="sayfa">
+                            <h:commandButton value="#{sayfa}"
+                                             action="#{haberBean.sayfayaGit}"
+                                             styleClass="#{haberBean.aktifSayfa eq sayfa ? 'sayfa-buton aktif-sayfa' : 'sayfa-buton'}">
+                                <f:setPropertyActionListener target="#{haberBean.secilecekSayfa}" value="#{sayfa}" />
+                            </h:commandButton>
+                        </ui:repeat>
+
+                        <h:commandButton value="Sonraki"
+                                         action="#{haberBean.sonrakiSayfa}"
+                                         disabled="#{not haberBean.sonrakiSayfaVarMi()}"
+                                         styleClass="sayfa-buton" />
+                    </div>
+                </h:form>
+            </h:panelGroup>
         </h:panelGroup>
 
         <h:outputScript target="body">

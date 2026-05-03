@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="/sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -18,7 +19,6 @@
                 <div class="card haber-karti">
                     <div class="card-body p-4 p-lg-5">
 
-                        <!-- HEADER -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>
                                 <h1 style="color:#FFFFFF;">Yorum Yönetimi</h1>
@@ -33,14 +33,12 @@
                             </h:link>
                         </div>
 
-                        <!-- BOS LISTE -->
                         <h:panelGroup rendered="#{empty yorumBean.tumYorumlar}">
                             <div class="text-center p-4" style="color:#9AA0C3;">
                                 Henüz yorum yok.
                             </div>
                         </h:panelGroup>
 
-                        <!-- LISTE -->
                         <h:panelGroup rendered="#{not empty yorumBean.tumYorumlar}">
                             <div class="row g-4">
 
@@ -55,12 +53,10 @@
                                             padding:20px;
                                         ">
 
-                                            <!-- HABER BASLIK -->
                                             <h3 style="color:#FFFFFF; font-weight:700;">
                                                 #{yorum.haber.baslik}
                                             </h3>
 
-                                            <!-- META -->
                                             <div style="color:#B8B6E0; margin-top:10px; font-size:14px;">
                                                 <div><b style="color:#00FFFF;">Kullanıcı:</b> #{yorum.kullanici.kullaniciAdi}</div>
                                                 <div><b style="color:#00FFFF;">Tarih:</b> #{yorum.yorumTarihi}</div>
@@ -80,7 +76,6 @@
                                                 </h:panelGroup>
                                             </div>
 
-                                            <!-- YORUM -->
                                             <p style="
                                                 color:#E2E0F5;
                                                 margin-top:15px;
@@ -89,7 +84,6 @@
                                                 #{yorum.icerik}
                                             </p>
 
-                                            <!-- BUTONLAR -->
                                             <div class="d-flex gap-2 mt-3">
 
                                                 <h:link outcome="/haber-detay.xhtml"
@@ -102,7 +96,7 @@
                                                     <h:commandButton value="Yorumu Sil"
                                                                      action="#{yorumBean.yorumSil(yorum)}"
                                                                      styleClass="btn btn-danger"
-                                                                     onclick="return confirm('Silmek istediğine emin misin?');" />
+                                                                     onclick="return confirm('Silmek istediğinize emin misiniz?');" />
                                                 </h:form>
 
                                             </div>
