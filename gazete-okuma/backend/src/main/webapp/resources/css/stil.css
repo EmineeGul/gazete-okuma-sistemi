@@ -257,6 +257,97 @@ body {
     border: 1px solid rgba(255, 0, 255, 0.24);
 }
 
+.haber-kart-istatistikleri {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.haber-kart-istatistik {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(17, 18, 32, 0.86);
+    color: #e2e0f5;
+    border: 1px solid rgba(0, 255, 255, 0.24);
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 0 14px rgba(0, 255, 255, 0.07);
+}
+
+.haber-kart-istatistik:nth-child(2) {
+    border-color: rgba(255, 0, 255, 0.28);
+    box-shadow: 0 0 14px rgba(255, 0, 255, 0.07);
+}
+
+.haber-istatistik-ikon {
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.32);
+}
+
+.haber-kart-istatistik:nth-child(2) .haber-istatistik-ikon {
+    color: #ff00ff;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.32);
+}
+
+.haber-istatistikleri {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.haber-istatistik-karti {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(180deg, rgba(22, 23, 45, 0.92), rgba(17, 18, 32, 0.92));
+    border: 1px solid rgba(0, 255, 255, 0.24);
+    border-radius: 1rem;
+    padding: 18px;
+    box-shadow: 0 0 22px rgba(0, 255, 255, 0.08), inset 0 0 18px rgba(255, 0, 255, 0.04);
+}
+
+.haber-istatistik-karti:nth-child(2) {
+    border-color: rgba(255, 0, 255, 0.26);
+}
+
+.haber-istatistik-karti .haber-istatistik-ikon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #111220;
+    border: 1px solid rgba(0, 255, 255, 0.32);
+    border-radius: 999px;
+    font-size: 1.15rem;
+    flex: 0 0 auto;
+}
+
+.haber-istatistik-sayi {
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.haber-istatistik-etiket {
+    color: #9aa0c3;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.admin-haber-istatistikleri {
+    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .btn-haber,
 .btn-geri-don {
     background: transparent;
@@ -453,6 +544,7 @@ body {
 }
 
 .yorum-karti {
+    position: relative;
     background: #111220;
     border: 1px solid rgba(0, 255, 255, 0.14);
     border-radius: 1rem;
@@ -475,6 +567,77 @@ body {
     margin-top: 10px;
     line-height: 1.6;
     white-space: pre-line;
+}
+
+.yorum-begeni-alani {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.yorum-begeni-alani form {
+    margin: 0;
+}
+
+.yorum-begeni-buton,
+.yorum-begeni-alani input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 42px;
+    padding: 0 18px !important;
+    border-radius: 999px !important;
+    background: rgba(17, 18, 32, 0.95) !important;
+    color: #E2E0F5 !important;
+    border: 1px solid rgba(0, 255, 255, 0.55) !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    cursor: pointer !important;
+    text-decoration: none;
+    box-shadow: 0 0 14px rgba(0, 255, 255, 0.10) !important;
+    transition: all 0.25s ease !important;
+}
+
+.yorum-begeni-buton:hover,
+.yorum-begeni-alani input[type="submit"]:hover {
+    color: #00FFFF !important;
+    border-color: #00FFFF !important;
+    background: rgba(0, 255, 255, 0.08) !important;
+    box-shadow: 0 0 22px rgba(0, 255, 255, 0.35) !important;
+    transform: translateY(-2px);
+}
+
+.yorum-begeni-buton.aktif,
+.yorum-begeni-alani input[type="submit"].aktif {
+    color: #FF8CFF !important;
+    border-color: #FF00FF !important;
+    background: rgba(255, 0, 255, 0.12) !important;
+    box-shadow: 0 0 22px rgba(255, 0, 255, 0.28) !important;
+}
+
+.yorum-begeni-buton.aktif:hover,
+.yorum-begeni-alani input[type="submit"].aktif:hover {
+    color: #FFFFFF !important;
+    box-shadow: 0 0 26px rgba(255, 0, 255, 0.42) !important;
+}
+
+.yorum-begeni-buton.pasif {
+    cursor: default;
+    color: #9aa0c3 !important;
+    border-color: rgba(255, 0, 255, 0.22) !important;
+    box-shadow: 0 0 12px rgba(255, 0, 255, 0.08);
+}
+
+.yorum-begeni-buton.pasif:hover {
+    transform: none;
+    color: #9aa0c3 !important;
+}
+
+.yorum-begeni-sayisi {
+    color: #e2e0f5;
 }
 
 .admin-yorum-karti {
@@ -577,6 +740,55 @@ body {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+}
+
+.admin-haber-izleme-kutusu {
+    min-width: 220px;
+    background: rgba(17, 18, 32, 0.88);
+    border: 1px solid rgba(0, 255, 255, 0.20);
+    border-radius: 0.85rem;
+    padding: 12px 14px;
+    color: #e2e0f5;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.06);
+    line-height: 1.55;
+}
+
+.admin-haber-izleme-kutusu > div + div {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 0, 255, 0.12);
+}
+
+.admin-haber-izleme-etiket {
+    display: block;
+    color: #00ffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04rem;
+}
+
+.admin-haber-izleme-deger {
+    display: block;
+    color: #e2e0f5;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+
+.admin-haber-bilgi-kutusu {
+    background: linear-gradient(180deg, rgba(22, 23, 45, 0.92), rgba(17, 18, 32, 0.92));
+    border: 1px solid rgba(0, 255, 255, 0.24);
+    border-radius: 1rem;
+    color: #e2e0f5;
+    padding: 16px 18px;
+    text-align: center;
+    box-shadow: 0 0 22px rgba(0, 255, 255, 0.08), inset 0 0 18px rgba(255, 0, 255, 0.04);
+}
+
+.admin-haber-bilgi-vurgu {
+    color: #00ffff;
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.28);
 }
 
 .sayfalama-kapsayici {
@@ -815,6 +1027,14 @@ button.yorum-buton {
 
     .sayfa-icerik-alani {
         padding-top: 2rem !important;
+    }
+
+    .haber-istatistikleri {
+        grid-template-columns: 1fr;
+    }
+
+    .yorum-begeni-alani {
+        justify-content: flex-start;
     }
 
     .haber-arama-alani {

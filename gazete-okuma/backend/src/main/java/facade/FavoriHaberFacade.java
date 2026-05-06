@@ -72,6 +72,18 @@ public class FavoriHaberFacade extends AbstractFacade<FavoriHaber> implements Fa
     }
 
     @Override
+    public long haberiFavorileyenKullaniciSayisi(Haber haber) {
+        if (haber == null || haber.getId() == null) {
+            return 0L;
+        }
+
+        return entityManager.createQuery(
+                "SELECT COUNT(f) FROM FavoriHaber f WHERE f.haber.id = :haberId",
+                Long.class
+        ).setParameter("haberId", haber.getId()).getSingleResult();
+    }
+
+    @Override
     public long kullaniciFavoriSayisi(Kullanici kullanici) {
         if (kullanici == null) {
             return 0L;

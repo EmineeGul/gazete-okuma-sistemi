@@ -46,6 +46,7 @@ public class HaberBean implements Serializable {
     private List<Haber> haberListesi;
     private List<Integer> sayfalar;
     private String aramaMetni;
+    private boolean goruntulenmeArtirildiMi;
 
     @PostConstruct
     public void init() {
@@ -256,8 +257,26 @@ public class HaberBean implements Serializable {
 
         try {
             seciliHaber = haberFacade.idIleBul(haberId);
+
+            if (seciliHaber != null && !goruntulenmeArtirildiMi) {
+                haberFacade.goruntulenmeSayisiniArtir(seciliHaber);
+                seciliHaber.setGoruntulenmeSayisi(seciliHaber.getGoruntulenmeSayisi() + 1);
+                goruntulenmeArtirildiMi = true;
+            }
         } catch (Exception e) {
             seciliHaber = null;
+        }
+    }
+
+    public Long goruntulenmeSayisiGetir(Haber haber) {
+        return haber == null ? 0L : haber.getGoruntulenmeSayisi();
+    }
+
+    public long favoriSayisiGetir(Haber haber) {
+        try {
+            return favoriHaberFacade.haberiFavorileyenKullaniciSayisi(haber);
+        } catch (Exception e) {
+            return 0L;
         }
     }
 

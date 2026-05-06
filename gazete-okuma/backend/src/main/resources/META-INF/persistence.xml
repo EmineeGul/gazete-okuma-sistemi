@@ -10,6 +10,7 @@
         <class>entity.Haber</class>
         <class>entity.FavoriHaber</class>
         <class>entity.Yorum</class>
+        <class>entity.YorumBegeni</class>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
         </properties>

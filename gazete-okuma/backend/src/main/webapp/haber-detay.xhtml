@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition template="sablon.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
@@ -12,7 +12,7 @@
         <f:viewAction action="#{yorumBean.yorumlariYukle}" />
     </f:metadata>
 
-    <ui:define name="title">Haber Detayı | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Haber DetayÄ± | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
 
@@ -88,6 +88,91 @@
                 color: #9AA0C3;
             }
 
+            .yorum-karti {
+                position: relative !important;
+                padding-bottom: 72px !important;
+            }
+
+            .yorum-begeni-alani {
+                position: absolute !important;
+                right: 18px !important;
+                bottom: 18px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+            }
+
+            .yorum-begeni-form {
+                margin: 0 !important;
+            }
+
+            .yorum-begeni-buton,
+            .yorum-begeni-alani input[type="submit"] {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                min-width: 82px !important;
+                height: 42px !important;
+                padding: 0 18px !important;
+                border-radius: 999px !important;
+                background: rgba(13, 14, 28, 0.92) !important;
+                color: #00FFFF !important;
+                border: 1px solid rgba(0, 255, 255, 0.58) !important;
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                cursor: pointer !important;
+                box-shadow:
+                    0 0 16px rgba(0, 255, 255, 0.12),
+                    inset 0 0 10px rgba(0, 255, 255, 0.05) !important;
+                transition: all 0.25s ease !important;
+            }
+
+            .yorum-begeni-buton:hover,
+            .yorum-begeni-alani input[type="submit"]:hover {
+                background: rgba(0, 255, 255, 0.10) !important;
+                color: #FFFFFF !important;
+                border-color: #00FFFF !important;
+                box-shadow:
+                    0 0 24px rgba(0, 255, 255, 0.35),
+                    inset 0 0 12px rgba(0, 255, 255, 0.08) !important;
+                transform: translateY(-2px) !important;
+            }
+
+            .yorum-begeni-buton.aktif,
+            .yorum-begeni-alani input[type="submit"].aktif {
+                color: #FF8CFF !important;
+                border-color: #FF00FF !important;
+                background: rgba(255, 0, 255, 0.14) !important;
+                box-shadow:
+                    0 0 24px rgba(255, 0, 255, 0.30),
+                    inset 0 0 10px rgba(255, 0, 255, 0.08) !important;
+            }
+
+            .yorum-begeni-buton.pasif {
+                cursor: default !important;
+                color: #9AA0C3 !important;
+                border-color: rgba(255, 0, 255, 0.18) !important;
+                background: rgba(13, 14, 28, 0.88) !important;
+                box-shadow: 0 0 14px rgba(255, 0, 255, 0.06) !important;
+            }
+
+            .yorum-begeni-buton.pasif:hover {
+                transform: none !important;
+            }
+
+            @media (max-width: 768px) {
+
+                .yorum-karti {
+                    padding-bottom: 20px !important;
+                }
+
+                .yorum-begeni-alani {
+                    position: static !important;
+                    margin-top: 18px !important;
+                    justify-content: flex-start !important;
+                }
+            }
+
         </style>
 
         <div class="row justify-content-center">
@@ -111,7 +196,7 @@
 
                             <div class="row g-3 mt-1">
                                 <div class="col-12 col-md-4">
-                                    <div class="bilgi-etiket">Yayın Tarihi</div>
+                                    <div class="bilgi-etiket">YayÄ±n Tarihi</div>
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.yayinTarihi}</div>
                                 </div>
                                 <div class="col-12 col-md-4">
@@ -119,7 +204,7 @@
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.kategori.kategoriAdi}</div>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    <div class="bilgi-etiket">Gazete Kaynağı</div>
+                                    <div class="bilgi-etiket">Gazete KaynaÄŸÄ±</div>
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.haberKaynagi.ad}</div>
                                 </div>
                             </div>
@@ -130,16 +215,33 @@
                                 <h:outputText value="#{haberBean.seciliHaber.icerik}" escape="false" />
                             </div>
 
+                            <div class="haber-istatistikleri">
+                                <div class="haber-istatistik-karti">
+                                    <div class="haber-istatistik-ikon">ğŸ‘</div>
+                                    <div>
+                                        <div class="haber-istatistik-sayi">#{haberBean.goruntulenmeSayisiGetir(haberBean.seciliHaber)}</div>
+                                        <div class="haber-istatistik-etiket">Okunma SayÄ±sÄ±</div>
+                                    </div>
+                                </div>
+                                <div class="haber-istatistik-karti">
+                                    <div class="haber-istatistik-ikon">â™¥</div>
+                                    <div>
+                                        <div class="haber-istatistik-sayi">#{haberBean.favoriSayisiGetir(haberBean.seciliHaber)}</div>
+                                        <div class="haber-istatistik-etiket">BeÄŸeni SayÄ±sÄ±</div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
                                 <h:outputLink value="index.xhtml" styleClass="btn btn-geri-don">
-                                    Geri Dön
+                                    Geri DÃ¶n
                                 </h:outputLink>
 
                                 <h:outputLink value="#{haberBean.seciliHaber.haberLinki}"
                                               rendered="#{haberBean.seciliHaber.haberLinki ne null and haberBean.seciliHaber.haberLinki ne ''}"
                                               styleClass="btn btn-haber"
                                               target="_blank">
-                                    Haber Kaynağına Git
+                                    Haber KaynaÄŸÄ±na Git
                                 </h:outputLink>
                             </div>
 
@@ -160,7 +262,7 @@
                                                      styleClass="yorum-textarea"
                                                      maxlength="300"
                                                      required="true"
-                                                     requiredMessage="Yorum boş olamaz." />
+                                                     requiredMessage="Yorum boÅŸ olamaz." />
 
                                     <br/><br/>
 
@@ -176,7 +278,7 @@
 
                                 <h:panelGroup rendered="#{empty yorumBean.yorumlar}">
                                     <p class="yorum-yardim">
-                                        Bu habere henüz yorum yapılmamış.
+                                        Bu habere henÃ¼z yorum yapÄ±lmamÄ±ÅŸ.
                                     </p>
                                 </h:panelGroup>
 
@@ -192,13 +294,36 @@
                                                 <h:commandButton value="Sil"
                                                                  action="#{yorumBean.yorumSil(yorum)}"
                                                                  styleClass="btn btn-danger btn-sm"
-                                                                 onclick="return confirm('Bu yorumu silmek istediğinize emin misiniz?');" />
+                                                                 onclick="return confirm('Bu yorumu silmek istediÄŸinize emin misiniz?');" />
                                             </h:form>
                                         </div>
 
                                         <p class="yorum-metin">
                                             #{yorum.icerik}
                                         </p>
+
+                                        <div class="yorum-begeni-alani">
+
+                                            <h:form rendered="#{not girisBean.adminMi()}" styleClass="yorum-begeni-form">
+
+                                                <h:commandButton
+                                                        value="👍 #{yorumBegeniBean.yorumBegeniSayisi(yorum)}"
+                                                        action="#{yorumBegeniBean.yorumBegeniDegistir(yorum)}"
+                                                        styleClass="#{yorumBegeniBean.yorumBegenildiMi(yorum)
+                                                                       ? 'yorum-begeni-buton aktif'
+                                                                       : 'yorum-begeni-buton'}" />
+
+                                            </h:form>
+
+                                            <h:panelGroup rendered="#{girisBean.adminMi()}">
+
+                                                <div class="yorum-begeni-buton pasif">
+                                                    👍 #{yorumBegeniBean.yorumBegeniSayisi(yorum)}
+                                                </div>
+
+                                            </h:panelGroup>
+
+                                        </div>
 
                                     </div>
                                 </ui:repeat>

@@ -31,6 +31,7 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
 
     @Override
     public void sil(Yorum yorum) {
+        yorumBegenileriniSil(yorum);
         Yorum silinecek = entityManager.merge(yorum);
         entityManager.remove(silinecek);
         entityManager.flush();
@@ -103,6 +104,15 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
             return;
         }
 
+        List<Yorum> yorumlar = entityManager.createQuery(
+                "SELECT y FROM Yorum y WHERE y.haber = :haber",
+                Yorum.class
+        ).setParameter("haber", haber).getResultList();
+
+        for (Yorum yorum : yorumlar) {
+            yorumBegenileriniSil(yorum);
+        }
+
         entityManager.createQuery("DELETE FROM Yorum y WHERE y.haber = :haber")
                 .setParameter("haber", haber)
                 .executeUpdate();
@@ -128,16 +138,39 @@ public class YorumFacade extends AbstractFacade<Yorum> implements YorumFacadeLoc
             return;
         }
 
+        try {
+            entityManager.createQuery("DELETE FROM YorumBegeni yb WHERE yb.kullanici = :kullanici")
+                    .setParameter("kullanici", kullanici)
+                    .executeUpdate();
+        } catch (Exception e) {
+            entityManager.clear();
+        }
+
         List<Yorum> yorumlar = entityManager.createQuery(
                 "SELECT y FROM Yorum y WHERE y.kullanici = :kullanici",
                 Yorum.class
         ).setParameter("kullanici", kullanici).getResultList();
 
         for (Yorum yorum : yorumlar) {
+            yorumBegenileriniSil(yorum);
             entityManager.remove(entityManager.merge(yorum));
         }
 
         entityManager.flush();
         entityManager.clear();
+    }
+
+    private void yorumBegenileriniSil(Yorum yorum) {
+        if (yorum == null || yorum.getId() == null) {
+            return;
+        }
+
+        try {
+            entityManager.createQuery("DELETE FROM YorumBegeni yb WHERE yb.yorum = :yorum")
+                    .setParameter("yorum", yorum)
+                    .executeUpdate();
+        } catch (Exception e) {
+            entityManager.clear();
+        }
     }
 }

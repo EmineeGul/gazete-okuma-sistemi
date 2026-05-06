@@ -35,6 +35,18 @@ public class Haber implements Serializable {
     @Column(name = "haber_linki")
     private String haberLinki;
 
+    @Column(name = "olusturulma_tarihi")
+    private LocalDateTime olusturulmaTarihi;
+
+    @Column(name = "guncellenme_tarihi")
+    private LocalDateTime guncellenmeTarihi;
+
+    @Column(name = "son_guncelleyen_admin", length = 100)
+    private String sonGuncelleyenAdmin;
+
+    @Column(name = "goruntulenme_sayisi")
+    private Long goruntulenmeSayisi = 0L;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_id", nullable = false)
     private Kategori kategori;
@@ -126,6 +138,38 @@ public class Haber implements Serializable {
         this.haberLinki = haberLinki;
     }
 
+    public LocalDateTime getOlusturulmaTarihi() {
+        return olusturulmaTarihi;
+    }
+
+    public void setOlusturulmaTarihi(LocalDateTime olusturulmaTarihi) {
+        this.olusturulmaTarihi = olusturulmaTarihi;
+    }
+
+    public LocalDateTime getGuncellenmeTarihi() {
+        return guncellenmeTarihi;
+    }
+
+    public void setGuncellenmeTarihi(LocalDateTime guncellenmeTarihi) {
+        this.guncellenmeTarihi = guncellenmeTarihi;
+    }
+
+    public String getSonGuncelleyenAdmin() {
+        return sonGuncelleyenAdmin;
+    }
+
+    public void setSonGuncelleyenAdmin(String sonGuncelleyenAdmin) {
+        this.sonGuncelleyenAdmin = sonGuncelleyenAdmin;
+    }
+
+    public Long getGoruntulenmeSayisi() {
+        return goruntulenmeSayisi == null ? 0L : goruntulenmeSayisi;
+    }
+
+    public void setGoruntulenmeSayisi(Long goruntulenmeSayisi) {
+        this.goruntulenmeSayisi = goruntulenmeSayisi;
+    }
+
     public Kategori getKategori() {
         return kategori;
     }
@@ -160,6 +204,10 @@ public class Haber implements Serializable {
                 + ", yayinTarihi=" + yayinTarihi
                 + ", gorselUrl='" + gorselUrl + '\''
                 + ", haberLinki='" + haberLinki + '\''
+                + ", olusturulmaTarihi=" + olusturulmaTarihi
+                + ", guncellenmeTarihi=" + guncellenmeTarihi
+                + ", sonGuncelleyenAdmin='" + sonGuncelleyenAdmin + '\''
+                + ", goruntulenmeSayisi=" + goruntulenmeSayisi
                 + ", kategori=" + kategori
                 + ", haberKaynagi=" + haberKaynagi
                 + '}';

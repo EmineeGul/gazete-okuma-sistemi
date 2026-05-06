@@ -146,6 +146,23 @@ public class HaberFacade extends AbstractFacade<Haber> implements HaberFacadeLoc
     }
 
     @Override
+    public void goruntulenmeSayisiniArtir(Haber haber) {
+        if (haber == null || haber.getId() == null) {
+            return;
+        }
+
+        Haber guncellenecekHaber = entityManager.find(Haber.class, haber.getId());
+
+        if (guncellenecekHaber == null) {
+            return;
+        }
+
+        Long mevcutSayi = guncellenecekHaber.getGoruntulenmeSayisi();
+        guncellenecekHaber.setGoruntulenmeSayisi(mevcutSayi + 1);
+        entityManager.flush();
+    }
+
+    @Override
     public List<Haber> adminSayfaliHaberleriGetir(int baslangic, int limit) {
         entityManager.clear();
         List<Haber> haberler = entityManager.createQuery(

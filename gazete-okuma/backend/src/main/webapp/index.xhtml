@@ -183,6 +183,17 @@
 
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>
 
+                                <div class="haber-kart-istatistikleri">
+                                    <span class="haber-kart-istatistik">
+                                        <span class="haber-istatistik-ikon">👁</span>
+                                        #{haberBean.goruntulenmeSayisiGetir(haber)}
+                                    </span>
+                                    <span class="haber-kart-istatistik">
+                                        <span class="haber-istatistik-ikon">♥</span>
+                                        #{haberBean.favoriSayisiGetir(haber)}
+                                    </span>
+                                </div>
+
                                 <h:link outcome="haber-detay.xhtml"
                                         styleClass="btn btn-haber align-self-start">
                                     <f:param name="haberId" value="#{haber.id}" />

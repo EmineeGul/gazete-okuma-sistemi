@@ -47,6 +47,8 @@
                                                 <th scope="col">Kategori</th>
                                                 <th scope="col">Kaynak</th>
                                                 <th scope="col">Yayın Tarihi</th>
+                                                <th scope="col">Güncelleme Bilgisi</th>
+                                                <th scope="col">İstatistik</th>
                                                 <th scope="col">Haber Linki</th>
                                                 <th scope="col" class="text-center">İşlemler</th>
                                             </tr>
@@ -59,6 +61,40 @@
                                                     <td>#{haber.kategori.kategoriAdi}</td>
                                                     <td>#{haber.haberKaynagi.ad}</td>
                                                     <td>#{haber.yayinTarihi}</td>
+                                                    <td>
+                                                        <div class="admin-haber-izleme-kutusu">
+                                                            <div>
+                                                                <span class="admin-haber-izleme-etiket">Oluşturulma</span>
+                                                                <span class="admin-haber-izleme-deger">
+                                                                    #{empty haber.olusturulmaTarihi ? 'Bilgi yok' : haber.olusturulmaTarihi}
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="admin-haber-izleme-etiket">Son Güncelleme</span>
+                                                                <span class="admin-haber-izleme-deger">
+                                                                    #{empty haber.guncellenmeTarihi ? 'Bilgi yok' : haber.guncellenmeTarihi}
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="admin-haber-izleme-etiket">Admin</span>
+                                                                <span class="admin-haber-izleme-deger">
+                                                                    #{empty haber.sonGuncelleyenAdmin ? 'Bilgi yok' : haber.sonGuncelleyenAdmin}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="admin-haber-istatistikleri">
+                                                            <span class="haber-kart-istatistik">
+                                                                <span class="haber-istatistik-ikon">👁</span>
+                                                                #{haberBean.goruntulenmeSayisiGetir(haber)}
+                                                            </span>
+                                                            <span class="haber-kart-istatistik">
+                                                                <span class="haber-istatistik-ikon">♥</span>
+                                                                #{haberBean.favoriSayisiGetir(haber)}
+                                                            </span>
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         <h:outputLink value="#{haber.haberLinki}"
                                                                       rendered="#{not empty haber.haberLinki}"

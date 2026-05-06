@@ -30,6 +30,20 @@
                                 errorClass="alert alert-danger mb-4"
                                 fatalClass="alert alert-danger mb-4" />
 
+                    <h:panelGroup rendered="#{not empty haberGuncelleBean.haber}" layout="block"
+                                  styleClass="admin-haber-bilgi-kutusu mb-4">
+                        <h:panelGroup rendered="#{haberGuncelleBean.guncellemeBilgisiVarMi}">
+                            Bu haber en son
+                            <span class="admin-haber-bilgi-vurgu">#{haberGuncelleBean.haber.guncellenmeTarihi}</span>
+                            tarihinde
+                            <span class="admin-haber-bilgi-vurgu">#{haberGuncelleBean.haber.sonGuncelleyenAdmin}</span>
+                            tarafından güncellendi.
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not haberGuncelleBean.guncellemeBilgisiVarMi}">
+                            Bu haber için güncelleme bilgisi bulunmuyor.
+                        </h:panelGroup>
+                    </h:panelGroup>
+
                     <h:form rendered="#{not empty haberGuncelleBean.haber}">
                         <div class="row g-4">
                             <div class="col-12">

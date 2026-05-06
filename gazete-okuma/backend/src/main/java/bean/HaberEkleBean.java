@@ -3,6 +3,7 @@ package bean;
 import entity.GazeteKaynagi;
 import entity.Haber;
 import entity.Kategori;
+import entity.Kullanici;
 import facadeLocal.GazeteKaynagiFacadeLocal;
 import facadeLocal.HaberFacadeLocal;
 import facadeLocal.KategoriFacadeLocal;
@@ -110,6 +111,13 @@ public class HaberEkleBean implements Serializable {
 
             haber.setKategori(kategori);
             haber.setGazeteKaynagi(kaynak);
+
+            LocalDateTime simdi = LocalDateTime.now();
+            haber.setOlusturulmaTarihi(simdi);
+            haber.setGuncellenmeTarihi(simdi);
+            haber.setSonGuncelleyenAdmin(girisYapanAdminAdiniGetir());
+            haber.setGoruntulenmeSayisi(0L);
+
             haberFacade.ekle(haber);
 
             FacesContext.getCurrentInstance()
@@ -140,6 +148,27 @@ public class HaberEkleBean implements Serializable {
 
     private void mesajEkle(FacesMessage.Severity severity, String baslik, String detay) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, baslik, detay));
+    }
+
+    private String girisYapanAdminAdiniGetir() {
+        Object kullaniciObj = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap()
+                .get("user");
+
+        if (kullaniciObj instanceof Kullanici) {
+            Kullanici kullanici = (Kullanici) kullaniciObj;
+
+            if (kullanici.getKullaniciAdi() != null && !kullanici.getKullaniciAdi().isBlank()) {
+                return kullanici.getKullaniciAdi();
+            }
+
+            if (kullanici.getEposta() != null && !kullanici.getEposta().isBlank()) {
+                return kullanici.getEposta();
+            }
+        }
+
+        return "Bilinmeyen Admin";
     }
 
     public Haber getHaber() {

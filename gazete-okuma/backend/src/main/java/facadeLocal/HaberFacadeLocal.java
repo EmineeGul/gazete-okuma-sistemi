@@ -41,6 +41,8 @@ public interface HaberFacadeLocal {
 
     Long arananHaberSayisi(String aramaMetni);
 
+    void goruntulenmeSayisiniArtir(Haber haber);
+
     List<Haber> adminSayfaliHaberleriGetir(int baslangic, int limit);
 
     Long haberSayisiniGetir();
