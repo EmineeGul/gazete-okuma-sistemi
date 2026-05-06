@@ -123,6 +123,92 @@ body {
     background: linear-gradient(90deg, var(--cyan), var(--magenta));
 }
 
+.haber-arama-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 45px auto;
+}
+
+.haber-arama-alani {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+.haber-arama-butonlar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 0 0 auto;
+}
+
+.haber-arama-form .haber-arama-input,
+.haber-arama-form input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    background: #111220 !important;
+    color: #E2E0F5 !important;
+    border: 1px solid rgba(0, 255, 255, 0.65) !important;
+    border-radius: 999px !important;
+    padding: 14px 22px !important;
+    font-size: 15px !important;
+    outline: none !important;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.12) !important;
+}
+
+.haber-arama-form .haber-arama-input::placeholder,
+.haber-arama-form input[type="text"]::placeholder {
+    color: #9AA0C3 !important;
+}
+
+.haber-arama-form .haber-arama-input:focus,
+.haber-arama-form input[type="text"]:focus {
+    border-color: #00FFFF !important;
+    box-shadow: 0 0 24px rgba(0, 255, 255, 0.38) !important;
+}
+
+.haber-arama-form .haber-arama-buton,
+.haber-arama-form .haber-arama-temizle,
+.haber-arama-form input[type="submit"],
+.haber-arama-form button {
+    background: #16172D !important;
+    color: #E2E0F5 !important;
+    border: 1px solid #00FFFF !important;
+    border-radius: 999px !important;
+    padding: 14px 26px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 0 14px rgba(0, 255, 255, 0.14) !important;
+}
+
+.haber-arama-form .haber-arama-temizle {
+    border-color: #FF00FF !important;
+    box-shadow: 0 0 14px rgba(255, 0, 255, 0.14) !important;
+}
+
+.haber-arama-form .haber-arama-buton:hover,
+.haber-arama-form input[type="submit"]:hover,
+.haber-arama-form button:hover {
+    background: #16172D !important;
+    color: #00FFFF !important;
+    border-color: #00FFFF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(0, 255, 255, 0.38) !important;
+}
+
+.haber-arama-form .haber-arama-temizle:hover {
+    background: #16172D !important;
+    color: #FF00FF !important;
+    border-color: #FF00FF !important;
+    box-shadow: 0 0 24px rgba(255, 0, 255, 0.38) !important;
+    transform: translateY(-2px);
+}
+
 .haber-karti {
     position: relative;
     background: linear-gradient(180deg, var(--bg-card), var(--bg-card-alt));
@@ -493,6 +579,55 @@ body {
     flex-wrap: wrap;
 }
 
+.sayfalama-kapsayici {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+}
+
+.sayfalama {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.sayfa-buton {
+    min-width: 42px;
+    padding: 9px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    background: transparent;
+    color: #e2e0f5;
+    font-weight: 700;
+    line-height: 1.2;
+    box-shadow: inset 0 0 0 1px rgba(0, 255, 255, 0.06);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.sayfa-buton:hover:not(:disabled) {
+    background: rgba(0, 255, 255, 0.10);
+    color: #ffffff;
+    border-color: #00ffff;
+    box-shadow: 0 0 16px rgba(0, 255, 255, 0.16);
+    transform: translateY(-1px);
+}
+
+.aktif-sayfa {
+    background: rgba(0, 255, 255, 0.18);
+    color: #00ffff;
+    border-color: #00ffff;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.28), inset 0 0 10px rgba(0, 255, 255, 0.08);
+}
+
+.sayfa-buton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 textarea.yorum-textarea {
     background-color: #111220 !important;
     color: #e2e0f5 !important;
@@ -680,6 +815,26 @@ button.yorum-buton {
 
     .sayfa-icerik-alani {
         padding-top: 2rem !important;
+    }
+
+    .haber-arama-alani {
+        flex-direction: column;
+        max-width: 100%;
+        padding: 0 18px;
+    }
+
+    .haber-arama-butonlar {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .haber-arama-form .haber-arama-input,
+    .haber-arama-form input[type="text"],
+    .haber-arama-form .haber-arama-buton,
+    .haber-arama-form .haber-arama-temizle,
+    .haber-arama-form input[type="submit"],
+    .haber-arama-form button {
+        width: 100%;
     }
 
     .toast-message {

@@ -30,13 +30,13 @@
                             </div>
                         </div>
 
-                        <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block">
+                        <h:panelGroup rendered="#{empty haberBean.haberListesi}" layout="block">
                             <div class="alert alert-secondary mb-0">
                                 Henüz haber bulunmamaktadır.
                             </div>
                         </h:panelGroup>
 
-                        <h:panelGroup rendered="#{not empty haberBean.haberler}" layout="block">
+                        <h:panelGroup rendered="#{not empty haberBean.haberListesi}" layout="block">
                             <h:form>
                                 <div class="table-responsive">
                                     <table class="table tablo-haber table-hover align-middle mb-0">
@@ -52,7 +52,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <ui:repeat value="#{haberBean.haberler}" var="haber">
+                                            <ui:repeat value="#{haberBean.haberListesi}" var="haber">
                                                 <tr>
                                                     <td class="fw-semibold">#{haber.baslik}</td>
                                                     <td>#{haber.ozet}</td>
@@ -88,6 +88,26 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <h:panelGroup rendered="#{haberBean.toplamSayfa gt 1}" layout="block" styleClass="sayfalama-kapsayici">
+                                    <div class="sayfalama">
+                                        <h:commandButton value="Önceki"
+                                                         action="#{haberBean.onceki}"
+                                                         disabled="#{haberBean.aktifSayfa eq 1}"
+                                                         styleClass="sayfa-buton" />
+
+                                        <ui:repeat value="#{haberBean.sayfalar}" var="s">
+                                            <h:commandButton value="#{s}"
+                                                             action="#{haberBean.sayfayaGit(s)}"
+                                                             styleClass="#{haberBean.aktifSayfa eq s ? 'sayfa-buton aktif-sayfa' : 'sayfa-buton'}" />
+                                        </ui:repeat>
+
+                                        <h:commandButton value="Sonraki"
+                                                         action="#{haberBean.sonraki}"
+                                                         disabled="#{haberBean.aktifSayfa eq haberBean.toplamSayfa}"
+                                                         styleClass="sayfa-buton" />
+                                    </div>
+                                </h:panelGroup>
                             </h:form>
                         </h:panelGroup>
                     </div>

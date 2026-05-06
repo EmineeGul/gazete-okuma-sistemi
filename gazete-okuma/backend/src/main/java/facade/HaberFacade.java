@@ -7,6 +7,7 @@ import facadeLocal.HaberFacadeLocal;
 import jakarta.ejb.Stateless;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 @Stateless
 public class HaberFacade extends AbstractFacade<Haber> implements HaberFacadeLocal {
@@ -106,7 +107,70 @@ public class HaberFacade extends AbstractFacade<Haber> implements HaberFacadeLoc
                 .getSingleResult();
     }
 
+    @Override
+    public List<Haber> haberleriAraSayfaliGetir(String aramaMetni, int ilkKayit, int sayfaBoyutu) {
+        if (aramaMetni == null || aramaMetni.trim().isEmpty()) {
+            return haberleriSayfaliGetir(ilkKayit, sayfaBoyutu);
+        }
+
+        entityManager.clear();
+        List<Haber> haberler = entityManager.createQuery(
+                "SELECT h FROM Haber h WHERE "
+                        + "LOWER(COALESCE(h.baslik, '')) LIKE :arama OR "
+                        + "LOWER(COALESCE(h.ozet, '')) LIKE :arama OR "
+                        + "LOWER(COALESCE(h.icerik, '')) LIKE :arama "
+                        + "ORDER BY h.yayinTarihi DESC",
+                Haber.class)
+                .setParameter("arama", aramaParametresiHazirla(aramaMetni))
+                .setFirstResult(ilkKayit)
+                .setMaxResults(sayfaBoyutu)
+                .getResultList();
+        return sonucYoksaBosListeDon(haberler);
+    }
+
+    @Override
+    public Long arananHaberSayisi(String aramaMetni) {
+        if (aramaMetni == null || aramaMetni.trim().isEmpty()) {
+            return toplamHaberSayisi();
+        }
+
+        entityManager.clear();
+        return entityManager.createQuery(
+                "SELECT COUNT(h) FROM Haber h WHERE "
+                        + "LOWER(COALESCE(h.baslik, '')) LIKE :arama OR "
+                        + "LOWER(COALESCE(h.ozet, '')) LIKE :arama OR "
+                        + "LOWER(COALESCE(h.icerik, '')) LIKE :arama",
+                Long.class)
+                .setParameter("arama", aramaParametresiHazirla(aramaMetni))
+                .getSingleResult();
+    }
+
+    @Override
+    public List<Haber> adminSayfaliHaberleriGetir(int baslangic, int limit) {
+        entityManager.clear();
+        List<Haber> haberler = entityManager.createQuery(
+                "SELECT h FROM Haber h ORDER BY h.id DESC",
+                Haber.class)
+                .setFirstResult(baslangic)
+                .setMaxResults(limit)
+                .getResultList();
+        return sonucYoksaBosListeDon(haberler);
+    }
+
+    @Override
+    public Long haberSayisiniGetir() {
+        entityManager.clear();
+        return entityManager.createQuery(
+                "SELECT COUNT(h) FROM Haber h",
+                Long.class)
+                .getSingleResult();
+    }
+
     private List<Haber> sonucYoksaBosListeDon(List<Haber> haberler) {
         return haberler == null ? Collections.emptyList() : haberler;
+    }
+
+    private String aramaParametresiHazirla(String aramaMetni) {
+        return "%" + aramaMetni.trim().toLowerCase(Locale.ROOT) + "%";
     }
 }

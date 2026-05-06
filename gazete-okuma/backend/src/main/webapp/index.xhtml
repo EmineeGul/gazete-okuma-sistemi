@@ -3,50 +3,117 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="jakarta.faces.core"
                 xmlns:h="jakarta.faces.html"
+                xmlns:pt="jakarta.faces.passthrough"
                 xmlns:ui="jakarta.faces.facelets">
 
     <ui:define name="icerik">
+
         <style>
-            .sayfalama-kapsayici {
-                margin-top: 36px;
-                display: flex;
-                justify-content: center;
+            .haber-arama-form {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                margin: 0 auto 46px auto !important;
             }
 
-            .sayfalama {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
+            .haber-arama-alani {
+                width: 100% !important;
+                max-width: 820px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 14px !important;
+                padding: 18px !important;
+                background: rgba(17, 18, 32, 0.72) !important;
+                border: 1px solid rgba(0, 255, 255, 0.18) !important;
+                border-radius: 999px !important;
+                box-shadow: 0 0 26px rgba(0, 255, 255, 0.08) !important;
             }
 
-            .sayfa-buton {
-                min-width: 42px;
-                padding: 9px 14px;
-                border-radius: 999px;
-                border: 1px solid rgba(0, 255, 255, 0.35);
-                background: #111220;
-                color: #E2E0F5;
-                font-weight: 700;
-                transition: all 0.2s ease;
+            .haber-arama-input {
+                flex: 1 !important;
+                min-width: 0 !important;
+                height: 52px !important;
+                background: #111220 !important;
+                color: #E2E0F5 !important;
+                border: 1px solid rgba(0, 255, 255, 0.65) !important;
+                border-radius: 999px !important;
+                padding: 0 24px !important;
+                font-size: 15px !important;
+                outline: none !important;
+                box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.08), 0 0 16px rgba(0, 255, 255, 0.10) !important;
+                font-family: "Space Grotesk", "Courier New", monospace !important;
             }
 
-            .sayfa-buton:hover {
-                background: rgba(0, 255, 255, 0.10);
-                color: #FFFFFF;
-                border-color: #00FFFF;
+            .haber-arama-input::placeholder {
+                color: #9AA0C3 !important;
+                opacity: 1 !important;
             }
 
-            .aktif-sayfa {
-                background: rgba(0, 255, 255, 0.18);
-                color: #00FFFF;
-                border-color: #00FFFF;
-                box-shadow: 0 0 14px rgba(0, 255, 255, 0.18);
+            .haber-arama-input:focus {
+                border-color: #00FFFF !important;
+                box-shadow: 0 0 24px rgba(0, 255, 255, 0.38) !important;
             }
 
-            .sayfa-buton:disabled {
-                opacity: 0.45;
-                cursor: not-allowed;
+            .haber-arama-butonlar {
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+                flex: 0 0 auto !important;
+            }
+
+            .haber-arama-buton,
+            .haber-arama-temizle {
+                height: 52px !important;
+                background: #16172D !important;
+                color: #E2E0F5 !important;
+                border-radius: 999px !important;
+                padding: 0 28px !important;
+                font-weight: 700 !important;
+                cursor: pointer !important;
+                transition: all 0.25s ease !important;
+                font-family: "Space Grotesk", "Courier New", monospace !important;
+            }
+
+            .haber-arama-buton {
+                border: 1px solid #00FFFF !important;
+                box-shadow: 0 0 16px rgba(0, 255, 255, 0.16) !important;
+            }
+
+            .haber-arama-temizle {
+                border: 1px solid #FF00FF !important;
+                box-shadow: 0 0 16px rgba(255, 0, 255, 0.16) !important;
+            }
+
+            .haber-arama-buton:hover {
+                color: #00FFFF !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 0 26px rgba(0, 255, 255, 0.40) !important;
+            }
+
+            .haber-arama-temizle:hover {
+                color: #FF00FF !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 0 26px rgba(255, 0, 255, 0.40) !important;
+            }
+
+            @media (max-width: 768px) {
+                .haber-arama-alani {
+                    flex-direction: column !important;
+                    border-radius: 1.4rem !important;
+                    padding: 16px !important;
+                }
+
+                .haber-arama-input,
+                .haber-arama-butonlar,
+                .haber-arama-buton,
+                .haber-arama-temizle {
+                    width: 100% !important;
+                }
+
+                .haber-arama-butonlar {
+                    flex-direction: column !important;
+                }
             }
         </style>
 
@@ -56,6 +123,26 @@
             <h1 class="bolum-basligi">Son Haberler</h1>
             <p class="text-secondary mt-3 mb-0">Güncel gelişmeleri sade ve düzenli bir akışta takip edin.</p>
         </div>
+
+        <h:form styleClass="haber-arama-form">
+            <div class="haber-arama-alani">
+                <h:inputText value="#{haberBean.aramaMetni}"
+                             styleClass="haber-arama-input"
+                             maxlength="120"
+                             pt:placeholder="Haber başlığı, özeti veya içeriğinde ara..." />
+
+                <div class="haber-arama-butonlar">
+                    <h:commandButton value="Ara"
+                                     action="#{haberBean.haberAra}"
+                                     styleClass="haber-arama-buton" />
+
+                    <h:commandButton value="Temizle"
+                                     action="#{haberBean.aramayiTemizle}"
+                                     styleClass="haber-arama-temizle"
+                                     rendered="#{haberBean.aramaYapildiMi}" />
+                </div>
+            </div>
+        </h:form>
 
         <h:panelGroup rendered="#{empty haberBean.haberler}" layout="block" styleClass="bos-liste-kutusu p-5 text-center">
             <h4 class="mb-2">Henüz haber bulunamadı.</h4>
@@ -89,9 +176,11 @@
                                 </div>
 
                                 <h3 class="haber-baslik h5 mb-3">#{haber.baslik}</h3>
+
                                 <p class="haber-bilgi mb-2">
                                     <strong class="text-light">Yayın Tarihi:</strong> #{haber.yayinTarihi}
                                 </p>
+
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>
 
                                 <h:link outcome="haber-detay.xhtml"

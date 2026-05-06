@@ -20,6 +20,8 @@ import java.util.List;
 public class HaberBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final int ANA_SAYFA_SAYFA_BOYUTU = 9;
+    private static final int ADMIN_HABER_SAYFA_BOYUTU = 10;
 
     @EJB
     private HaberFacadeLocal haberFacade;
@@ -34,15 +36,30 @@ public class HaberBean implements Serializable {
     private List<Haber> haberler;
     private Haber seciliHaber;
     private int aktifSayfa = 1;
-    private int sayfaBoyutu = 10;
+    private int sayfaBoyutu = ANA_SAYFA_SAYFA_BOYUTU;
     private int toplamSayfaSayisi;
     private Long toplamHaberSayisi;
     private List<Integer> sayfaNumaralari;
     private int secilecekSayfa;
+    private int toplamSayfa;
+    private Long toplamHaber;
+    private List<Haber> haberListesi;
+    private List<Integer> sayfalar;
+    private String aramaMetni;
 
     @PostConstruct
     public void init() {
+        if (adminHaberListeSayfasiMi()) {
+            sayfaBoyutu = ADMIN_HABER_SAYFA_BOYUTU;
+            toplamHaber = haberFacade.haberSayisiniGetir();
+            toplamSayfa = toplamHaber > 0 ? (int) Math.ceil(toplamHaber / (double) sayfaBoyutu) : 0;
+            sayfalariHazirla();
+            haberleriYukle();
+            return;
+        }
+
         if (anaSayfaMi()) {
+            sayfaBoyutu = ANA_SAYFA_SAYFA_BOYUTU;
             haberleriSayfaliYukle();
             return;
         }
@@ -51,6 +68,42 @@ public class HaberBean implements Serializable {
     }
 
     public void haberleriYukle() {
+        if (adminHaberListeSayfasiMi()) {
+            try {
+                if (toplamHaber == null) {
+                    toplamHaber = haberFacade.haberSayisiniGetir();
+                }
+
+                toplamSayfa = toplamHaber > 0 ? (int) Math.ceil(toplamHaber / (double) sayfaBoyutu) : 0;
+
+                if (toplamSayfa == 0) {
+                    aktifSayfa = 1;
+                    haberListesi = Collections.emptyList();
+                    haberler = haberListesi;
+                    sayfalariHazirla();
+                    return;
+                }
+
+                if (aktifSayfa < 1) {
+                    aktifSayfa = 1;
+                } else if (aktifSayfa > toplamSayfa) {
+                    aktifSayfa = toplamSayfa;
+                }
+
+                int baslangic = (aktifSayfa - 1) * sayfaBoyutu;
+                haberListesi = haberFacade.adminSayfaliHaberleriGetir(baslangic, sayfaBoyutu);
+                haberler = haberListesi;
+                sayfalariHazirla();
+            } catch (Exception e) {
+                toplamHaber = 0L;
+                toplamSayfa = 0;
+                haberListesi = Collections.emptyList();
+                haberler = haberListesi;
+                sayfalariHazirla();
+            }
+            return;
+        }
+
         try {
             haberler = haberFacade.tumHaberleriGetir();
         } catch (Exception e) {
@@ -60,7 +113,10 @@ public class HaberBean implements Serializable {
 
     public void haberleriSayfaliYukle() {
         try {
-            toplamHaberSayisi = haberFacade.toplamHaberSayisi();
+            sayfaBoyutu = ANA_SAYFA_SAYFA_BOYUTU;
+            toplamHaberSayisi = aramaMetniVarMi()
+                    ? haberFacade.arananHaberSayisi(aramaMetni)
+                    : haberFacade.toplamHaberSayisi();
             toplamSayfaSayisi = (int) Math.ceil(toplamHaberSayisi / (double) sayfaBoyutu);
 
             if (toplamSayfaSayisi == 0) {
@@ -77,7 +133,9 @@ public class HaberBean implements Serializable {
             }
 
             int ilkKayit = (aktifSayfa - 1) * sayfaBoyutu;
-            haberler = haberFacade.haberleriSayfaliGetir(ilkKayit, sayfaBoyutu);
+            haberler = aramaMetniVarMi()
+                    ? haberFacade.haberleriAraSayfaliGetir(aramaMetni, ilkKayit, sayfaBoyutu)
+                    : haberFacade.haberleriSayfaliGetir(ilkKayit, sayfaBoyutu);
             sayfaNumaralariniHazirla();
         } catch (Exception e) {
             toplamHaberSayisi = 0L;
@@ -87,25 +145,56 @@ public class HaberBean implements Serializable {
         }
     }
 
+    public String haberAra() {
+        aktifSayfa = 1;
+        haberleriSayfaliYukle();
+        return null;
+    }
+
+    public String aramayiTemizle() {
+        aramaMetni = null;
+        aktifSayfa = 1;
+        haberleriSayfaliYukle();
+        return null;
+    }
+
+    public void sayfayaGit() {
+        sayfayaGit(secilecekSayfa);
+    }
+
     public void sayfayaGit(int sayfa) {
-        if (toplamSayfaSayisi <= 0) {
-            aktifSayfa = 1;
+        if (!adminHaberListeSayfasiMi()) {
+            if (toplamSayfaSayisi <= 0) {
+                aktifSayfa = 1;
+                haberleriSayfaliYukle();
+                return;
+            }
+
+            if (sayfa < 1) {
+                sayfa = 1;
+            } else if (sayfa > toplamSayfaSayisi) {
+                sayfa = toplamSayfaSayisi;
+            }
+
+            aktifSayfa = sayfa;
             haberleriSayfaliYukle();
+            return;
+        }
+
+        if (toplamSayfa <= 0) {
+            aktifSayfa = 1;
+            haberleriYukle();
             return;
         }
 
         if (sayfa < 1) {
             sayfa = 1;
-        } else if (sayfa > toplamSayfaSayisi) {
-            sayfa = toplamSayfaSayisi;
+        } else if (sayfa > toplamSayfa) {
+            sayfa = toplamSayfa;
         }
 
         aktifSayfa = sayfa;
-        haberleriSayfaliYukle();
-    }
-
-    public void sayfayaGit() {
-        sayfayaGit(secilecekSayfa);
+        haberleriYukle();
     }
 
     public boolean oncekiSayfaVarMi() {
@@ -128,11 +217,33 @@ public class HaberBean implements Serializable {
         }
     }
 
+    public void onceki() {
+        if (aktifSayfa > 1) {
+            aktifSayfa--;
+            haberleriYukle();
+        }
+    }
+
+    public void sonraki() {
+        if (aktifSayfa < toplamSayfa) {
+            aktifSayfa++;
+            haberleriYukle();
+        }
+    }
+
     private void sayfaNumaralariniHazirla() {
         sayfaNumaralari = new ArrayList<>();
 
         for (int sayfa = 1; sayfa <= toplamSayfaSayisi; sayfa++) {
             sayfaNumaralari.add(sayfa);
+        }
+    }
+
+    private void sayfalariHazirla() {
+        sayfalar = new ArrayList<>();
+
+        for (int sayfa = 1; sayfa <= toplamSayfa; sayfa++) {
+            sayfalar.add(sayfa);
         }
     }
 
@@ -167,7 +278,20 @@ public class HaberBean implements Serializable {
             yorumFacade.habereAitYorumlariSil(silinecekHaber);
             favoriHaberFacade.habereAitFavorileriSil(silinecekHaber);
             haberFacade.sil(silinecekHaber);
-            haberleriYukle();
+
+            if (adminHaberListeSayfasiMi()) {
+                toplamHaber = haberFacade.haberSayisiniGetir();
+                toplamSayfa = toplamHaber > 0 ? (int) Math.ceil(toplamHaber / (double) sayfaBoyutu) : 0;
+
+                if (toplamSayfa > 0 && aktifSayfa > toplamSayfa) {
+                    aktifSayfa = toplamSayfa;
+                }
+
+                haberleriYukle();
+            } else {
+                haberleriYukle();
+            }
+
             seciliHaber = null;
 
             mesajEkle(FacesMessage.SEVERITY_INFO, "Basarili", "Haber basariyla silindi.");
@@ -180,6 +304,10 @@ public class HaberBean implements Serializable {
 
     private void mesajEkle(FacesMessage.Severity seviye, String baslik, String detay) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(seviye, baslik, detay));
+    }
+
+    private boolean aramaMetniVarMi() {
+        return aramaMetni != null && !aramaMetni.trim().isEmpty();
     }
 
     public List<Haber> getHaberler() {
@@ -225,6 +353,10 @@ public class HaberBean implements Serializable {
         return sayfaBoyutu;
     }
 
+    public void setSayfaBoyutu(int sayfaBoyutu) {
+        this.sayfaBoyutu = sayfaBoyutu;
+    }
+
     public Long getToplamHaberSayisi() {
         return toplamHaberSayisi;
     }
@@ -248,6 +380,40 @@ public class HaberBean implements Serializable {
         this.secilecekSayfa = secilecekSayfa;
     }
 
+    public String getAramaMetni() {
+        return aramaMetni;
+    }
+
+    public void setAramaMetni(String aramaMetni) {
+        this.aramaMetni = aramaMetni;
+    }
+
+    public boolean isAramaYapildiMi() {
+        return aramaMetniVarMi();
+    }
+
+    public int getToplamSayfa() {
+        return toplamSayfa;
+    }
+
+    public Long getToplamHaber() {
+        return toplamHaber;
+    }
+
+    public List<Haber> getHaberListesi() {
+        if (haberListesi == null) {
+            haberleriYukle();
+        }
+        return haberListesi;
+    }
+
+    public List<Integer> getSayfalar() {
+        if (sayfalar == null) {
+            sayfalariHazirla();
+        }
+        return sayfalar;
+    }
+
     private boolean anaSayfaMi() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
 
@@ -257,6 +423,17 @@ public class HaberBean implements Serializable {
 
         String gorunumId = facesContext.getViewRoot().getViewId();
         return "/index.xhtml".equals(gorunumId);
+    }
+
+    private boolean adminHaberListeSayfasiMi() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        if (facesContext == null || facesContext.getViewRoot() == null) {
+            return false;
+        }
+
+        String gorunumId = facesContext.getViewRoot().getViewId();
+        return "/panel/admin-haber-liste.xhtml".equals(gorunumId);
     }
 
 }
