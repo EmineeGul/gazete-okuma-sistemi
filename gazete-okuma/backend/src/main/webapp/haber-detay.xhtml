@@ -12,7 +12,7 @@
         <f:viewAction action="#{yorumBean.yorumlariYukle}" />
     </f:metadata>
 
-    <ui:define name="title">Haber DetayÄ± | HABER_KONSOLU</ui:define>
+    <ui:define name="title">Haber Detayı | HABER_KONSOLU</ui:define>
 
     <ui:define name="icerik">
 
@@ -173,6 +173,97 @@
                 }
             }
 
+            .detay-istatistik-paneli {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 18px !important;
+                margin: 34px 0 28px 0 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            .detay-istatistik-karti {
+                display: flex !important;
+                align-items: center !important;
+                gap: 16px !important;
+                min-height: 92px !important;
+                padding: 20px 22px !important;
+                border-radius: 18px !important;
+                background: linear-gradient(180deg, #16172D 0%, #111220 100%) !important;
+                color: #E2E0F5 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            .detay-okunma-karti {
+                border: 1px solid rgba(0, 255, 255, 0.55) !important;
+                box-shadow:
+                    0 0 28px rgba(0, 255, 255, 0.18),
+                    inset 0 0 18px rgba(0, 255, 255, 0.05) !important;
+            }
+
+            .detay-begeni-karti {
+                border: 1px solid rgba(255, 0, 255, 0.55) !important;
+                box-shadow:
+                    0 0 28px rgba(255, 0, 255, 0.18),
+                    inset 0 0 18px rgba(255, 0, 255, 0.05) !important;
+            }
+
+            .detay-istatistik-ikon {
+                width: 52px !important;
+                height: 52px !important;
+                min-width: 52px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 999px !important;
+                background: #0D0E1C !important;
+                font-size: 24px !important;
+                line-height: 1 !important;
+                opacity: 1 !important;
+            }
+
+            .detay-okunma-karti .detay-istatistik-ikon {
+                color: #00FFFF !important;
+                border: 1px solid rgba(0, 255, 255, 0.65) !important;
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.32) !important;
+            }
+
+            .detay-begeni-karti .detay-istatistik-ikon {
+                color: #FF00FF !important;
+                border: 1px solid rgba(255, 0, 255, 0.65) !important;
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.32) !important;
+            }
+
+            .detay-istatistik-metin {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 5px !important;
+                opacity: 1 !important;
+            }
+
+            .detay-istatistik-sayi {
+                color: #FFFFFF !important;
+                font-size: 30px !important;
+                font-weight: 900 !important;
+                line-height: 1 !important;
+                opacity: 1 !important;
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.15) !important;
+            }
+
+            .detay-istatistik-etiket {
+                color: #B8BCE8 !important;
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                opacity: 1 !important;
+            }
+
+            @media (max-width: 768px) {
+                .detay-istatistik-paneli {
+                    grid-template-columns: 1fr !important;
+                }
+            }
+
         </style>
 
         <div class="row justify-content-center">
@@ -196,15 +287,15 @@
 
                             <div class="row g-3 mt-1">
                                 <div class="col-12 col-md-4">
-                                    <div class="bilgi-etiket">YayÄ±n Tarihi</div>
-                                    <div class="bilgi-deger">#{haberBean.seciliHaber.yayinTarihi}</div>
+                                    <div class="bilgi-etiket">Yayın Tarihi</div>
+                                    <div class="bilgi-deger">#{tarihFormatBean.tarihSaatFormatla(haberBean.seciliHaber.yayinTarihi)}</div>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <div class="bilgi-etiket">Kategori</div>
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.kategori.kategoriAdi}</div>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    <div class="bilgi-etiket">Gazete KaynaÄŸÄ±</div>
+                                    <div class="bilgi-etiket">Gazete Kaynağı</div>
                                     <div class="bilgi-deger">#{haberBean.seciliHaber.haberKaynagi.ad}</div>
                                 </div>
                             </div>
@@ -215,33 +306,38 @@
                                 <h:outputText value="#{haberBean.seciliHaber.icerik}" escape="false" />
                             </div>
 
-                            <div class="haber-istatistikleri">
-                                <div class="haber-istatistik-karti">
-                                    <div class="haber-istatistik-ikon">ğŸ‘</div>
-                                    <div>
-                                        <div class="haber-istatistik-sayi">#{haberBean.goruntulenmeSayisiGetir(haberBean.seciliHaber)}</div>
-                                        <div class="haber-istatistik-etiket">Okunma SayÄ±sÄ±</div>
+                            <div class="detay-istatistik-paneli">
+                                <div class="detay-istatistik-karti detay-okunma-karti">
+                                    <div class="detay-istatistik-ikon">👁</div>
+                                    <div class="detay-istatistik-metin">
+                                        <div class="detay-istatistik-sayi">
+                                            #{haberBean.goruntulenmeSayisiGetir(haberBean.seciliHaber)}
+                                        </div>
+                                        <div class="detay-istatistik-etiket">Okunma Sayısı</div>
                                     </div>
                                 </div>
-                                <div class="haber-istatistik-karti">
-                                    <div class="haber-istatistik-ikon">â™¥</div>
-                                    <div>
-                                        <div class="haber-istatistik-sayi">#{haberBean.favoriSayisiGetir(haberBean.seciliHaber)}</div>
-                                        <div class="haber-istatistik-etiket">BeÄŸeni SayÄ±sÄ±</div>
+
+                                <div class="detay-istatistik-karti detay-begeni-karti">
+                                    <div class="detay-istatistik-ikon">♥</div>
+                                    <div class="detay-istatistik-metin">
+                                        <div class="detay-istatistik-sayi">
+                                            #{haberBean.favoriSayisiGetir(haberBean.seciliHaber)}
+                                        </div>
+                                        <div class="detay-istatistik-etiket">Beğeni Sayısı</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
                                 <h:outputLink value="index.xhtml" styleClass="btn btn-geri-don">
-                                    Geri DÃ¶n
+                                    Geri Dön
                                 </h:outputLink>
 
                                 <h:outputLink value="#{haberBean.seciliHaber.haberLinki}"
                                               rendered="#{haberBean.seciliHaber.haberLinki ne null and haberBean.seciliHaber.haberLinki ne ''}"
                                               styleClass="btn btn-haber"
                                               target="_blank">
-                                    Haber KaynaÄŸÄ±na Git
+                                    Haber Kaynağına Git
                                 </h:outputLink>
                             </div>
 
@@ -262,7 +358,7 @@
                                                      styleClass="yorum-textarea"
                                                      maxlength="300"
                                                      required="true"
-                                                     requiredMessage="Yorum boÅŸ olamaz." />
+                                                     requiredMessage="Yorum boş olamaz." />
 
                                     <br/><br/>
 
@@ -278,7 +374,7 @@
 
                                 <h:panelGroup rendered="#{empty yorumBean.yorumlar}">
                                     <p class="yorum-yardim">
-                                        Bu habere henÃ¼z yorum yapÄ±lmamÄ±ÅŸ.
+                                        Bu habere henüz yorum yapılmamış.
                                     </p>
                                 </h:panelGroup>
 
@@ -294,7 +390,7 @@
                                                 <h:commandButton value="Sil"
                                                                  action="#{yorumBean.yorumSil(yorum)}"
                                                                  styleClass="btn btn-danger btn-sm"
-                                                                 onclick="return confirm('Bu yorumu silmek istediÄŸinize emin misiniz?');" />
+                                                                 onclick="return confirm('Bu yorumu silmek istediğinize emin misiniz?');" />
                                             </h:form>
                                         </div>
 

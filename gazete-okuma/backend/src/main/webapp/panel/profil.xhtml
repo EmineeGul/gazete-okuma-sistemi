@@ -277,7 +277,7 @@
                             <div class="col-12 col-md-6 col-xl-4">
                                 <div class="profil-ozet-kutu">
                                     <div class="profil-etiket">Kayıt Tarihi</div>
-                                    <div class="profil-deger">#{profilBean.kullanici.kayitTarihi}</div>
+                                    <div class="profil-deger">#{tarihFormatBean.tarihSaatFormatla(profilBean.kullanici.kayitTarihi)}</div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-xl-4">
@@ -430,7 +430,7 @@
                                             <h3 class="profil-liste-baslik">#{yorum.haber.baslik}</h3>
 
                                             <div class="profil-meta">
-                                                <div><strong>Yorum Tarihi:</strong> #{yorum.yorumTarihi}</div>
+                                                <div><strong>Yorum Tarihi:</strong> #{tarihFormatBean.tarihSaatFormatla(yorum.yorumTarihi)}</div>
                                             </div>
 
                                             <h:panelGroup rendered="#{profilBean.duzenlenenYorumId ne yorum.id}" layout="block">

@@ -59,7 +59,7 @@
 
                                             <div style="color:#B8B6E0; margin-top:10px; font-size:14px;">
                                                 <div><b style="color:#00FFFF;">Kullanıcı:</b> #{yorum.kullanici.kullaniciAdi}</div>
-                                                <div><b style="color:#00FFFF;">Tarih:</b> #{yorum.yorumTarihi}</div>
+                                                <div><b style="color:#00FFFF;">Tarih:</b> #{tarihFormatBean.tarihSaatFormatla(yorum.yorumTarihi)}</div>
 
                                                 <h:panelGroup rendered="#{not empty yorum.haber.kategori}">
                                                     <div>

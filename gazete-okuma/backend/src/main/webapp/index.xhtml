@@ -9,6 +9,85 @@
     <ui:define name="icerik">
 
         <style>
+            @keyframes sonDakikaKaydir {
+                from {
+                    transform: translateX(0);
+                }
+
+                to {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .son-dakika-seridi {
+                width: min(1180px, calc(100% - 32px)) !important;
+                margin: 18px auto 42px auto !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 16px !important;
+                background: linear-gradient(90deg, rgba(17, 18, 32, 0.96), rgba(22, 23, 45, 0.90)) !important;
+                border: 1px solid rgba(0, 255, 255, 0.25) !important;
+                border-radius: 999px !important;
+                padding: 12px 16px !important;
+                overflow: hidden !important;
+                box-shadow: 0 0 26px rgba(0, 255, 255, 0.12), inset 0 0 18px rgba(255, 0, 255, 0.05) !important;
+            }
+
+            .son-dakika-etiket {
+                flex: 0 0 auto !important;
+                background: linear-gradient(90deg, #00FFFF, #FF00FF) !important;
+                color: #0D0E1C !important;
+                border-radius: 999px !important;
+                padding: 9px 16px !important;
+                font-size: 0.86rem !important;
+                font-weight: 900 !important;
+                letter-spacing: 0.08rem !important;
+                text-transform: uppercase !important;
+                box-shadow: 0 0 18px rgba(0, 255, 255, 0.28) !important;
+            }
+
+            .son-dakika-akis {
+                flex: 1 !important;
+                overflow: hidden !important;
+                white-space: nowrap !important;
+                min-width: 0 !important;
+            }
+
+            .son-dakika-icerik {
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 18px !important;
+                min-width: max-content !important;
+                white-space: nowrap !important;
+                animation: sonDakikaKaydir 32s linear infinite !important;
+            }
+
+            .son-dakika-akis:hover .son-dakika-icerik {
+                animation-play-state: paused !important;
+            }
+
+            .son-dakika-link,
+            .son-dakika-link:visited {
+                color: #E2E0F5 !important;
+                text-decoration: none !important;
+                font-weight: 700 !important;
+                font-size: 0.98rem !important;
+                line-height: 1 !important;
+            }
+
+            .son-dakika-link:hover,
+            .son-dakika-link:focus {
+                color: #00FFFF !important;
+                text-decoration: none !important;
+                text-shadow: 0 0 14px rgba(0, 255, 255, 0.42) !important;
+            }
+
+            .son-dakika-ayrac {
+                color: #FF00FF !important;
+                font-size: 0.75rem !important;
+                text-shadow: 0 0 10px rgba(255, 0, 255, 0.42) !important;
+            }
+
             .haber-arama-form {
                 width: 100% !important;
                 display: flex !important;
@@ -98,6 +177,17 @@
             }
 
             @media (max-width: 768px) {
+                .son-dakika-seridi {
+                    width: calc(100% - 20px) !important;
+                    border-radius: 1.2rem !important;
+                    flex-direction: column !important;
+                    align-items: stretch !important;
+                }
+
+                .son-dakika-etiket {
+                    width: fit-content !important;
+                }
+
                 .haber-arama-alani {
                     flex-direction: column !important;
                     border-radius: 1.4rem !important;
@@ -118,6 +208,29 @@
         </style>
 
         <div id="toastMessage" class="toast-message" aria-live="polite">Favorilere eklendi</div>
+
+        <h:panelGroup rendered="#{not empty haberBean.sonDakikaHaberleri}" layout="block" styleClass="son-dakika-seridi">
+            <div class="son-dakika-etiket">SON DAKİKA</div>
+            <div class="son-dakika-akis">
+                <div class="son-dakika-icerik">
+                    <ui:repeat value="#{haberBean.sonDakikaHaberleri}" var="haber">
+                        <h:link outcome="haber-detay.xhtml" styleClass="son-dakika-link">
+                            <f:param name="haberId" value="#{haber.id}" />
+                            #{haber.baslik}
+                        </h:link>
+                        <span class="son-dakika-ayrac">◆</span>
+                    </ui:repeat>
+
+                    <ui:repeat value="#{haberBean.sonDakikaHaberleri}" var="haber">
+                        <h:link outcome="haber-detay.xhtml" styleClass="son-dakika-link">
+                            <f:param name="haberId" value="#{haber.id}" />
+                            #{haber.baslik}
+                        </h:link>
+                        <span class="son-dakika-ayrac">◆</span>
+                    </ui:repeat>
+                </div>
+            </div>
+        </h:panelGroup>
 
         <div class="text-center mb-5">
             <h1 class="bolum-basligi">Son Haberler</h1>
@@ -178,7 +291,7 @@
                                 <h3 class="haber-baslik h5 mb-3">#{haber.baslik}</h3>
 
                                 <p class="haber-bilgi mb-2">
-                                    <strong class="text-light">Yayın Tarihi:</strong> #{haber.yayinTarihi}
+                                    <strong class="text-light">Yayın Tarihi:</strong> #{tarihFormatBean.tarihSaatFormatla(haber.yayinTarihi)}
                                 </p>
 
                                 <p class="card-text text-light-emphasis mb-4 flex-grow-1">#{haber.ozet}</p>

@@ -60,19 +60,19 @@
                                                     <td>#{haber.ozet}</td>
                                                     <td>#{haber.kategori.kategoriAdi}</td>
                                                     <td>#{haber.haberKaynagi.ad}</td>
-                                                    <td>#{haber.yayinTarihi}</td>
+                                                    <td>#{tarihFormatBean.tarihSaatFormatla(haber.yayinTarihi)}</td>
                                                     <td>
                                                         <div class="admin-haber-izleme-kutusu">
                                                             <div>
                                                                 <span class="admin-haber-izleme-etiket">Oluşturulma</span>
                                                                 <span class="admin-haber-izleme-deger">
-                                                                    #{empty haber.olusturulmaTarihi ? 'Bilgi yok' : haber.olusturulmaTarihi}
+                                                                    #{tarihFormatBean.tarihSaatFormatla(haber.olusturulmaTarihi)}
                                                                 </span>
                                                             </div>
                                                             <div>
                                                                 <span class="admin-haber-izleme-etiket">Son Güncelleme</span>
                                                                 <span class="admin-haber-izleme-deger">
-                                                                    #{empty haber.guncellenmeTarihi ? 'Bilgi yok' : haber.guncellenmeTarihi}
+                                                                    #{tarihFormatBean.tarihSaatFormatla(haber.guncellenmeTarihi)}
                                                                 </span>
                                                             </div>
                                                             <div>

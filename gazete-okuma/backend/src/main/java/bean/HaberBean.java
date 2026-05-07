@@ -34,6 +34,7 @@ public class HaberBean implements Serializable {
 
     private Long haberId;
     private List<Haber> haberler;
+    private List<Haber> sonDakikaHaberleri;
     private Haber seciliHaber;
     private int aktifSayfa = 1;
     private int sayfaBoyutu = ANA_SAYFA_SAYFA_BOYUTU;
@@ -61,6 +62,7 @@ public class HaberBean implements Serializable {
 
         if (anaSayfaMi()) {
             sayfaBoyutu = ANA_SAYFA_SAYFA_BOYUTU;
+            sonDakikaHaberleriniYukle();
             haberleriSayfaliYukle();
             return;
         }
@@ -143,6 +145,14 @@ public class HaberBean implements Serializable {
             toplamSayfaSayisi = 0;
             haberler = Collections.emptyList();
             sayfaNumaralariniHazirla();
+        }
+    }
+
+    public void sonDakikaHaberleriniYukle() {
+        try {
+            sonDakikaHaberleri = haberFacade.enSonHaberleriGetir(5);
+        } catch (Exception e) {
+            sonDakikaHaberleri = Collections.emptyList();
         }
     }
 
@@ -342,6 +352,13 @@ public class HaberBean implements Serializable {
 
     public void setHaberler(List<Haber> haberler) {
         this.haberler = haberler;
+    }
+
+    public List<Haber> getSonDakikaHaberleri() {
+        if (sonDakikaHaberleri == null) {
+            sonDakikaHaberleriniYukle();
+        }
+        return sonDakikaHaberleri;
     }
 
     public Long getHaberId() {

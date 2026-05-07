@@ -123,6 +123,87 @@ body {
     background: linear-gradient(90deg, var(--cyan), var(--magenta));
 }
 
+@keyframes sonDakikaKaydir {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.son-dakika-seridi {
+    width: min(1180px, calc(100% - 32px));
+    margin: 18px auto 42px auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(90deg, rgba(17, 18, 32, 0.96), rgba(22, 23, 45, 0.88));
+    border: 1px solid rgba(0, 255, 255, 0.22);
+    border-radius: 999px;
+    padding: 12px 16px;
+    overflow: hidden;
+    box-shadow:
+        0 0 26px rgba(0, 255, 255, 0.10),
+        inset 0 0 18px rgba(255, 0, 255, 0.04);
+}
+
+.son-dakika-etiket {
+    flex: 0 0 auto;
+    background: linear-gradient(90deg, #00FFFF, #FF00FF);
+    color: #0D0E1C;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-size: 0.86rem;
+    font-weight: 900;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.28);
+}
+
+.son-dakika-akis {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.son-dakika-icerik {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    min-width: max-content;
+    animation: sonDakikaKaydir 32s linear infinite;
+    will-change: transform;
+}
+
+.son-dakika-akis:hover .son-dakika-icerik {
+    animation-play-state: paused;
+}
+
+.son-dakika-link {
+    color: #E2E0F5 !important;
+    text-decoration: none !important;
+    font-weight: 700;
+    font-size: 0.98rem;
+    line-height: 1;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.son-dakika-link:hover,
+.son-dakika-link:focus {
+    color: #00FFFF !important;
+    text-decoration: none !important;
+    text-shadow: 0 0 14px rgba(0, 255, 255, 0.42);
+}
+
+.son-dakika-ayrac {
+    color: #FF00FF;
+    font-size: 0.75rem;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.42);
+}
+
 .haber-arama-form {
     width: 100%;
     display: flex;
@@ -294,51 +375,69 @@ body {
 }
 
 .haber-istatistikleri {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 28px;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+    margin: 34px 0 24px 0 !important;
 }
 
 .haber-istatistik-karti {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: linear-gradient(180deg, rgba(22, 23, 45, 0.92), rgba(17, 18, 32, 0.92));
-    border: 1px solid rgba(0, 255, 255, 0.24);
-    border-radius: 1rem;
-    padding: 18px;
-    box-shadow: 0 0 22px rgba(0, 255, 255, 0.08), inset 0 0 18px rgba(255, 0, 255, 0.04);
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    background: linear-gradient(180deg, rgba(22, 23, 45, 0.98), rgba(17, 18, 32, 0.98)) !important;
+    border-radius: 1rem !important;
+    padding: 18px 20px !important;
+    color: #E2E0F5 !important;
+    box-shadow: 0 0 22px rgba(0, 255, 255, 0.08) !important;
 }
 
-.haber-istatistik-karti:nth-child(2) {
-    border-color: rgba(255, 0, 255, 0.26);
+.haber-istatistik-karti.okunma {
+    border: 1px solid rgba(0, 255, 255, 0.42) !important;
+    box-shadow: 0 0 24px rgba(0, 255, 255, 0.14) !important;
 }
 
-.haber-istatistik-karti .haber-istatistik-ikon {
-    width: 42px;
-    height: 42px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #111220;
-    border: 1px solid rgba(0, 255, 255, 0.32);
-    border-radius: 999px;
-    font-size: 1.15rem;
-    flex: 0 0 auto;
+.haber-istatistik-karti.begeni {
+    border: 1px solid rgba(255, 0, 255, 0.42) !important;
+    box-shadow: 0 0 24px rgba(255, 0, 255, 0.14) !important;
+}
+
+.haber-istatistik-ikon {
+    width: 46px !important;
+    height: 46px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    border-radius: 999px !important;
+    background: #111220 !important;
+    font-size: 1.25rem !important;
+}
+
+.haber-istatistik-karti.okunma .haber-istatistik-ikon {
+    color: #00FFFF !important;
+    border: 1px solid rgba(0, 255, 255, 0.50) !important;
+    box-shadow: 0 0 16px rgba(0, 255, 255, 0.22) !important;
+}
+
+.haber-istatistik-karti.begeni .haber-istatistik-ikon {
+    color: #FF00FF !important;
+    border: 1px solid rgba(255, 0, 255, 0.50) !important;
+    box-shadow: 0 0 16px rgba(255, 0, 255, 0.22) !important;
 }
 
 .haber-istatistik-sayi {
-    color: #ffffff;
-    font-size: 1.35rem;
-    font-weight: 700;
-    line-height: 1.1;
+    color: #FFFFFF !important;
+    font-size: 1.45rem !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
 }
 
 .haber-istatistik-etiket {
-    color: #9aa0c3;
-    font-size: 0.9rem;
-    margin-top: 4px;
+    color: #9AA0C3 !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    margin-top: 5px !important;
 }
 
 .admin-haber-istatistikleri {
@@ -1031,6 +1130,31 @@ button.yorum-buton {
 
     .haber-istatistikleri {
         grid-template-columns: 1fr;
+    }
+
+    .son-dakika-seridi {
+        width: calc(100% - 20px);
+        margin: 12px auto 34px auto;
+        border-radius: 1.2rem;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .son-dakika-etiket {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+    }
+
+    .son-dakika-icerik {
+        animation-duration: 32s;
+    }
+
+    .son-dakika-link {
+        font-size: 0.9rem;
     }
 
     .yorum-begeni-alani {

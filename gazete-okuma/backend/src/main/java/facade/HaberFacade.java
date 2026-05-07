@@ -71,7 +71,8 @@ public class HaberFacade extends AbstractFacade<Haber> implements HaberFacadeLoc
         entityManager.clear();
         @SuppressWarnings("unchecked")
         List<Haber> haberler = entityManager
-                .createQuery("SELECT h FROM Haber h ORDER BY h.yayinTarihi DESC")
+                .createQuery("SELECT h FROM Haber h WHERE h.baslik IS NOT NULL "
+                        + "AND TRIM(h.baslik) <> '' ORDER BY h.yayinTarihi DESC")
                 .setMaxResults(guvenliLimit)
                 .getResultList();
         return sonucYoksaBosListeDon(haberler);

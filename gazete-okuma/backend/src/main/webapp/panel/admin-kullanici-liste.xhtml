@@ -118,7 +118,7 @@
                                             <div><strong>Rol:</strong> #{kullanici.role}</div>
 
                                             <h:panelGroup rendered="#{not empty kullanici.kayitTarihi}">
-                                                <div><strong>Kayıt Tarihi:</strong> #{kullanici.kayitTarihi}</div>
+                                                <div><strong>Kayıt Tarihi:</strong> #{tarihFormatBean.tarihSaatFormatla(kullanici.kayitTarihi)}</div>
                                             </h:panelGroup>
                                         </div>
 
